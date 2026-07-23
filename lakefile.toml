@@ -1,0 +1,45 @@
+name = "erdos700_pnt"
+defaultTargets = ["Erdos700PNT"]
+
+[[require]]
+name = "formal_conjectures"
+git = "https://github.com/google-deepmind/formal-conjectures.git"
+rev = "e751934294a381afd2d5fc1124c5953c8e25f9fa"
+
+[[require]]
+name = "PrimeNumberTheoremAnd"
+git = "https://github.com/AlexKontorovich/PrimeNumberTheoremAnd.git"
+rev = "00737ce40d3ba12a58e63d7eca65563fb9860f7c"
+
+[[lean_lib]]
+name = "Erdos700PNT"
+
+[[lean_lib]]
+name = "Assembly"
+
+[[lean_lib]]
+name = "CoreHelpers"
+
+[[lean_lib]]
+name = "DominanceWork"
+
+[[lean_lib]]
+name = "FEquality"
+
+[[lean_lib]]
+name = "PackingWork"
+
+[[lean_lib]]
+name = "PNTWork"
+
+[[lean_lib]]
+name = "Reduction"
+
+[[lean_lib]]
+name = "StructuralWork"
+
+[[lean_lib]]
+name = "Solution"
+
+[[lean_lib]]
+name = "Target"

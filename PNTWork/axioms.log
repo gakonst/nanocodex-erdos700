@@ -1,0 +1,3 @@
+'Erdos700PNT.eventually_primeCounting_double_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos700PNT.eventually_primeCounting_eight_cube_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Erdos700PNT.eventually_primeCounting_eight_cube_interval_nat_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
