@@ -17,8 +17,9 @@ jobs:
       - name: Set up Lean and build
         uses: leanprover/lean-action@v1
         with:
+          lake-package-directory: proof
           build: true
           test: false
           lint: false
       - name: Verify theorem dependencies
-        run: ./scripts/verify.sh
+        run: ERDOS700_SKIP_BUILD=1 ./proof/scripts/verify.sh

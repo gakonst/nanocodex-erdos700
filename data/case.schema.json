@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nanocodex.paradigm.xyz/schemas/math-discovery-case.json",
+  "title": "AI-assisted mathematical result case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "domain",
+    "date",
+    "result_status",
+    "claim_summary",
+    "ai_role",
+    "evidence_tier",
+    "novelty",
+    "model",
+    "environment",
+    "sources"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$" },
+    "title": { "type": "string", "minLength": 1 },
+    "domain": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "date": { "type": "string", "format": "date" },
+    "result_status": {
+      "enum": [
+        "accepted-proof",
+        "accepted-disproof",
+        "accepted-strengthening",
+        "accepted-record",
+        "expert-accepted",
+        "site-accepted",
+        "partial",
+        "candidate",
+        "unreviewed",
+        "rediscovered"
+      ]
+    },
+    "claim_summary": { "type": "string", "minLength": 1 },
+    "ai_role": {
+      "enum": [
+        "autonomous-discovery",
+        "primary-discovery",
+        "human-ai-collaboration",
+        "key-lemma",
+        "formalization",
+        "verification",
+        "literature-retrieval",
+        "record-optimization",
+        "mixed",
+        "unclear"
+      ]
+    },
+    "evidence_tier": { "enum": ["A", "B", "C", "D"] },
+    "novelty": {
+      "enum": [
+        "new-result",
+        "new-proof",
+        "new-record",
+        "stronger-than-known",
+        "rediscovery-adjacent",
+        "rediscovered",
+        "uncertain"
+      ]
+    },
+    "model": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "web_search",
+        "interaction",
+        "specialized_tools",
+        "proof_assistant",
+        "subagents",
+        "human_input"
+      ],
+      "properties": {
+        "web_search": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "evidence"],
+          "properties": {
+            "status": { "enum": ["disabled", "restricted", "enabled", "not-reported"] },
+            "evidence": { "type": "string" },
+            "role": { "enum": ["none", "background", "discovery", "novelty", "mixed", "unknown"] }
+          }
+        },
+        "interaction": {
+          "enum": ["one-shot", "iterative", "autonomous-loop", "multi-agent", "formal-loop", "arena", "not-reported"]
+        },
+        "duration": { "type": "string" },
+        "specialized_tools": { "type": "array", "items": { "type": "string" } },
+        "proof_assistant": { "type": ["string", "null"] },
+        "subagents": { "type": ["integer", "null"], "minimum": 0 },
+        "human_input": { "type": "string" }
+      }
+    },
+    "artifacts": { "type": "array", "items": { "type": "string" } },
+    "lessons": { "type": "array", "items": { "type": "string" } },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "url"],
+        "properties": {
+          "kind": { "type": "string" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}
