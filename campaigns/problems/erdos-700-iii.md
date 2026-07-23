@@ -122,10 +122,22 @@ Required files:
 
 - `research-note.md`: complete proof or disproof;
 - `route-map.md`: all attempted mechanisms and concrete failure certificates;
-- `literature-audit.md`;
+- `source-audit.md`: literature searches, primary sources, and closest prior
+  result;
 - `statement-audit.md`;
-- `solution.lean`: the exact direct proposition or its negation against
-  `FormalConjectures.ErdosProblems.«700»`;
+- `candidate.json`: exactly `{"answer":"true"}` or
+  `{"answer":"false"}`;
+- `solution.lean`: define `Campaign.result` with exactly the corresponding
+  type
+
+  ```lean
+  answer(True) ↔
+    (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ,
+      ¬ n.Prime → 1 < n →
+        (Erdos700.f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A)
+  ```
+
+  or the same type with `answer(False)`;
 - `compile.log` and `axioms.log`.
 
 Do not use `sorry`, `admit`, new axioms, or

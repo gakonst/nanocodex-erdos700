@@ -35,6 +35,12 @@ answer({answer}) ↔
       δ * (n : ℝ) ^ 2 ≤ G.edgeFinset.card →
         c * n ≤ (G.indepNum : ℝ)
 """,
+    "# Erdős Problem 700(iii): arbitrary logarithmic saving": """
+answer({answer}) ↔
+  (∀ A : ℝ, 0 < A → ∃ C : ℝ, 0 < C ∧ ∀ n : ℕ,
+    ¬ n.Prime → 1 < n →
+      (Erdos700.f n : ℝ) ≤ C * (n : ℝ) / (Real.log n) ^ A)
+""",
 }
 
 FORBIDDEN_SOURCE = re.compile(
