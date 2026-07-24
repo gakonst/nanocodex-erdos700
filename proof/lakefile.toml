@@ -30,6 +30,9 @@ name = "FEquality"
 name = "PackingWork"
 
 [[lean_lib]]
+name = "PartIWork"
+
+[[lean_lib]]
 name = "PNTWork"
 
 [[lean_lib]]

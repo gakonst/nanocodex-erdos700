@@ -69,6 +69,25 @@ Also use the previously known anchors:
 - for prime powers `p^a`, `f(p^a)=p`, so equality holds exactly at `a=2`;
 - `n=30` is a further classical example.
 
+## Retained evidence from the interrupted first campaign
+
+The first live portfolio was interrupted by a transport watchdog before its
+workers could synthesize reports. Import only its compact checked artifacts;
+never inspect any `events.jsonl`:
+
+- `runs/math-1784840756-35224/exact-jobs/job-1.json` tested 15,180 squarefree
+  prime triples. A pair-omission criterion selected 1,673 equality cases and
+  agreed with direct binomial/gcd evaluation on 100 manageable triples.
+- `runs/math-1784840756-35224/exact-jobs/job-3.json` found the first squarefree
+  three-prime obstruction `n=78`, `k=39`. Independent recomputation in
+  `runs/math-1784840756-35224/operator-note-n78.md` proves
+  `gcd(78, binomial(78,39))=2`, hence `f(78)=2<6=78/P(78)`. Lucas digit
+  containment simultaneously omits `3` and `13`.
+
+Treat `n=78` as a mandatory regression test. Repair and formalize the exact
+squarefree-triple pair-omission iff before proposing the all-composite
+generalization.
+
 ## Discovery policy
 
 Inference is the primary compute. Start from Kummer/Lucas and the complete

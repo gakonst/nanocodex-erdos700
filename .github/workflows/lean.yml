@@ -21,5 +21,7 @@ jobs:
           build: true
           test: false
           lint: false
-      - name: Verify theorem dependencies
+      - name: Verify Part (ii) theorem dependencies
         run: ERDOS700_SKIP_BUILD=1 ./proof/scripts/verify.sh
+      - name: Build and verify Part (i) characterization
+        run: ./proof/scripts/verify-part-i.sh
