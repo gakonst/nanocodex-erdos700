@@ -40,12 +40,47 @@ promoted_theorems=(
   realized_iff_exists_dvd_residueCarryWeight
   residueCarrySafe_iff_boundarySafe
   f_eq_div_iff_boundarySafe
+  factorTableauFeasible_iff_exists_boundary_realized
+  boundarySafeAt_iff_factorTableauSafe
 )
+
+# Lean may wrap a long axiom list across several output lines.  Normalize
+# whitespace before checking the audited dependency set.
+normalized_audit_output="$(tr '\n' ' ' < "$audit_output" | tr -s ' ')"
 
 for theorem in "${promoted_theorems[@]}"; do
   expected="'Erdos700PartI.${theorem}' depends on axioms: [propext, Classical.choice, Quot.sound]"
-  if ! grep -Fq "$expected" "$audit_output"; then
+  if ! grep -Fq "$expected" <<<"$normalized_audit_output"; then
     echo "The Part (i) theorem ${theorem} did not have the audited dependency set." >&2
+    exit 1
+  fi
+done
+
+explicit_tableau_theorems=(
+  borrowRow_iff_outgoing
+  borrowRow_iff_resultDigit
+  card_var_exact
+  card_var_le
+)
+
+for theorem in "${explicit_tableau_theorems[@]}"; do
+  expected="'Erdos700PartI.ExplicitTableau.${theorem}' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  if ! grep -Fq "$expected" <<<"$normalized_audit_output"; then
+    echo "The explicit Part (i) theorem ${theorem} did not have the audited dependency set." >&2
+    exit 1
+  fi
+done
+
+explicit_g_theorems=(
+  G_to_factorTableauFeasible
+  factorTableauFeasible_to_G
+  explicitG_iff_factorTableauFeasible
+)
+
+for theorem in "${explicit_g_theorems[@]}"; do
+  expected="'Erdos700PartI.ExplicitG.${theorem}' depends on axioms: [propext, Classical.choice, Quot.sound]"
+  if ! grep -Fq "$expected" <<<"$normalized_audit_output"; then
+    echo "The explicit Part (i) theorem ${theorem} did not have the audited dependency set." >&2
     exit 1
   fi
 done

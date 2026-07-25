@@ -7,6 +7,15 @@ dependencies of every load-bearing bridge promoted by the characterization.
 -/
 
 #check Erdos700PartI.f_eq_div_iff_boundarySafe
+#check Erdos700PartI.factorTableauFeasible_iff_exists_boundary_realized
+#check Erdos700PartI.boundarySafeAt_iff_factorTableauSafe
+#check Erdos700PartI.ExplicitTableau.borrowRow_iff_outgoing
+#check Erdos700PartI.ExplicitTableau.borrowRow_iff_resultDigit
+#check Erdos700PartI.ExplicitTableau.card_var_exact
+#check Erdos700PartI.ExplicitTableau.card_var_le
+#check Erdos700PartI.ExplicitG.G_to_factorTableauFeasible
+#check Erdos700PartI.ExplicitG.factorTableauFeasible_to_G
+#check Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
 
 #print axioms Erdos700PartI.residueCarryWeight_dvd_of_admissible
 #print axioms Erdos700PartI.minimalOverweightDivisor_iff_boundary
@@ -15,3 +24,12 @@ dependencies of every load-bearing bridge promoted by the characterization.
 #print axioms Erdos700PartI.realized_iff_exists_dvd_residueCarryWeight
 #print axioms Erdos700PartI.residueCarrySafe_iff_boundarySafe
 #print axioms Erdos700PartI.f_eq_div_iff_boundarySafe
+#print axioms Erdos700PartI.factorTableauFeasible_iff_exists_boundary_realized
+#print axioms Erdos700PartI.boundarySafeAt_iff_factorTableauSafe
+#print axioms Erdos700PartI.ExplicitTableau.borrowRow_iff_outgoing
+#print axioms Erdos700PartI.ExplicitTableau.borrowRow_iff_resultDigit
+#print axioms Erdos700PartI.ExplicitTableau.card_var_exact
+#print axioms Erdos700PartI.ExplicitTableau.card_var_le
+#print axioms Erdos700PartI.ExplicitG.G_to_factorTableauFeasible
+#print axioms Erdos700PartI.ExplicitG.factorTableauFeasible_to_G
+#print axioms Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible

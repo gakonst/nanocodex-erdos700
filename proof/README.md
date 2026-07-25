@@ -1,4 +1,4 @@
-# A Lean proof of Erdős Problem 700(ii)
+# Lean developments for Erdős Problem 700
 
 This repository contains a kernel-checked Lean 4 proof of the affirmative
 answer to part (ii) of [Erdős Problem 700](https://www.erdosproblems.com/700).
@@ -23,6 +23,14 @@ The Erdős Problems site still listed the problem as open when this development
 was completed. This repository presents the proof for independent mathematical
 and formal review; it does not claim that the result has already been
 adjudicated by the problem maintainers.
+
+The same project contains an exact Part (i) characterization and its explicit
+finite certificate compiler. For every composite `n > 1`,
+`Erdos700PartI.f_eq_div_iff_boundarySafe` characterizes
+`f(n) = n / P(n)`. The theorem
+`Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that the
+raw Boolean-selector, integer-prefix, digit, and borrow system is equivalent
+to the semantic factor tableau.
 
 ## Proof idea
 
@@ -97,9 +105,21 @@ nix develop
 
 GitHub Actions runs the same verification on every push and pull request.
 
+The Part (i) verifier is:
+
+```sh
+./scripts/verify-part-i.sh
+```
+
+It builds `PartIWork`, rejects placeholders, audits every promoted theorem's
+axiom dependencies, and runs the finite characterization audit.
+
 ## Repository map
 
 - `Solution.lean` assembles the exact infinitude theorem.
+- `PartIWork/` contains the Part (i) boundary characterization, factor tableau,
+  and explicit finite-system compiler.
+- `PartIVerify.lean` is the public Part (i) theorem and axiom-audit surface.
 - `Erdos700PNT.lean` is the root build and dependency-audit module.
 - `PNTWork/` proves the required prime-counting lower bound.
 - `DominanceWork/` closes the asymptotic inequality used by interval packing.
