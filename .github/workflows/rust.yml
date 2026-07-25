@@ -24,10 +24,10 @@ jobs:
           ref: master
           path: nanocodex-latest
       - name: Install Rust toolchain
-        run: rustup toolchain install 1.88.0 --profile minimal --component rustfmt
+        run: rustup toolchain install 1.97.0 --profile minimal --component rustfmt
       - name: Check formatting
-        run: cargo +1.88.0 fmt --check
+        run: cargo +1.97.0 fmt --check
         working-directory: nanocodex-erdos700
       - name: Run tests
-        run: cargo +1.88.0 test --all-targets
+        run: cargo +1.97.0 test --all-targets
         working-directory: nanocodex-erdos700

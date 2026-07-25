@@ -96,7 +96,7 @@
             glpk
             highs
             kissat
-            lean4
+            elan
             minizinc
             z3
           ];

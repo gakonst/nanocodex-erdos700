@@ -297,6 +297,58 @@ Preserve the required full-fidelity trace while changing its physical layout:
 
 Do not delete or semantically truncate observed trace content.
 
+## P0: recorder output must never be model-readable input
+
+### Evidence
+
+The first Erdős 700(i) campaign exposed `events.jsonl` through the artifact
+reader. A worker tried to paginate that live file. Each read result was then
+recorded into the same file, so the next page contained an escaped copy of the
+previous page. The feedback loop grew the trace to roughly 79 GiB without
+producing mathematical evidence.
+
+### Implemented boundary
+
+- `events.jsonl` is hidden from artifact listings and rejected by artifact
+  reads.
+- Lead and worker instructions explicitly classify live recorder streams as
+  observability, not research artifacts.
+- Operators may inspect the stream out of process; agents consume compact
+  reports, exact-job records, ledger entries, and frozen candidates.
+
+This is a dataflow invariant, not a file-size heuristic. Full telemetry remains
+available to the operator and is never truncated merely because a response is
+long.
+
+## P1: persist completed conversation boundaries
+
+### Evidence
+
+The interrupted Erdős campaigns retained full event streams, completed exact
+jobs, and compact operator notes, but did not enable Nanocodex session
+snapshots or Codex-compatible rollouts. Once the processes were stopped, their
+in-memory completed conversation boundaries could not be restored directly.
+Stored provider response IDs may remain usable temporarily, but are an optional
+transport checkpoint rather than the application-owned source of truth.
+
+### Implemented boundary and follow-up
+
+- The harness now persists `TurnResult::snapshot()` after every completed lead
+  and worker turn under the uncommitted run directory, with the same access
+  controls as full conversation telemetry.
+- Optionally enable `RolloutConfig` for a Codex-compatible operator handoff and
+  flush it at every completed boundary.
+- Resume from the client-owned typed snapshot. Treat provider response IDs as
+  a cache optimization only.
+- Do not claim recovery of an unfinished response: Nanocodex correctly commits
+  only completed responses, and provider-private unfinished reasoning is not a
+  resumable artifact.
+
+The primary protection for long Pro work is therefore to avoid artificial
+event-idle cancellation. Persistence protects completed boundaries and process
+handoffs; it does not justify discarding or restarting a silent in-flight
+response.
+
 ## P2: distinguish typed state from textual monitoring
 
 A textual occurrence of `CANDIDATE` is not a candidate transition. Monitoring
@@ -310,6 +362,39 @@ AND verifier exits with accepted=true
 
 Dashboards and watchdogs should consume typed host state rather than grep model
 output.
+
+## P0: candidate handoff cannot wait for the batch tail
+
+### Evidence
+
+Several independent Part (i) campaigns had already produced a hole-free,
+kernel-checked `explicitG_iff_factorTableauFeasible` theorem. They remained
+classified as `strong-candidate` because the generic child verifier did not
+recognize that project-local target. The outer `run_campaign_batch` used
+`join_all`, journaled nothing until every sibling campaign exited, and returned
+no report to its manager while slower leads continued follow-up turns. This
+hid a completed theorem for hours and caused redundant campaigns.
+
+The compact summarizer compounded the problem by looking for
+`lead-final.md`, while actual retained runs exposed `report.md` and numbered
+`lead-turn-*.md` files.
+
+### Implemented boundary
+
+- Each child outcome is journaled immediately rather than at the batch barrier.
+- The supervisor polls retained reports while a child is still active.
+- A verifier-accepted or `strong-candidate` report returns control to the
+  manager immediately for independent inspection and promotion. The child
+  retains an owned background waiter so its already-running finalization is
+  not orphaned.
+- Sibling Tokio tasks are detached and continue under the shared semaphore;
+  their eventual outcomes remain journaled.
+- Compact summaries include `report.md` and the latest numbered lead turn.
+- Portfolio metrics distinguish launched, active, and completed campaigns.
+- Unverified `candidate.json` answers do not affect host success.
+
+`strong-candidate` is only a scheduling interrupt. It is never acceptance:
+the manager must still run the host-owned build or verifier.
 
 ## P2: package domains around evaluators
 

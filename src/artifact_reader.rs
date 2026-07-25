@@ -14,6 +14,7 @@ use sha2::{Digest, Sha256};
 
 const MAX_READ_BYTES: usize = 64 * 1024;
 const MAX_LIST_ENTRIES: usize = 1_000;
+const RECORDER_OWNED_FILE: &str = "events.jsonl";
 
 #[derive(Clone)]
 pub(crate) struct ArtifactReader {
@@ -114,6 +115,12 @@ impl ArtifactReader {
                     break;
                 }
                 let child_path = child.path();
+                if child_path
+                    .file_name()
+                    .is_some_and(|name| name == RECORDER_OWNED_FILE)
+                {
+                    continue;
+                }
                 let metadata = child
                     .metadata()
                     .wrap_err("failed to inspect artifact entry")?;
@@ -157,9 +164,27 @@ impl ArtifactReader {
             ))
             .into());
         }
+        if Path::new(&path)
+            .file_name()
+            .is_some_and(|name| name == RECORDER_OWNED_FILE)
+        {
+            return Err(std::io::Error::other(
+                "live recorder-owned event traces are not research artifacts",
+            )
+            .into());
+        }
         let file_path = self.resolve(&path)?;
         if !file_path.is_file() {
             return Err(std::io::Error::other("artifact read path must be a regular file").into());
+        }
+        if file_path
+            .file_name()
+            .is_some_and(|name| name == RECORDER_OWNED_FILE)
+        {
+            return Err(std::io::Error::other(
+                "live recorder-owned event traces are not research artifacts",
+            )
+            .into());
         }
         let mut file = File::open(&file_path).wrap_err("failed to open artifact")?;
         let total_bytes = file.metadata()?.len();
@@ -287,6 +312,7 @@ mod tests {
         fs::create_dir_all(path.join("runs/run-1/sub"))?;
         fs::write(path.join("runs/run-1/report.md"), "abcdefghij")?;
         fs::write(path.join("runs/run-1/sub/data.json"), "{}")?;
+        fs::write(path.join("runs/run-1/events.jsonl"), "{}\n")?;
         Ok(path)
     }
 
@@ -314,6 +340,11 @@ mod tests {
                 .iter()
                 .any(|entry| entry.path == "run-1/sub/data.json")
         );
+        assert!(
+            entries
+                .iter()
+                .all(|entry| entry.path != "run-1/events.jsonl")
+        );
         let ArtifactOutput::List { entries, .. } = reader.list(".".to_owned(), false, 10)? else {
             panic!("expected root list output");
         };
@@ -332,6 +363,20 @@ mod tests {
         let reader = ArtifactReader::new(&workspace)?;
         assert!(reader.read("../secret".to_owned(), 0, 10).is_err());
         assert!(reader.list("/tmp".to_owned(), false, 10).is_err());
+        fs::remove_dir_all(workspace)?;
+        Ok(())
+    }
+
+    #[test]
+    fn rejects_recorder_owned_event_traces() -> Result<()> {
+        let workspace = workspace()?;
+        let reader = ArtifactReader::new(&workspace)?;
+
+        let Err(error) = reader.read("run-1/events.jsonl".to_owned(), 0, 10) else {
+            panic!("event trace reads must be rejected");
+        };
+        assert!(error.to_string().contains("recorder-owned event traces"));
+
         fs::remove_dir_all(workspace)?;
         Ok(())
     }

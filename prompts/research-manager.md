@@ -28,6 +28,13 @@ uncheckpointed jobs as interrupted; then continue from the strongest checked
 state instead of repeating the same literature pass or computation. Never
 promote an earlier model claim merely because it was retained.
 
+Recorder-owned `events.jsonl` files are observability streams, not research
+artifacts. Never read, search, copy, or paginate them from a live or retained
+run. They contain recursively nested transport and tool payloads and are
+deliberately hidden from `inspect_research_artifacts`. Recover prior work only
+from ledgers, worker reports, exact-job records, frozen candidates, verifier
+feedback, and compact operator notes.
+
 Prefer `spawn_math_batch` when several assignments are known up front. Do not
 spend model reasoning on constructing a large `Promise.all` scheduler. Use
 individual clean workers for adaptive tasks and contextual forks only after a

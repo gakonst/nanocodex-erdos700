@@ -57,6 +57,10 @@ struct Args {
     #[arg(long, value_enum, default_value_t = WebPolicy::NoveltyOnly)]
     web_policy: WebPolicy,
 
+    /// Request priority processing for lead, worker, and novelty-audit model calls.
+    #[arg(long, default_value_t = false)]
+    fast_mode: bool,
+
     /// Maximum child-agent prompts, including retained follow-ups.
     #[arg(long, default_value_t = 64)]
     max_worker_calls: u64,
@@ -168,6 +172,7 @@ struct WorkerResult {
     role: String,
     report: String,
     report_path: String,
+    snapshot_path: String,
     budget: BudgetSnapshot,
 }
 
@@ -175,6 +180,7 @@ struct WorkerResult {
 struct FollowUpResult {
     agent_id: u64,
     report: String,
+    snapshot_path: String,
     budget: BudgetSnapshot,
 }
 
@@ -189,6 +195,7 @@ struct CampaignManifest<'a> {
     model: &'static str,
     reasoning_mode: &'static str,
     thinking: &'static str,
+    fast_mode: bool,
     discovery_policy: &'static str,
     web_policy: WebPolicy,
     max_worker_calls: u64,
@@ -1050,6 +1057,7 @@ struct CleanWorkerFactory {
     workspace: PathBuf,
     session_prefix: String,
     prompt_cache_key: String,
+    fast_mode: bool,
     exact_jobs: ExactJobRunner,
     max_exact_jobs_per_worker: u64,
     artifacts: ArtifactReader,
@@ -1067,11 +1075,12 @@ impl CleanWorkerFactory {
             .prompt_cache_key(self.prompt_cache_key.clone())
             .shared_prompt_cache()
             .instructions(format!(
-                "You are a bounded clean-room worker inside a mathematical research campaign. You receive only the delegated task. Return checkable mathematical content and explicit uncertainty. Mathematical inference is your primary work: first seek a structural lemma, representation, proof step, obstruction, or sharply targeted experiment. Do not turn the task into a generic census merely because computation is available. You have no writable filesystem, web, or child-agent tools. Read prior retained evidence with inspect_research_artifacts; never spend exact-computation jobs on find/cat/sed. Artifact paths are relative to the host's runs/ directory. The current run prefix is `{}`; therefore a current-run path such as `delayed3/summary.json` must be read as `{}/delayed3/summary.json`. List `.` if you need to discover other retained run prefixes. For every mathematically justified CAS, solver, enumeration, compiler, or long computation, use the host-supervised run_exact_job tool; state the hypothesis it tests, why the search distribution is enriched, the decision rule, and the kill rule, then emit progress or a heartbeat and inspect its retained output. A heartbeat alone is not a resumable checkpoint: any search that can approach its deadline must atomically persist and consume a versioned cursor or completed-shard manifest, and retain an early restart/resume self-check. Your exact-job quota is deliberately local so other routes retain compute. Do not pretend to have executed a check you could not perform.",
+                "You are a bounded clean-room worker inside a mathematical research campaign. You receive only the delegated task. Return checkable mathematical content and explicit uncertainty. Mathematical inference is your primary work: first seek a structural lemma, representation, proof step, obstruction, or sharply targeted experiment. Do not turn the task into a generic census merely because computation is available. You have no writable filesystem, web, or child-agent tools. Read prior retained evidence with inspect_research_artifacts; never spend exact-computation jobs on find/cat/sed. Recorder-owned events.jsonl files are observability streams, not research artifacts: never read, search, copy, or paginate them. Artifact paths are relative to the host's runs/ directory. The current run prefix is `{}`; therefore a current-run path such as `delayed3/summary.json` must be read as `{}/delayed3/summary.json`. List `.` if you need to discover other retained run prefixes. For every mathematically justified CAS, solver, enumeration, compiler, or long computation, use the host-supervised run_exact_job tool; state the hypothesis it tests, why the search distribution is enriched, the decision rule, and the kill rule, then emit progress or a heartbeat and inspect its retained output. A heartbeat alone is not a resumable checkpoint: any search that can approach its deadline must atomically persist and consume a versioned cursor or completed-shard manifest, and retain an early restart/resume self-check. Your exact-job quota is deliberately local so other routes retain compute. Do not pretend to have executed a check you could not perform.",
                 self.session_prefix, self.session_prefix
             ))
             .reasoning_mode(ReasoningMode::Pro)
             .thinking(Thinking::Max)
+            .fast_mode(self.fast_mode)
             .tools(tools)
             .workspace(&self.workspace)
             .build()
@@ -1160,6 +1169,17 @@ impl ChildAgent {
                 return Err(error);
             }
         };
+        let snapshot_path = match retain_turn_snapshot(
+            &self.run_directory,
+            &format!("agent-{agent_id}-call-{}", budget.calls_used),
+            &result,
+        ) {
+            Ok(path) => path,
+            Err(error) => {
+                self.limits.release_worker();
+                return Err(error);
+            }
+        };
         let report = result.final_message;
         let report_path = match retain_worker_report(&self.run_directory, agent_id, &role, &report)
         {
@@ -1176,6 +1196,7 @@ impl ChildAgent {
             role,
             report,
             report_path,
+            snapshot_path,
             budget,
         })
     }
@@ -1385,6 +1406,23 @@ fn retain_worker_report(
     Ok(relative)
 }
 
+fn retain_turn_snapshot(run_directory: &Path, name: &str, result: &TurnResult) -> Result<String> {
+    let snapshots = run_directory.join("session-snapshots");
+    fs::create_dir_all(&snapshots).wrap_err("failed to create session-snapshot directory")?;
+    let relative = format!("session-snapshots/{name}.json");
+    let path = run_directory.join(&relative);
+    let mut file = OpenOptions::new()
+        .create_new(true)
+        .write(true)
+        .open(&path)
+        .wrap_err("failed to create retained session snapshot")?;
+    serde_json::to_writer(&mut file, &result.snapshot())
+        .wrap_err("failed to serialize retained session snapshot")?;
+    file.sync_all()
+        .wrap_err("failed to sync retained session snapshot")?;
+    Ok(relative)
+}
+
 fn artifact_slug(value: &str) -> String {
     let mut slug = String::new();
     let mut previous_separator = false;
@@ -1410,6 +1448,7 @@ fn artifact_slug(value: &str) -> String {
 struct PromptAgent {
     agents: Weak<ChildAgents>,
     limits: Arc<WorkerLimits>,
+    run_directory: PathBuf,
 }
 
 #[async_trait]
@@ -1456,9 +1495,15 @@ impl Tool for PromptAgent {
             self.limits.worker_closure_after,
         )
         .await?;
+        let snapshot_path = retain_turn_snapshot(
+            &self.run_directory,
+            &format!("agent-{agent_id}-call-{}", budget.calls_used),
+            &result,
+        )?;
         Ok(ToolExecution::json(&FollowUpResult {
             agent_id,
             report: result.final_message,
+            snapshot_path,
             budget,
         }))
     }
@@ -1469,6 +1514,7 @@ struct CampaignRuntime {
     session_id: String,
     run_directory: PathBuf,
     recorder: CampaignRecorder,
+    artifacts: ArtifactReader,
     children: Arc<ChildAgents>,
     limits: Arc<WorkerLimits>,
     ledger: Arc<CampaignLedger>,
@@ -1500,9 +1546,10 @@ impl CampaignRuntime {
             nanocodex_git_commit: NANOCODEX_GIT_COMMIT,
             nanocodex_source_sha256: NANOCODEX_SOURCE_SHA256,
             nanocodex_build_dirty: NANOCODEX_BUILD_DIRTY == "true",
-            model: "gpt-5.6",
+            model: "gpt-5.6-sol",
             reasoning_mode: "pro",
             thinking: "max",
+            fast_mode: args.fast_mode,
             discovery_policy: "inference-first-v1",
             web_policy: args.web_policy,
             max_worker_calls: args.max_worker_calls,
@@ -1532,6 +1579,7 @@ impl CampaignRuntime {
         let artifacts = ArtifactReader::new(&workspace)?;
         Ok(Self {
             recorder: CampaignRecorder::create(&run_directory.join("events.jsonl"))?,
+            artifacts: artifacts.clone(),
             children: Arc::new(ChildAgents::default()),
             limits: Arc::new(WorkerLimits::new(
                 args.max_worker_calls,
@@ -1550,6 +1598,7 @@ impl CampaignRuntime {
                 workspace: workspace.clone(),
                 session_prefix: session_id.clone(),
                 prompt_cache_key: format!("{}-clean-worker-v1", args.prompt_cache_key),
+                fast_mode: args.fast_mode,
                 exact_jobs,
                 max_exact_jobs_per_worker: args.max_exact_jobs_per_worker,
                 artifacts,
@@ -1571,6 +1620,7 @@ impl CampaignRuntime {
         let web_policy = args.web_policy;
         let max_batch_size = args.max_batch_size;
         let exact_jobs = self.exact_jobs.clone();
+        let artifacts = self.artifacts.clone();
         let run_directory = self.run_directory.clone();
         Nanocodex::builder(api_key.to_owned())
             .session_id(&self.session_id)
@@ -1579,6 +1629,7 @@ impl CampaignRuntime {
             .instructions(RESEARCH_MANAGER)
             .reasoning_mode(ReasoningMode::Pro)
             .thinking(Thinking::Max)
+            .fast_mode(args.fast_mode)
             .tools_factory(move |handle| {
                 let clean_runner = ChildAgent::new(
                     handle.clone(),
@@ -1594,6 +1645,7 @@ impl CampaignRuntime {
                     .tool(RecordEvidence {
                         ledger: ledger.clone(),
                     })
+                    .tool(artifacts.clone())
                     .tool(FreezeCandidate {
                         store: candidates.clone(),
                     })
@@ -1615,6 +1667,7 @@ impl CampaignRuntime {
                     .tool(PromptAgent {
                         agents: children.clone(),
                         limits: limits.clone(),
+                        run_directory: run_directory.clone(),
                     });
                 match &verifier {
                     Some(verifier) => tools
@@ -1692,6 +1745,7 @@ impl CampaignRuntime {
             .instructions(NOVELTY_AUDITOR)
             .reasoning_mode(ReasoningMode::Pro)
             .thinking(Thinking::Max)
+            .fast_mode(args.fast_mode)
             .tools_factory(move |_| {
                 Tools::builder()
                     .web_search(true)
@@ -1796,6 +1850,11 @@ async fn main() -> Result<()> {
                 .clone_into(&mut stop_reason);
             break;
         };
+        retain_turn_snapshot(
+            &campaign.run_directory,
+            &format!("lead-turn-{turn_index}"),
+            &result,
+        )?;
         final_message.clone_from(&result.final_message);
         fs::write(
             campaign

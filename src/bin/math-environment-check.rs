@@ -135,8 +135,7 @@ fn body_text(body: &ToolOutputBody) -> String {
             .iter()
             .filter_map(|item| match item {
                 ToolOutputContent::InputText { text } => Some(text.as_str()),
-                ToolOutputContent::InputImage { .. } => None,
-                ToolOutputContent::InputAudio { .. } => None,
+                ToolOutputContent::InputImage { .. } | ToolOutputContent::InputAudio { .. } => None,
             })
             .collect::<Vec<_>>()
             .join("\n"),

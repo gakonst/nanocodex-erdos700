@@ -32,6 +32,27 @@ canonical problem page still listed part (ii) as open when the development was
 completed; kernel verification is not a substitute for external novelty and
 community review.
 
+## Part (i): explicit checked characterization
+
+The repository also proves the exact boundary-antichain characterization
+
+```text
+f(n) = n / P(n) ↔ BoundarySafe(n)
+```
+
+for every composite `n > 1`, then refines the semantic obstruction into the
+finite integer/Boolean system `ExplicitG.G`. The checked compiler theorem
+
+```lean
+Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
+```
+
+proves that the raw selector, prefix-product, digit, and borrow constraints
+have neither false positives nor false negatives relative to the semantic
+factor tableau. `./proof/scripts/verify-part-i.sh` builds the complete chain,
+rejects proof placeholders, audits dependencies, and runs finite regression
+tests through `n = 1000`.
+
 ## Start here
 
 - [Erdős 700(ii) proof](proof/README.md): pinned Lean project and CI verifier.
@@ -62,6 +83,38 @@ autonomous mathematics has been solved. It runs GPT-5.6 Pro through Nanocodex,
 gives the lead agent Code Mode and standard workspace tools, and exposes
 application-owned tools for clean-room workers, contextual forks, retained
 follow-ups, immutable candidate freezing, and pre-approved verification.
+
+### Persistent Code Mode research loop
+
+`research-loop` adds an outer portfolio controller around those campaigns. It
+keeps one Pro/Max Nanocodex manager session alive across rounds, gives that
+manager normal Code Mode workspace tools, and exposes a host-owned
+`run_campaign_batch` tool. Every campaign request must name its mathematical
+representation, falsifiable hypothesis, dead end escaped, and
+outcome-dependent decision rule.
+
+The host rejects exact duplicate route fingerprints and owns campaign
+concurrency, total campaign count, wall time, prompt freezing, compact result
+collection, and success detection. A model message cannot stop the loop:
+completion requires either a verifier-accepted frozen candidate or an explicit
+success command.
+
+Child outcomes are journaled as soon as they finish. A verified or
+`strong-candidate` report returns control to the manager immediately while
+other detached campaigns continue under the shared concurrency bound. The
+manager can therefore inspect, promote, and run the host gate without waiting
+for the slowest member of a batch. Prose `candidate.json` answers never count
+as success without the host gate.
+
+```sh
+cargo build --release --bin nanocodex-erdos --bin research-loop
+./harness/run-erdos700-loop.sh i
+./harness/run-erdos700-loop.sh iii
+```
+
+Loop state is retained beneath `loops/loop-*/`; child research remains beneath
+`runs/math-*/`. Manager telemetry and session snapshots are operator-only and
+are explicitly excluded from model research input.
 
 ```sh
 cp .env.example .env
@@ -107,6 +160,13 @@ the host under `worker-reports/` and returned with `report_path`, so a malformed
 model-side batch loop cannot discard them. `--web-policy` supports `disabled`,
 `novelty-only`, and `full-research`.
 
+Every completed lead or worker boundary also writes its complete
+`TurnResult::snapshot()` beneath the ignored `session-snapshots/` directory in
+that run. These files make completed typed history resumable after a process
+handoff and contain the full unredacted conversation, reasoning payloads, and
+tool data; protect them like the API trace. An unfinished response is not
+committed or presented as recoverable.
+
 Long computation uses `run_exact_job`, a typed application-owned tool rather
 than an opaque subagent or raw shell session. It invokes `/bin/bash -c` in the
 campaign directory, removes the API credential, enforces both a total deadline
@@ -121,8 +181,11 @@ The host detaches accepted exact jobs from the invoking model cell, so a yielded
 cell, compaction, or caller cancellation cannot erase the terminal job record;
 the owned job still completes or is killed by its declared policy and retains
 its result.
-Clean workers read prior retained evidence through the bounded, read-only
+The lead and clean workers read prior retained evidence through the bounded, read-only
 `inspect_research_artifacts` tool. Those reads do not spend exact-job budget.
+The tool hides and rejects every live `events.jsonl`: recorder output is an
+operator-only observability stream and must never feed itself through a model
+tool result.
 Each worker receives a local `--max-exact-jobs-per-worker` quota layered over
 the campaign-wide pool, preventing the first concurrency wave from starving
 later mathematical routes.

@@ -65,6 +65,27 @@ content is the omission viewpoint: `f(n)` is controlled by finding one
 admissible `k` whose binomial coefficient omits enough prime-power mass from
 `n`.
 
+## Retained evidence from the interrupted first campaign
+
+The first live portfolio was interrupted by a transport watchdog before its
+workers could synthesize reports. Import only compact checked artifacts; never
+inspect any `events.jsonl`.
+
+`runs/math-1784840756-35227/exact-jobs/job-1.json` contains an exact primorial
+pilot for `D_n(k)=n/gcd(n,binomial(n,k))`:
+
+```text
+n=210       P(n)=7   best D=15
+n=2310      P(n)=11  best D=15
+n=30030     P(n)=13  best D=182
+n=510510    P(n)=17  best D=1001
+n=9699690   P(n)=19  best D=3553
+```
+
+This falsifies any assumption that the strongest omission is always a single
+largest prime. Use the witnesses to infer a scalable compatibility mechanism;
+do not merely extend the census.
+
 ## Discovery policy
 
 Inference is the main compute. Reconstruct the original `A = 1` proof before
