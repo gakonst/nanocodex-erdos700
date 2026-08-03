@@ -65,7 +65,7 @@ For every composite $n>1$, the Lean development proves
 $$
 f(n)=\frac{n}{P(n)}
 \quad\Longleftrightarrow\quad
-\operatorname{BoundarySafe}(n).
+\mathrm{BoundarySafe}(n).
 $$
 
 The exact Lean declaration is
@@ -87,9 +87,9 @@ the checked historical theorem is
 $$
 f(n)=\frac{n}{Q(n)}
 \quad\Longleftrightarrow\quad
-\neg\operatorname{PrimePow}(n)
+\neg\mathrm{IsPrimePow}(n)
 \;\land\;
-\operatorname{HistoricalBoundarySafe}(n).
+\mathrm{HistoricalBoundarySafe}(n).
 $$
 
 The exact Lean declaration is
@@ -119,11 +119,10 @@ The Lean development proves
 
 $$
 \left\{
-  n\in\mathbb N
-  \;\middle|\;
-  n>1,\ n\text{ is composite},\ f(n)^2>n
+  n\in\mathbb N:
+  n>1,\ n\ \mathrm{composite},\ f(n)^2>n
 \right\}
-\text{ is infinite}.
+\ \mathrm{is\ infinite}.
 $$
 
 The exact Lean declaration is `Erdos700PNT.erdos_700_ii`.
@@ -142,12 +141,12 @@ legal row retains at least two primes, so $f(pqr)=pq>\sqrt{pqr}$.
 Put
 
 $$
-D_n(k)=\frac{n}{\gcd\!\left(n,\binom{n}{k}\right)},\qquad
+D_n(k)=\frac{n}{\gcd\left(n,\binom{n}{k}\right)},\qquad
 D(n)=\max_{2\le k\le n/2}D_n(k).
 $$
 
 Part (iii) is equivalent to proving that, for every fixed $A>0$, there is a
-constant $c_A>0$ such that
+constant $`c_A>0`$ such that
 
 $$
 D(n)\ge c_A(\log n)^A
