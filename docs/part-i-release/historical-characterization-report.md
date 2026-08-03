@@ -46,24 +46,33 @@ digit/divisor conditions; `Realized` quantifies over the bounded interval
 
 ## Does this count as “characterize”?
 
-Mathematically, yes in the exact decision-theoretic sense: the iff is
-unconditional, independent of the original minimum, handles arbitrary
-factorizations and repeated prime powers, and supplies a finite test.  The
-prime-power threshold theorem and explicit `Q(n)=n` exception remove the
-earlier historical-statement ambiguity.
+Mathematically, yes in a stronger sense than a bounded decision procedure.
+The boundary iff is unconditional, independent of the original minimum,
+handles arbitrary factorizations and repeated prime powers, and supplies the
+semantic reduction. The prime-power threshold theorem and explicit `Q(n)=n`
+exception remove the earlier historical-statement ambiguity.
 
-A stronger closed form eliminating the bounded multiplier search would be
-desirable, but it is not required for extensional characterization and no
-uniform factorization-only thinning was proved.  `structural-upgrade.md`
-gives an exact Shadow--CRT normal form rather than pretending such a thinning
-exists.
+The first full-shadow/CRT upgrade did not uniformly shorten the multiplier
+range; its common period can exceed the entire admissible interval. That is an
+important limitation of that intermediate representation, not the endpoint of
+the development.
 
-The subsequent compiled `FullShadowSafe` theorem makes that normal form a
-public finite digit/factorization predicate.  An adversary proved that its
-common period is larger than the entire admissible multiplier interval for
-boundary divisors, so it improves explicitness but not the search bound.  This
-closes the formal alternative-characterization route while preserving the
-qualification above.
+The later factor-tableau construction replaces a realized obstruction by one
+prime-exponent vector and one shared symbolic multiplier. `ExplicitG` then
+compiles that tableau into one finite natural-linear selector, prefix, digit,
+Boolean-borrow, and budget system. Its soundness and completeness theorem has
+no variable or disjunction for each multiplier value. For an ordered exact
+factorization `F`, the complete chain gives
+
+```text
+f(n)=n/P(n) ↔ ¬ ExplicitG.G F (P(n)),
+```
+
+and, away from the necessary prime-power exception, the same form at `Q(n)`.
+The direct sparse description is polynomial in the binary length of `n`; no
+polynomial-time feasibility claim is made. A uniform factorization-family
+taxonomy was not proved, but that would be a stronger optional classification,
+not a missing closure of the symbolic characterization.
 
 ## Separate release and novelty judgments
 

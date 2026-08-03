@@ -1,4 +1,4 @@
-# Complete prose proof of the modern boundary characterization
+# Complete prose proof of the modern structural characterization
 
 ## Theorem
 
@@ -8,7 +8,7 @@ in `problem.md`. Then
 
 \[
  f(n)=\frac nP\quad\Longleftrightarrow\quad
- \operatorname{BoundarySafe}(n).
+ \mathrm{BoundarySafe}(n).
 \]
 
 This proves the immutable modern statement. It does **not** identify this
@@ -127,7 +127,7 @@ Fix a divisor $W\mid n$. Then
 \[
  W>P
  \quad\Longleftrightarrow\quad
- \exists d\mid W\;\operatorname{Boundary}(n,d). \tag{5}
+ \exists d\mid W\;\mathrm{Boundary}(n,d). \tag{5}
 \]
 
 For the forward implication, among divisors of $W$ exceeding $P$, choose a
@@ -175,7 +175,7 @@ needed form.
 For a boundary divisor $d$,
 
 \[
- \operatorname{Realized}(n,d)
+ \mathrm{Realized}(n,d)
  \quad\Longleftrightarrow\quad
  \exists k\ (2\le k\le\lfloor n/2\rfloor\ \land\ d\mid W_n(k)). \tag{8}
 \]
@@ -196,18 +196,123 @@ Combining (5) and (8),
  &W_n(k)\le P\text{ for every admissible }k\\
  &\qquad\Longleftrightarrow
  \text{no boundary divisor of }n\text{ is realized}\\
- &\qquad\Longleftrightarrow \operatorname{BoundarySafe}(n).
+ &\qquad\Longleftrightarrow \mathrm{BoundarySafe}(n).
  \end{aligned}
 \]
 
 Together with (4), this proves the theorem.
+
+## 7. Semantic factor tableau
+
+The boundary predicate is the proof-theoretic bridge, not the final compact
+presentation. Fix an ordered exact factorization
+
+\[
+n=\prod_{i=1}^{r}p_i^{a_i}
+\]
+
+and a baseline \(B\). Select exponents \(0\le e_i\le a_i\) and one positive
+integer \(T\), and put
+
+\[
+d=\prod_i p_i^{e_i},\qquad K=dT.
+\]
+
+The semantic factor tableau requires
+
+\[
+B<d,\qquad K\le \lfloor n/2\rfloor,
+\]
+
+and, for every active prime \(p_i\) with \(e_i>0\),
+
+\[
+\frac{d}{p_i}\le B,
+\qquad
+\kappa_{p_i}(n,K)\le a_i-e_i. \tag{9}
+\]
+
+The selected product \(d\) is therefore a boundary divisor and the same row
+\(K=dT\) realizes all its carry budgets. Conversely, a realized boundary
+divisor supplies its exponent vector and its common multiplier. Hence
+
+\[
+\mathrm{FactorTableauFeasible}(n,B)
+\Longleftrightarrow
+\exists d\,
+  (\mathrm{BoundaryAt}(n,B,d)\land\mathrm{Realized}(n,d)).
+\tag{10}
+\]
+
+This is the checked theorem
+`factorTableauFeasible_iff_exists_boundary_realized`.
+
+## 8. Compact synchronized integer/Boolean compiler
+
+Let \(F\) be the supplied ordered factorization of \(n\). The explicit system
+\(G(F,B)\) replaces the semantic objects above by finite integer and Boolean
+fields:
+
+1. one-hot selectors choose each exponent \(e_i\);
+2. prefix-product variables construct \(d\) and the one shared row \(K=dT\);
+3. digit variables expand that same \(K\) in every base \(p_i\);
+4. Boolean borrow variables encode subtraction of \(K\) from \(n\);
+5. boundary and budget rows enforce (9) for active primes and use checked
+   inactive bounds for unselected primes.
+
+There is no multiplication of two free integer variables. Selected prime
+powers are fixed coefficients, and each local borrow row is a signed linear
+inequality whose Boolean outgoing borrow is true exactly when the subtraction
+borrows. Summing the outgoing borrows gives the Kummer carry count.
+
+Soundness decodes a satisfying assignment into the selected exponent vector,
+the exact prefix products, the common multiplier, and the genuine carry
+budgets. Completeness starts from a semantic tableau and fills every field
+with its canonical selector, prefix, base digit, and borrow value. Therefore
+Lean proves
+
+\[
+\boxed{
+G(F,B)
+\Longleftrightarrow
+\mathrm{FactorTableauFeasible}(n,B).}
+\tag{11}
+\]
+
+The exact declaration is
+`Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible`.
+
+Combining (4), (10), and (11), for every composite \(n>1\), gives the compact
+headline form
+
+\[
+\boxed{
+f(n)=\frac{n}{P(n)}
+\Longleftrightarrow
+\neg G(F,P(n)).}
+\tag{12}
+\]
+
+This system does not enumerate the possible multipliers. Its indexed
+selector, digit, borrow, and prefix coordinates are linear in
+
+\[
+\sum_i(a_i+1)+\sum_i(\lfloor\log_{p_i}n\rfloor+1)+r.
+\]
+
+There are \(O((\log n)^2)\) such coordinates, and the fixed coefficients have
+\(O(\log n)\) bits, yielding an \(O((\log n)^3)\) direct sparse description.
+This is a compact symbolic characterization. It does not assert a
+polynomial-time feasibility algorithm or a short enumeration of factorization
+families.
 
 ## Quantifier and independence check
 
 The proof uses every $k$ with $1<k\le n/2$, including the endpoint. Every
 boundary divisor must be safe, every prime divisor of a realized boundary
 must meet its own budget, and the same positive multiplier $m$ must satisfy
-all those budgets. The right-hand predicate uses only divisibility,
+all those budgets. The boundary right-hand predicate uses only divisibility,
 factorization, the largest prime factor, floor division, and residue carry
-counts; it does not mention $f$, gcds, binomial coefficients, or the upstream
-open theorem.
+counts. The compiled right-hand system goes further: it replaces the semantic
+carry count by explicit digits and Boolean borrows. Neither form mentions
+$f$, gcds, binomial coefficients, or the upstream open theorem.

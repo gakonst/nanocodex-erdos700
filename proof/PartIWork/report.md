@@ -1,7 +1,7 @@
 # Part (i): complete checked equality-case solution
 
-This directory proves exact finite characterizations of the equality cases
-for both the maintained largest-prime target and the original 1978
+This directory proves compact structural characterizations of the equality
+cases for both the maintained largest-prime target and the original 1978
 greatest-prime-power target.
 
 ## Kernel-checked chain
@@ -27,6 +27,11 @@ greatest-prime-power target.
 - `FullDigitShadow.lean`, `CanonicalObstruction.lean`,
   `CofactorObstruction.lean`, and `DivisorPosetObstruction.lean` give
   increasingly explicit finite criteria for the maintained target.
+- `FactorTableau.lean` replaces realized obstructions by one selected
+  prime-exponent vector and one shared symbolic multiplier.
+- `ExplicitBorrow.lean` and `ExplicitG.lean` compile that semantic object into
+  a compact selector/prefix/digit/Boolean-borrow system and prove exact
+  soundness and completeness in both directions.
 
 The final theorem is
 
@@ -36,7 +41,17 @@ theorem Erdos700PartI.f_eq_div_iff_boundarySafe
     Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
 ```
 
-It does not invoke `Erdos700.erdos_700.parts.i`.
+For an ordered exact factorization `F`, the complete chain also gives the
+compact headline form
+
+```text
+Erdos700.f n = n / Erdos700.P n ↔ ¬ ExplicitG.G F (Erdos700.P n)
+```
+
+where the right side has no coordinate or disjunction for each possible
+multiplier. The indexed system has polynomial description size in the binary
+length of `n`; no polynomial-time feasibility claim is made. None of these
+theorems invokes `Erdos700.erdos_700.parts.i`.
 
 ## Verification
 
@@ -70,10 +85,10 @@ theorem Erdos700PartI.erdos_700_i_historical
 
 ## Claim boundary
 
-The theorems are complete finite carry/factorization characterizations. They
-are stronger than restating the original equalities: the right sides contain
-no `f`, gcd, or binomial coefficient and reduce failures to explicit finite
-factorization/digit constraints. They are not a closed factorization-family
+The theorems are complete compact carry/factorization characterizations. They
+are stronger than restating the original equalities: the final right side is
+a synchronized symbolic system containing no `f`, gcd, binomial coefficient,
+or multiplier enumeration. They are not a closed factorization-family
 enumeration; such an enumeration would be an optional strengthening rather
 than a missing part of the stated characterization problem. The complete
 release evidence is indexed in `../../docs/part-i-release/README.md`, and

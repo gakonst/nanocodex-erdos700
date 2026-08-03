@@ -6,28 +6,35 @@ attack on [Erdős Problem 700](https://www.erdosproblems.com/700). It contains:
 [![Lean proof](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml)
 [![Rust harness](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml)
 
-- a complete kernel-checked solution of Part (i), covering both the maintained
+- a complete kernel-checked structural solution of Part (i), culminating in a
+  compact synchronized integer/Boolean carry system for both the maintained
   largest-prime statement and the original 1978 greatest-prime-power statement;
-- a kernel-checked unconditional proof of Part (ii);
+- a kernel-checked unconditional proof of Part (ii), presented without a
+  novelty or priority claim;
 - the Nanocodex application and methodology used to discover, audit, and
   formalize those results;
 - an explicit account of the unresolved obstruction in Part (iii), including
   the routes we tried and the counterexamples that killed them.
 
 The repository separates proof completion from publication and priority.
-Part (i) is solved here by exact finite iff characterizations; the Lean kernel
-checks the encoded theorems, while independent review still decides novelty,
-priority, exposition, and community acceptance.
+Part (i) is not presented merely as a bounded search under a new name. The
+proof first identifies the exact minimal carry obstructions and then compiles
+their simultaneous cross-base realizability into a sparse symbolic system
+with no variable or row for each possible multiplier. The Lean kernel checks
+soundness and completeness of that compiler. Independent review still decides
+novelty, priority, exposition, and community acceptance.
 
 ## Read this repository in order
 
 1. This page gives the problem, the two completed developments, and the open
    frontier.
-2. [`proof/README.md`](proof/README.md) explains the promoted Lean package and
+2. [`writeups/`](writeups/README.md) contains one self-contained TeX document
+   for each part: two proofs and one explicitly open research report.
+3. [`proof/README.md`](proof/README.md) explains the promoted Lean package and
    how to verify it.
-3. [`docs/research-map.md`](docs/research-map.md) maps every major route tried
+4. [`docs/research-map.md`](docs/research-map.md) maps every major route tried
    on Parts (i), (ii), and (iii), with outcomes and lessons.
-4. [`docs/erdos700-iii-bottleneck-brief.md`](docs/erdos700-iii-bottleneck-brief.md)
+5. [`docs/erdos700-iii-bottleneck-brief.md`](docs/erdos700-iii-bottleneck-brief.md)
    is the short technical handoff for new work on the open part.
 
 The forensic run and session audits are linked from the research map. Readers
@@ -46,8 +53,8 @@ the three subproblems currently stand as follows:
 
 | Part  | Repository result | Evidence | Claim boundary |
 | --- | --- | --- | --- |
-| (i) | Complete exact finite characterizations for the maintained $n/P(n)$ target and the original 1978 $n/Q(n)$ target | Lean build, axiom audit, clean release rebuild, finite regression and statement audits | Solved internally; independent novelty, priority, and publication review remain external |
-| (ii) | Infinitely many composite $n$ satisfy $f(n)^2>n$ | Complete natural proof, Lean build, axiom audit | Solved internally; independent novelty and community review remain external |
+| (i) | Complete structural characterizations of the maintained $n/P(n)$ target and the original 1978 $n/Q(n)$ target, including a compact symbolic carry compiler | Lean build, compiler soundness/completeness, axiom audit, clean release rebuild, finite regression and statement audits | Solved internally; independent novelty, priority, and publication review remain external |
+| (ii) | Infinitely many composite $n$ satisfy $f(n)^2>n$ | Complete natural proof, Lean build, axiom audit | Complete proof here; no novelty or priority claim |
 | (iii) | Open for $A>1$ | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical $D(n)\gg\log n$ scale |
 
 Here $P(n)$ is the largest prime factor used by the maintained problem page.
@@ -56,25 +63,63 @@ of $n$; the repository proves both non-equivalent formulations. See
 [the canonical status and claim boundaries](docs/status.md) before quoting a
 result.
 
+## Reviewer packets
+
+The shortest mathematical path is one standalone TeX source per part:
+
+- [Part (i): complete structural characterization proof](writeups/part-i-characterization.tex)
+- [Part (ii): complete unconditional infinite-family proof](writeups/part-ii-infinite-family.tex)
+- [Part (iii): partial-results map and open frontier](writeups/part-iii-frontier.tex)
+
+Parts (i) and (ii) are proof documents. Part (iii) is deliberately a research
+report: it separates proved lemmas and method counterexamples from the still
+open original target. The [write-up index](writeups/README.md) links each
+document to its formal surface and deeper evidence trail.
+
 ## The two completed developments
 
-### Part (i): complete solution by exact finite characterization
+### Part (i): compact structural characterization
 
-For every composite $n>1$, the Lean development proves
+The main breakthrough is a synchronized digit-and-borrow formulation, not
+the name `BoundarySafe`. Given the prime factorization
+
+$$
+n=\prod_{i=1}^{r}p_i^{a_i},
+$$
+
+let $F$ denote this ordered exact factorization. The development constructs an
+explicit finite natural-linear system $G(F,B)$. Its variables select an
+exponent vector for a minimal obstruction,
+build the selected divisor and one shared row by prefix products, expand that
+row in every active prime base, and enforce the corresponding Boolean borrow
+budgets. All prime bases use the same multiplier.
+
+Lean proves the exact projection theorem
+
+$$
+G(F,B)
+\quad\Longleftrightarrow\quad
+\text{a boundary obstruction above }B\text{ is realized}.
+$$
+
+The system has no variable, state, or disjunction for each possible
+multiplier. Its indexed selector, digit, borrow, and prefix coordinates are
+polynomial in the binary length of $n$; the retained campaign analysis gives
+a sparse encoding of size $O((\log n)^3)$. No polynomial-time claim is made.
+
+For every composite $n>1$, composing the checked reduction and compiler gives
 
 $$
 f(n)=\frac{n}{P(n)}
 \quad\Longleftrightarrow\quad
-\mathrm{BoundarySafe}(n).
+\neg G(F,P(n)).
 $$
 
-The exact Lean declaration is
-`Erdos700PartI.f_eq_div_iff_boundarySafe`.
-
-The development also compiles `BoundarySafe` into an explicit finite system
-of selector, prime-power, prefix-product, digit, and borrow constraints. The
-compiler theorem proves that the finite system has neither false positives nor
-false negatives relative to the semantic factor tableau.
+Here `Erdos700PartI.f_eq_div_iff_boundarySafe` is the decisive mathematical
+reduction, `boundarySafeAt_iff_factorTableauSafe` is the semantic bridge, and
+`Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that the
+explicit system has neither false positives nor false negatives. This final
+step is what prevents the result from being just a scan of the original rows.
 
 For the literal 1978 definition
 
@@ -82,24 +127,27 @@ $$
 Q(n)=\max_{p\mid n}p^{v_p(n)},
 $$
 
-the checked historical theorem is
+the same compiler gives, for composite $n>1$,
 
 $$
 f(n)=\frac{n}{Q(n)}
 \quad\Longleftrightarrow\quad
 \neg\mathrm{IsPrimePow}(n)
 \land
-\mathrm{HistoricalBoundarySafe}(n).
+\neg G(F,Q(n)).
 $$
 
-The exact Lean declaration is
-`Erdos700PartI.erdos_700_i_historical`.
+Off prime powers this is the same structural system at baseline $Q(n)$;
+composite prime powers are the necessary explicit exception. The packaged
+Lean declaration is `Erdos700PartI.erdos_700_i_historical`.
 
 The release also proves equivalent full-digit-shadow, bounded-obstruction,
 cofactor-normalized, divisor-poset, factor-tableau, and explicit
 integer/Boolean forms. Thus “characterization” describes the form of the
-solution; it is not a partial-result label.
+solution; it is neither a partial-result label nor merely the original finite
+minimum rewritten.
 
+- [Standalone Part (i) mathematical write-up](writeups/part-i-characterization.tex)
 - [Part (i) overview and scope](proof/PartIWork/report.md)
 - [Recovered complete release record](docs/part-i-release/README.md)
 - [Every recovered Part (i) run and what it contributed](docs/part-i-run-coverage-audit.md)
@@ -125,11 +173,16 @@ $$
 
 The exact Lean declaration is `Erdos700PNT.erdos_700_ii`.
 
+This repository does not claim novelty or priority for Part (ii). It records
+the proof developed and kernel-checked here so that it can be compared cleanly
+with prior or independent resolutions.
+
 The proof uses the prime number theorem to construct nearby primes
 $p<q<r$ with asymmetric gaps. A Lucas-theorem argument proves that every
 legal row retains at least two primes, so $f(pqr)=pq>\sqrt{pqr}$.
 
 - [Lean project and verification](proof/README.md)
+- [Self-contained Part (ii) TeX proof](writeups/part-ii-infinite-family.tex)
 - [Complete mathematical proof](proof/docs/proof.md)
 - [Statement alignment audit](proof/docs/statement-audit.md)
 - [Research and formalization methodology](docs/methodology.md)
@@ -144,7 +197,7 @@ D(n)=\max_{2\le k\le n/2}D_n(k).
 $$
 
 Part (iii) is equivalent to proving that, for every fixed $A>0$, there is a
-constant $`c_A>0`$ such that
+constant $c_A>0$ such that
 
 $$
 D(n)\ge c_A(\log n)^A
@@ -160,6 +213,7 @@ pairwise Lucas and Carmichael reductions all have rigorous failure
 certificates.
 
 - [Technical Part (iii) bottleneck](docs/erdos700-iii-bottleneck-brief.md)
+- [Self-contained Part (iii) TeX frontier report](writeups/part-iii-frontier.tex)
 - [All-parts attempt and lesson map](docs/research-map.md)
 - [Detailed exploration tree and result ledger](docs/part-iii-exploration-map.md)
 - [Canonical status and evidence labels](docs/status.md)
@@ -210,6 +264,7 @@ operational details.
 ## Repository map
 
 ```text
+writeups/       standalone TeX proof/research packets for Parts (i), (ii), (iii)
 proof/          Lean proofs and their mathematical/statement audits
 docs/           status, all-parts research map, methodology, and Part (iii) ledger
 campaigns/      frozen problem packages and research prompts

@@ -27,26 +27,39 @@ by [`proof/PartIWork.lean`](../../proof/PartIWork.lean), exposed by
 | Divisor poset | `Erdos700PartI.f_eq_div_iff_divisorPosetSafe` | Post-freeze finite criterion directly over `n.divisors` |
 | Integer/Boolean compiler | `Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` | Compiles the semantic tableau into selector, prefix, digit, borrow, and budget rows |
 
-These constitute a complete solution of Part (i) in the exact finite
-characterization sense requested by the problem. A shorter enumeration of
-factorization families would be an optional strengthening, not an unproved
-part of the stated theorem.
+These constitute a complete structural solution of Part (i). The boundary
+theorem supplies the mathematical reduction; the final factor-tableau and
+integer/Boolean compiler replace multiplier enumeration by one compact
+synchronized symbolic system. For an ordered exact factorization `F`, the
+checked chain gives
+
+```text
+f(n) = n / P(n) ↔ ¬ ExplicitG.G F (P(n)).
+```
+
+The sparse system has polynomial description size in the binary length of
+`n`, although no polynomial-time feasibility claim is made. A shorter
+enumeration of factorization families would be an optional strengthening,
+not an unproved part of the stated theorem.
 
 ## Reading order
 
-1. [`complete-prose-proof.md`](complete-prose-proof.md) gives the complete
-   boundary-antichain proof.
-2. [`historical-characterization-report.md`](historical-characterization-report.md)
+1. [`../../writeups/part-i-characterization.tex`](../../writeups/part-i-characterization.tex)
+   is the standalone reviewer-ready TeX proof of the parameterized theorem,
+   compact compiler, and both source formulations.
+2. [`complete-prose-proof.md`](complete-prose-proof.md) gives the complete
+   boundary-antichain proof and compact synchronized compiler closure.
+3. [`historical-characterization-report.md`](historical-characterization-report.md)
    separates the 1978 greatest-prime-power statement from the maintained
    largest-prime statement.
-3. [`prime-power-threshold-prose-proof.md`](prime-power-threshold-prose-proof.md)
+4. [`prime-power-threshold-prose-proof.md`](prime-power-threshold-prose-proof.md)
    proves the common generalization.
-4. [`historical-order-duality-proof.md`](historical-order-duality-proof.md)
+5. [`historical-order-duality-proof.md`](historical-order-duality-proof.md)
    and [`historical-extremal-proof.md`](historical-extremal-proof.md) give
    two independent historical proof architectures.
-5. [`structural-upgrade.md`](structural-upgrade.md) explains the digit-shadow
-   and bounded-obstruction progression.
-6. The full-shadow, canonical, cofactor, and divisor-poset proof/audit pairs
+6. [`structural-upgrade.md`](structural-upgrade.md) explains the digit-shadow
+   intermediate result and the later compact compiler breakthrough.
+7. The full-shadow, canonical, cofactor, and divisor-poset proof/audit pairs
    document each increasingly explicit equivalent predicate.
 
 ## Independent evidence

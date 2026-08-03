@@ -4,16 +4,18 @@ Use the smallest document that answers your question:
 
 1. [`../README.md`](../README.md) — problem statement, current results, and
    proof commands.
-2. [`status.md`](status.md) — exact claim boundaries and evidence labels.
-3. [`research-map.md`](research-map.md) — what we tried on all three parts and
+2. [`../writeups/`](../writeups/README.md) — standalone TeX proof packets for
+   Parts (i) and (ii), plus the explicitly open Part (iii) frontier report.
+3. [`status.md`](status.md) — exact claim boundaries and evidence labels.
+4. [`research-map.md`](research-map.md) — what we tried on all three parts and
    what we learned.
-4. [`part-i-release/README.md`](part-i-release/README.md) — complete modern
+5. [`part-i-release/README.md`](part-i-release/README.md) — complete modern
    and historical Part (i) release, alternate proofs, and audits.
-5. [`../proof/README.md`](../proof/README.md) — the promoted Lean developments
+6. [`../proof/README.md`](../proof/README.md) — the promoted Lean developments
    for Parts (i) and (ii).
-6. [`erdos700-iii-bottleneck-brief.md`](erdos700-iii-bottleneck-brief.md) —
+7. [`erdos700-iii-bottleneck-brief.md`](erdos700-iii-bottleneck-brief.md) —
    compact handoff for the open Part (iii) frontier.
-7. [`part-iii-exploration-map.md`](part-iii-exploration-map.md) — detailed
+8. [`part-iii-exploration-map.md`](part-iii-exploration-map.md) — detailed
    Part (iii) result ledger and no-retry constraints.
 
 For forensic coverage rather than a mathematical introduction, use the

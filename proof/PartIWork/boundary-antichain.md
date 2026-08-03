@@ -149,9 +149,15 @@ and explicit prime-power carry tests.
 
 ## Scope
 
-This theorem is a complete exact characterization and a finite decision
-procedure. It does not provide a closed factorization-only list of every
-equality case: realization can require a nontrivial multiplier, and its
-cross-base digit conditions are genuine arithmetic structure. Any public
-claim should distinguish the checked equivalence from the stronger,
-subjective expectation of a simple taxonomy of factorizations.
+This theorem is the decisive exact reduction. The subsequent factor-tableau
+and `ExplicitG` theorems go further: they replace value-by-value multiplier
+enumeration by one compact synchronized integer/Boolean system of selectors,
+prefix products, digits, and borrows, with exact soundness and completeness.
+See the [complete prose proof](../../docs/part-i-release/complete-prose-proof.md)
+for that closure.
+
+The final result still does not provide a closed factorization-only list of
+every equality case: the shared symbolic multiplier and its cross-base digit
+conditions are genuine arithmetic structure. A simple taxonomy of
+factorizations would be a stronger optional theorem, not a missing implication
+in the checked characterization.

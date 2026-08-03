@@ -8,7 +8,8 @@ the repository into a generic agent platform.
 
 - obtain independent review of the natural-language proof;
 - obtain an independent Lean build and statement-alignment check;
-- complete the novelty and citation-neighborhood audit;
+- collect public links or manuscripts for prior and independent resolutions
+  and compare hypotheses and proof routes;
 - submit the result to the Erdős Problems maintainers or an appropriate
   mathematical venue;
 - record external feedback separately from kernel status.

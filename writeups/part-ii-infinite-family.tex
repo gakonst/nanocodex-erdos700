@@ -1,0 +1,227 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newcommand{\choosef}[2]{\binom{#1}{#2}}
+
+\title{Erd\H{o}s Problem 700(ii):\\
+An Unconditional Infinite Family}
+\author{Nanocodex Erd\H{o}s 700 project}
+\date{3 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For
+\[
+ f(n)=\min_{2\leq k\leq\lfloor n/2\rfloor}
+       \gcd\!\left(n,\choosef nk\right),
+\]
+we prove that infinitely many composite integers $n$ satisfy
+$f(n)^2>n$.  The proof has two parts.  A Lucas-theorem argument shows that
+$f(pqr)=pq$ for suitable nearby primes $p<q<r$.  The prime number theorem,
+combined with an elementary packing lemma, supplies unboundedly many such
+triples.  This exact result is kernel-checked in Lean.  This document makes
+no novelty or priority claim; the purpose is to expose the repository's proof
+in a compact, independently reviewable form.
+\end{abstract}
+
+\section{Lucas's criterion}
+
+For a prime $s$, write $u\preceq_s v$ if every base-$s$ digit of $u$ is at
+most the corresponding digit of $v$.  Lucas's theorem gives
+\[
+ s\nmid\choosef nk\quad\Longleftrightarrow\quad k\preceq_s n.
+\]
+When $s\mid n$, the units digit of $n$ is zero, and therefore
+\[
+ s\nmid\choosef nk
+ \quad\Longleftrightarrow\quad
+ s\mid k\ \text{ and }\ k/s\preceq_s n/s.                 \tag{1}
+\]
+
+\section{The nearby-prime structural lemma}
+
+\begin{lemma}\label{lem:structural}
+Let
+\[
+ q=p+a,\qquad r=q+c=p+a+c,\qquad b=a+c,
+\]
+where $p<q<r$ are primes, $0<a<c$, and $p>4b^3$.  Put $n=pqr$.
+For every $0<k\leq n/2$, at most one of $p,q,r$ fails to divide
+$\choosef nk$.
+\end{lemma}
+
+\begin{proof}
+The hypotheses make the following genuine base expansions, with the units
+digit written first:
+\[
+ qr=ab+(a+b)p+p^2,                                         \tag{2}
+\]
+\[
+ pr=(q-ac)+(c-a-1)q+q^2,                                  \tag{3}
+\]
+\[
+ pq=bc+(p-c)r.                                             \tag{4}
+\]
+All displayed digits are nonnegative and smaller than their bases because
+$a,c<b$ and $p>4b^3$.
+
+Suppose first that both $p$ and $q$ are absent from $\choosef nk$.  By (1),
+$k=pqt$ for some positive integer $t$, and
+\[
+ qt\preceq_p qr,\qquad pt\preceq_q pr.                    \tag{5}
+\]
+The half-range gives $t\leq r/2$.  Write $at=up+v$ with $0\leq v<p$.
+Then
+\[
+ qt=v+(t+u)p,
+\]
+and $t+u<p$: indeed $t<p$, $u<a$, and
+$t+u\leq(p+b)/2+a-1<p$.  The next-to-units comparison with (2) gives
+$t+u\leq a+b$.  Hence $at<p$; the units comparison then gives
+$at\leq ab$, so $t\leq b$.  Thus $at<q$ and
+\[
+ pt=(q-at)+(t-1)q.
+\]
+Comparison with (3) gives $t\geq c$ from the units digit and
+$t\leq c-a$ from the next digit, a contradiction.
+
+Suppose next that $q$ and $r$ are both absent.  Write $k=qrt$.  Then
+\[
+ rt\preceq_q pr,\qquad qt\preceq_r pq,
+\]
+and $t\leq p/2$.  Write $ct=uq+v$, $0\leq v<q$.  Since $t+u<q$, the first
+two base-$q$ digits of $rt$ are
+\[
+ rt=v+(t+u)q.
+\]
+Comparison with (3) gives $t+u\leq c-a-1$, and hence
+$t\leq c-a-1$.  In particular $ct<r$, so
+\[
+ qt=(r-ct)+(t-1)r.
+\]
+The units comparison with (4) would give $r-ct\leq bc$.  But
+$ct+bc<2b^2<p<r$, a contradiction.
+
+Finally suppose that $p$ and $r$ are both absent.  Write $k=prt$.  Then
+\[
+ rt\preceq_p qr,\qquad pt\preceq_r pq,
+\]
+and $t\leq q/2$.  Write $bt=up+v$, $0\leq v<p$.  Again $t+u<p$, so the
+first two base-$p$ digits of $rt$ are $v,t+u$.  Comparison with (2) gives
+first $t\leq a+b$, then $bt<p$, then $bt\leq ab$, and therefore $t\leq a$.
+Now
+\[
+ pt=(r-bt)+(t-1)r.
+\]
+Comparison with (4) would imply $r-bt\leq bc$, hence
+$r\leq ab+bc=b^2$, contrary to $r>p>4b^3$.  All three possible pairs lead
+to contradictions.
+\end{proof}
+
+\begin{lemma}\label{lem:value}
+Under the hypotheses of Lemma~\ref{lem:structural},
+\[
+ f(pqr)=pq\qquad\text{and}\qquad f(pqr)^2>pqr.
+\]
+\end{lemma}
+
+\begin{proof}
+The integer $n=pqr$ is squarefree.  Lemma~\ref{lem:structural} says that
+every admissible gcd contains at least two of $p,q,r$, and is therefore at
+least $pq$.  At $k=r$, (4) gives $pq\bmod r=bc\geq1$, so
+$1\preceq_r pq$ and criterion (1) shows that $r$ is absent.  The primes
+$p$ and $q$ cannot be absent because either absence would force the distinct
+prime to divide $k=r$.  Thus the gcd at $k=r$ is exactly $pq$, proving
+$f(pqr)=pq$.
+
+Finally
+\[
+ pq-r=p^2+(a-1)p-b>0
+\]
+under $p>4b^3$.  Hence $pq>r$ and
+$(pq)^2>pqr$.
+\end{proof}
+
+\section{Producing infinitely many triples with the PNT}
+
+\begin{lemma}[Asymmetric gaps in a short set]\label{lem:gaps}
+If integers
+$x_0<x_1<\cdots<x_{m-1}$ lie in an interval of length $T$ and no
+$i<j<k$ satisfies
+\[
+ x_k-x_j>x_j-x_i,                                          \tag{6}
+\]
+then $2^{m-2}<T$.
+\end{lemma}
+
+\begin{proof}
+Put $S_j=x_{m-1}-x_j$.  Failure of (6) for $(j,j+1,m-1)$ gives
+$S_{j+1}\leq x_{j+1}-x_j$, and therefore
+\[
+ S_j=(x_{j+1}-x_j)+S_{j+1}\geq2S_{j+1}.
+\]
+Since $S_{m-2}\geq1$, iteration gives
+$x_{m-1}-x_0=S_0\geq2^{m-2}$, while the interval hypothesis makes the span
+strictly less than $T$.
+\end{proof}
+
+\begin{theorem}\label{thm:main}
+There are infinitely many composite integers $n$ such that $f(n)^2>n$.
+\end{theorem}
+
+\begin{proof}
+Let $T$ tend through sufficiently large positive integers and put
+$N=8T^3$.  Partition $[N,2N)$ into $8T^2$ half-open intervals of length
+$T$.  The prime number theorem gives
+\[
+ \pi(2N)-\pi(N)\sim\frac{N}{\log N}.
+\]
+Since
+\[
+ \frac{N/\log N}{8T^2(\log_2T+2)}\longrightarrow\infty,
+\]
+some length-$T$ interval contains more than
+$\lfloor\log_2T\rfloor+2$ primes.  Lemma~\ref{lem:gaps} then supplies
+primes $p<q<r$ in that interval with
+\[
+ r-q>q-p.
+\]
+Put $a=q-p$, $c=r-q$, and $b=a+c=r-p$.  Then $0<a<c$, $b<T$, and
+\[
+ 4b^3<4T^3<8T^3\leq p.
+\]
+Lemma~\ref{lem:value} gives $f(pqr)^2>pqr$.  Moreover $pqr\geq(8T^3)^3$,
+so these products are unbounded as $T\to\infty$.  An unbounded set of
+natural numbers is infinite.
+\end{proof}
+
+\section{Formal verification and claim boundary}
+
+The exact Lean declaration is
+\path{Erdos700PNT.erdos_700_ii} in
+\href{https://github.com/gakonst/nanocodex-erdos700/blob/main/proof/Solution.lean}
+{\texttt{proof/Solution.lean}}, exposed through
+\href{https://github.com/gakonst/nanocodex-erdos700/blob/main/proof/Erdos700PNT.lean}
+{\texttt{proof/Erdos700PNT.lean}}.  The three pair-omission cases in
+Lemma~\ref{lem:structural} are checked separately.  The repository verifier
+rejects placeholders and reports only \texttt{propext},
+\texttt{Classical.choice}, and \texttt{Quot.sound}, with no
+\texttt{sorryAx} dependency.
+
+This establishes the proposition represented in the repository.  It does
+not by itself establish novelty, priority, publication, or community
+acceptance.  The original problem is from P.~Erd\H{o}s and G.~Szekeres,
+``Some number theoretic problems on binomial coefficients,''
+\emph{Australian Mathematical Society Gazette} 5 (1978), 97--99,
+\href{https://www.renyi.hu/~p_erdos/1978-46.pdf}{archival PDF}.
+
+\end{document}

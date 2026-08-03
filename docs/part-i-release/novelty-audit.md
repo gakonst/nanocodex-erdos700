@@ -402,12 +402,14 @@ paradigm.
    must preserve this distinction.
 3. **Meaning of “characterize.”** `BoundarySafe` eliminates `f`, gcds, and
    binomial coefficients syntactically and is a finite decision predicate.
-   Nevertheless, `Realized` searches for \(k=dm\) and re-expresses the same
-   binomial valuations as simultaneous Kummer carry budgets. `FullShadowSafe`
-   expands this digit test, and its common period can exceed the original
-   multiplier interval. Thus the result is an exact reduction/criterion, not
-   a closed factorization-only list of equality cases. Whether that is the
-   intended historical standard is unresolved.
+   By itself, `Realized` still searches for \(k=dm\), and `FullShadowSafe` can
+   have a common period exceeding the original multiplier interval. The later
+   `ExplicitG` development materially strengthens this presentation: it
+   compiles the shared multiplier and all simultaneous Kummer budgets into one
+   compact natural-linear integer/Boolean system with no row or disjunction
+   for each multiplier value. The result is still not a closed
+   factorization-family list, so whether that stronger optional form is the
+   intended historical standard remains an external interpretation question.
 4. **No silent repair.** I found no explicit logical counterexample while
    reading the frozen theorem and its evidence, but I did not alter any
    declaration or strengthen a missing argument. This audit is not an

@@ -1,0 +1,389 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\vp}{v_p}
+\newcommand{\choosef}[2]{\binom{#1}{#2}}
+\newcommand{\BoundaryAt}{\mathsf{BoundaryAt}}
+\newcommand{\Realized}{\mathsf{Realized}}
+\newcommand{\BoundarySafeAt}{\mathsf{BoundarySafeAt}}
+\newcommand{\FactorTableau}{\mathsf{FactorTableau}}
+\newcommand{\GSys}{\mathcal G}
+
+\title{Erd\H{o}s Problem 700(i):\\
+A Compact Synchronized Carry Characterization}
+\author{Nanocodex Erd\H{o}s 700 project}
+\date{3 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For
+\[
+ f(n)=\min_{2\leq k\leq \lfloor n/2\rfloor}
+       \gcd\!\left(n,\choosef nk\right),
+\]
+we give an exact structural characterization of the equality $f(n)=n/q$
+for every proper prime-power component $q$ of $n$.  The initial reduction
+identifies divisibility-minimal carry obstructions.  The main structural step
+then compiles simultaneous realization in all relevant prime bases into one
+compact finite integer/Boolean system of selectors, prefix products, digits,
+and borrows.  The system has no variable or disjunction for each possible
+row or multiplier.  Taking $q$ to be the largest prime divisor gives the
+maintained formulation of Erd\H{o}s Problem 700(i).  Taking $q$ to be the
+greatest exact prime-power component gives the literal formulation in the
+1978 Erd\H{o}s--Szekeres paper, with the necessary prime-power exception.
+The reductions and both directions of the compiler are checked in Lean;
+novelty and priority remain matters for independent review.
+\end{abstract}
+
+\section{Definitions and statement}
+
+Call $k$ \emph{admissible for $n$} when
+$2\leq k\leq\lfloor n/2\rfloor$.  For a prime $p$, let
+$C_p(n,k)$ be the number of carries in the base-$p$ addition
+$k+(n-k)=n$.  By Kummer's theorem,
+\[
+ C_p(n,k)=v_p\!\left(\choosef nk\right).
+\]
+For an admissible $k$, define its complementary carry weight by
+\[
+ W_n(k)=\prod_{p\mid n}p^{\max\{v_p(n)-C_p(n,k),0\}}.       \tag{1}
+\]
+
+Fix a positive divisor $q$ of $n$.  Define
+\[
+ \BoundaryAt(n,q,d)
+ \quad\Longleftrightarrow\quad
+ d\mid n,\quad q<d,\quad
+ \frac d r\leq q\ \text{for every prime }r\mid d.          \tag{2}
+\]
+Thus $d$ is a divisibility-minimal divisor of $n$ lying numerically above
+$q$.  Define
+\begin{equation}
+ \begin{split}
+ \Realized(n,d)\quad\Longleftrightarrow\quad
+ &\text{there is an }m\geq1\text{ such that }dm\leq\lfloor n/2\rfloor,\\
+ &C_r(n,dm)\leq v_r(n)-v_r(d)
+   \quad\text{for every prime }r\mid d.
+ \end{split}
+\tag{3}
+\end{equation}
+Finally,
+\[
+ \BoundarySafeAt(n,q)
+ \quad\Longleftrightarrow\quad
+ \text{no }d\text{ satisfying (2) is realized}.            \tag{4}
+\]
+All ranges in (2)--(4) are finite, and the same multiplier $m$ must satisfy
+every carry constraint in (3).
+
+\begin{theorem}[Prime-power threshold theorem]\label{thm:threshold}
+Let $p$ be prime, let $b\geq1$, and put $q=p^b$.  If $q\mid n$ and $q<n$,
+then
+\[
+ \boxed{
+ f(n)=\frac nq
+ \quad\Longleftrightarrow\quad
+ \BoundarySafeAt(n,q).}
+\]
+\end{theorem}
+
+\section{The exact complementary weight}
+
+Put $G_n(k)=\gcd(n,\choosef nk)$.  Prime by prime,
+\[
+ v_p(G_n(k))=\min\!\left(v_p(n),C_p(n,k)\right).
+\]
+Since $\min(a,c)+\max(a-c,0)=a$, (1) gives the exact identity
+\[
+ \boxed{G_n(k)W_n(k)=n.}                                  \tag{5}
+\]
+In particular, $W_n(k)$ is a positive divisor of $n$.
+
+The identity
+\[
+ n\choosef{n-1}{k-1}=k\choosef nk
+\]
+shows that $n\mid k\choosef nk$.  Taking valuations gives
+\[
+ v_p(n)-C_p(n,k)\leq v_p(k)
+ \quad\text{whenever the left side is positive},
+\]
+and hence
+\[
+ \boxed{W_n(k)\mid k.}                                    \tag{6}
+\]
+This divisibility is what preserves one common index across all primes.
+
+\section{Every proper prime-power threshold is attained}
+
+Write $n=cq$.  Since $q<n$, we have $c\geq2$, so
+$2\leq q\leq\lfloor n/2\rfloor$ and $q$ is admissible.  The binomial
+identity
+\[
+ \choosef{cq}{q}=c\choosef{cq-1}{q-1}                    \tag{7}
+\]
+will give the exact value at this row.  In base $p$, the lowest $b$ digits
+of both $cq-1$ and $q-1=p^b-1$ are $p-1$.  Repeated application of Lucas's
+theorem therefore gives
+\[
+ \choosef{cq-1}{q-1}\equiv1\pmod p.                       \tag{8}
+\]
+If $A=\choosef{cq-1}{q-1}$, then $A$ is coprime to $q$, even when $p\mid c$.
+Consequently
+\[
+ \gcd\!\left(cq,\choosef{cq}{q}\right)
+ =\gcd(cq,cA)=c\gcd(q,A)=c=\frac nq.                      \tag{9}
+\]
+Combining (5) and (9) yields
+\[
+ W_n(q)=q.                                                  \tag{10}
+\]
+
+It follows that
+\[
+ f(n)=\frac nq
+ \quad\Longleftrightarrow\quad
+ W_n(k)\leq q\quad\text{for every admissible }k.           \tag{11}
+\]
+Indeed, (5) reverses the numerical order between $G_n(k)$ and $W_n(k)$,
+while (9)--(10) supply equality at an admissible row.
+
+\section{The boundary antichain}
+
+\begin{lemma}\label{lem:boundary}
+If $W\mid n$, then
+\[
+ q<W
+ \quad\Longleftrightarrow\quad
+ \text{some }d\mid W\text{ satisfies }\BoundaryAt(n,q,d).
+\]
+\end{lemma}
+
+\begin{proof}
+If $W>q$, choose the numerically least divisor $d$ of $W$ with $d>q$.
+Then $d\mid n$.  For every prime $r\mid d$, the proper divisor $d/r$ also
+divides $W$, so minimality gives $d/r\leq q$.  Thus $d$ satisfies (2).
+The reverse implication follows from $q<d\leq W$.
+\end{proof}
+
+For $d\mid n$, valuation comparison in (1) gives
+\[
+ d\mid W_n(k)
+ \quad\Longleftrightarrow\quad
+ C_r(n,k)\leq v_r(n)-v_r(d)
+ \quad\text{for every prime }r\mid d.                     \tag{12}
+\]
+If the left side holds, (6) gives $d\mid k$, say $k=dm$ with $m\geq1$.
+The admissible endpoint and (12) say exactly that $d$ is realized.  Conversely,
+a witness in (3), together with (12), gives $d\mid W_n(dm)$.  Therefore
+\begin{equation}
+ \begin{split}
+ &W_n(k)\leq q\quad\text{for every admissible }k\\
+ &\qquad\Longleftrightarrow
+ \text{no boundary divisor above }q\text{ is realized}\\
+ &\qquad\Longleftrightarrow \BoundarySafeAt(n,q).
+ \end{split}
+\tag{13}
+\end{equation}
+Equations (11) and (13) prove Theorem~\ref{thm:threshold}.
+
+\section{The compact synchronized compiler}
+
+The preceding theorem is already an exact characterization, but its semantic
+definition quantifies over a shared multiplier.  We now describe the stronger
+form that removes any need to list those multipliers in the statement.
+
+Fix an ordered exact prime factorization
+\[
+ n=\prod_{i=1}^{r}p_i^{a_i}
+\]
+and a baseline $B$ with $2\leq B\leq n$.  A semantic factor tableau selects
+exponents $0\leq e_i\leq a_i$ and one positive integer $T$.  Put
+\[
+ d=\prod_{i=1}^{r}p_i^{e_i},\qquad K=dT.
+\]
+The tableau is feasible when
+\[
+ B<d,\qquad K\leq\lfloor n/2\rfloor,
+\]
+and, for every active index $i$ with $e_i>0$,
+\[
+ \frac{d}{p_i}\leq B,
+ \qquad
+ C_{p_i}(n,K)\leq a_i-e_i.                              \tag{14}
+\]
+Thus $d$ is a boundary divisor and the one literal row $K=dT$ realizes it.
+Conversely every realized boundary divisor determines exactly such an
+exponent vector and shared $T$.  Hence
+\[
+ \FactorTableau(n,B)\text{ is feasible}
+ \quad\Longleftrightarrow\quad
+ \exists d\,[\BoundaryAt(n,B,d)\wedge\Realized(n,d)].   \tag{15}
+\]
+
+The explicit system $\GSys(F,B)$ is a natural-linear presentation of this
+tableau.  It contains the following finite fields.
+\begin{enumerate}
+\item One-hot Boolean selectors choose each exponent
+      $e_i\in\{0,\ldots,a_i\}$.
+\item Prefix variables build $d$ and $K=dT$ by multiplying only by the fixed
+      coefficients $p_i^e$ selected in the preceding step.
+\item For every $i$, digit variables expand the same integer $K$ in base
+      $p_i$ through height $h_i=\lfloor\log_{p_i}n\rfloor$.
+\item Boolean borrow variables encode subtraction of $K$ from $n$ in each
+      base.  Their sum is exactly $C_{p_i}(n,K)$.
+\item Boundary and budget rows enforce (14) when $e_i>0$ and become inactive
+      through checked big-$M$ bounds when $e_i=0$.
+\end{enumerate}
+Every multiplication in these rows is by input data or a selected fixed
+prime power; there is no product of two free integer variables.  The system
+is therefore a finite Presburger, equivalently mixed integer/Boolean,
+feasibility instance.
+
+\begin{theorem}[Compiler soundness and completeness]\label{thm:compiler}
+For every ordered exact factorization $F$ of $n$ and every
+$2\leq B\leq n$,
+\[
+ \boxed{
+ \GSys(F,B)
+ \quad\Longleftrightarrow\quad
+ \FactorTableau(n,B)\text{ is feasible}.}
+\]
+Consequently, for composite $n>1$,
+\[
+ \boxed{
+ f(n)=\frac{n}{P(n)}
+ \quad\Longleftrightarrow\quad
+ \neg\GSys(F,P(n)).}                                    \tag{16}
+\]
+\end{theorem}
+
+\begin{proof}
+From a satisfying assignment, one-hotness recovers the exponent vector.
+The active prefix equalities recover $d$ and $K=dT$ exactly.  The digit and
+borrow rows recover the genuine base-$p_i$ subtraction, so the budget rows
+give the carry inequalities in (14).  This constructs a semantic tableau.
+
+Conversely, from a semantic tableau choose the corresponding one-hot
+selectors, use the actual prefix products of $d$ and $K$, take the canonical
+base-$p_i$ digits of $K$, and take the genuine borrows in $n-K$.  These values
+satisfy every selector, bound, prefix, boundary, digit, borrow, and budget
+row.  This proves the displayed equivalence.  Equation (15), followed by
+Theorem~\ref{thm:threshold} at $q=P(n)$, gives (16).
+\end{proof}
+
+This compilation is materially smaller than enumerating the possible
+multipliers.  The indexed selector, digit, borrow, and prefix coordinates are
+linear in
+\[
+ \sum_i(a_i+1)+\sum_i(h_i+1)+r.
+\]
+Since $r$, $\sum_i a_i$, and every $h_i$ are bounded by the binary length of
+$n$, there are $O((\log n)^2)$ indexed coordinates.  The fixed coefficients
+have $O(\log n)$ bits, giving an $O((\log n)^3)$ direct sparse description.
+This is a compact symbolic characterization, not a claim that the resulting
+feasibility problem is decidable in polynomial time and not a claim that the
+equality cases admit a short list of factorization families.
+
+\section{The two formulations of Part (i)}
+
+Let $P(n)$ be the largest prime divisor of $n$.
+
+\begin{corollary}[Maintained largest-prime formulation]
+For every composite $n>1$ and every ordered exact factorization $F$ of $n$,
+\[
+ \begin{aligned}
+ f(n)=\frac{n}{P(n)}
+ &\quad\Longleftrightarrow\quad \BoundarySafeAt(n,P(n))\\
+ &\quad\Longleftrightarrow\quad \neg\GSys(F,P(n)).
+ \end{aligned}
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Theorem~\ref{thm:threshold} with $q=P(n)=P(n)^1$.  Since $n$ is
+composite, $P(n)$ is a proper divisor of $n$.  The second equivalence is
+Theorem~\ref{thm:compiler}.
+\end{proof}
+
+The 1978 paper instead uses
+\[
+ Q(n)=\max_{p\mid n}p^{v_p(n)},                            \tag{17}
+\]
+the greatest exact prime-power component of $n$.
+
+\begin{corollary}[Literal 1978 formulation]
+For every composite $n>1$ and every ordered exact factorization $F$ of $n$,
+\[
+ \begin{aligned}
+ f(n)=\frac{n}{Q(n)}
+ &\quad\Longleftrightarrow\quad
+ n\text{ is not a prime power and }\BoundarySafeAt(n,Q(n))\\
+ &\quad\Longleftrightarrow\quad
+ n\text{ is not a prime power and }\neg\GSys(F,Q(n)).
+ \end{aligned}
+\]
+\end{corollary}
+
+\begin{proof}
+If $n$ is not a prime power, an exact component attaining (17) is a proper
+prime-power divisor, so Theorem~\ref{thm:threshold} applies.  If
+$n=p^a$ is composite, then $Q(n)=n$.  Lucas's theorem shows that every
+interior binomial coefficient is divisible by $p$, while Kummer's theorem at
+$k=p^{a-1}$ gives valuation exactly one.  Thus $f(p^a)=p>1=n/Q(n)$, so the
+equality is impossible.  The second equivalence follows from
+Theorem~\ref{thm:compiler} at baseline $Q(n)$.
+\end{proof}
+
+\begin{remark}
+The two formulations are genuinely different.  For $n=12$, the gcd values
+for $k=2,3,4,5,6$ are $6,4,3,12,12$, so $f(12)=3$.  Here
+$P(12)=3$ and $Q(12)=4$: the historical equality $f(12)=12/Q(12)$ holds,
+whereas the maintained equality $f(12)=12/P(12)$ does not.
+\end{remark}
+
+
+\section{Formal verification and source trail}
+
+\begin{flushleft}
+The parameterized theorem is
+\path{Erdos700PartI.f_eq_div_primePow_iff_boundarySafeAt}.
+The maintained and historical corollaries are respectively
+\path{Erdos700PartI.f_eq_div_iff_boundarySafe} and
+\path{Erdos700PartI.erdos_700_i_historical}.  They are exposed in
+\href{https://github.com/gakonst/nanocodex-erdos700/blob/main/proof/PartIVerify.lean}
+{\texttt{proof/PartIVerify.lean}}.  The repository verifier builds the
+promoted roots, rejects placeholders, audits dependencies, and runs finite
+regressions.  Lean reports only the standard Mathlib axioms
+\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}; it
+reports no \texttt{sorryAx} dependency.
+
+The semantic bridge is
+\path{Erdos700PartI.factorTableauFeasible_iff_exists_boundary_realized},
+and the explicit compiler theorem is
+\path{Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible}.
+Lean checks both directions, including one-hot decoding, prefix products,
+canonical digit and borrow construction, inactive-row bounds, and the exact
+carry-budget identity.
+
+The primary historical source is P.~Erd\H{o}s and G.~Szekeres,
+``Some number theoretic problems on binomial coefficients,''
+\emph{Australian Mathematical Society Gazette} 5 (1978), 97--99,
+\href{https://www.renyi.hu/~p_erdos/1978-46.pdf}{archival PDF}.
+\end{flushleft}
+
+\end{document}

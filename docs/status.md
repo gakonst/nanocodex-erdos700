@@ -29,13 +29,13 @@ The three questions are:
 
 | Part  | Internal status | Exact result | Remaining external question |
 | --- | --- | --- | --- |
-| (i) | Solved and kernel-checked | Exact finite iff theorems for both the maintained largest-prime target and the original greatest-prime-power target | Independent novelty, priority, publication, and community adjudication |
-| (ii) | Solved and kernel-checked | `Erdos700PNT.erdos_700_ii` proves an infinite set with `f(n)^2 > n` | Independent mathematical review, novelty audit, and community adjudication |
+| (i) | Solved and kernel-checked | Compact synchronized integer/Boolean characterizations for both the maintained largest-prime target and the original greatest-prime-power target | Independent novelty, priority, publication, and community adjudication |
+| (ii) | Solved and kernel-checked | `Erdos700PNT.erdos_700_ii` proves an infinite set with `f(n)^2 > n` | Independent mathematical review and comparison with prior or independent resolutions; no novelty claim |
 | (iii) | Open | Classical \(A\le1\) range; several exact partial lemmas and method counterexamples | Any unconditional improvement beyond \(D(n)\gg\log n\), the full theorem, or a counterexample |
 
 ## Part (i)
 
-### Maintained largest-prime theorem
+### Maintained largest-prime theorem and structural compiler
 
 For every composite \(n>1\),
 
@@ -45,19 +45,32 @@ theorem Erdos700PartI.f_eq_div_iff_boundarySafe
     Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
 ```
 
-`BoundarySafe n` says that no divisibility-minimal divisor strictly above the
-largest prime factor can be realized by one legal row with the required
-simultaneous carry inequalities. It contains neither `f`, a gcd, nor a
-binomial coefficient.
+`BoundarySafe n` is the decisive proof bridge: it says that no
+divisibility-minimal divisor strictly above the largest prime factor can be
+realized by one legal row with the required simultaneous carry inequalities.
+It contains neither `f`, a gcd, nor a binomial coefficient.
 
-The additional compiler theorem
+The main structural closure is the compiler theorem
 
 ```lean
 Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
 ```
 
-turns the semantic factor tableau into a finite integer/Boolean system with
-explicit prime-power, selector, prefix-product, base-digit, and borrow rows.
+which turns the semantic factor tableau into a finite integer/Boolean system
+with explicit prime-power, selector, prefix-product, base-digit, and borrow
+rows. If `F` is an ordered exact factorization of `n`, the checked chain gives
+
+\[
+f(n)=\frac{n}{P(n)}
+\quad\Longleftrightarrow\quad
+\neg G(F,P(n)).
+\]
+
+The same row variable and multiplier are shared across every active prime.
+There is no variable, row, or disjunction for every possible multiplier. The
+indexed fields are polynomial in the binary length of `n`; the direct sparse
+description is $O((\log n)^3)$ bits. This is a representation-size statement,
+not a polynomial-time algorithm claim.
 
 ### Original 1978 greatest-prime-power theorem
 
@@ -94,11 +107,12 @@ The non-prime-power conjunct is necessary because a composite prime power has
 
 ### Claim boundary
 
-This is an exact, decidable, non-tautological iff characterization. It covers
-all composite integers, handles both source formulations, and has several
-checked finite encodings. It is a complete solution of the stated
-characterization problem. It is not a short enumeration of factorization
-families; obtaining one would be a stronger optional theorem.
+This is an exact, decidable, non-tautological structural characterization. It
+covers all composite integers, handles both source formulations, and
+culminates in a compact symbolic system rather than an enumeration of the
+original rows. It is a complete solution of the stated characterization
+problem. It is not a short enumeration of factorization families; obtaining
+one would be a stronger optional theorem.
 
 The clean-room novelty audit found no prior source stating or immediately
 implying these exact all-composite criteria and classified the work as a new
@@ -107,10 +121,14 @@ not settle priority or publication.
 
 ### Evidence
 
+- `writeups/part-i-characterization.tex`
 - `proof/PartIWork/report.md`
 - `proof/PartIWork/boundary-antichain.md`
 - `proof/PartIWork/HistoricalPrimePower.lean`
 - `proof/PartIWork/CofactorObstruction.lean`
+- `proof/PartIWork/FactorTableau.lean`
+- `proof/PartIWork/ExplicitG.lean`
+- `docs/part-i-release/complete-prose-proof.md`
 - `docs/part-i-release/README.md`
 - `docs/part-i-release/novelty-audit.md`
 - `docs/part-i-run-coverage-audit.md`
@@ -136,6 +154,7 @@ many such triples.
 
 ### Evidence
 
+- `writeups/part-ii-infinite-family.tex`
 - `proof/docs/proof.md`
 - `proof/docs/statement-audit.md`
 - `proof/Solution.lean`
@@ -184,6 +203,8 @@ See [`part-iii-exploration-map.md`](part-iii-exploration-map.md) for the full
 route ledger and [`part-iii-run-coverage-audit.md`](part-iii-run-coverage-audit.md)
 for the reconciled 105-directory evidence inventory.
 
+The standalone reviewer report is `writeups/part-iii-frontier.tex`.
+
 ## Evidence labels
 
 Use these labels consistently:
@@ -204,7 +225,7 @@ Use these labels consistently:
 
 ## Publication posture
 
-The repository should be read as a candidate proof package under independent
-review. The canonical problem page was still marked open during this work.
+The repository should be read as a proof package under independent review.
 Lean checks formal correctness of the encoded statements; literature priority,
-novelty, and interpretation remain separate review tasks.
+novelty, and interpretation remain separate review tasks. In particular, the
+repository makes no novelty or priority claim for Part (ii).

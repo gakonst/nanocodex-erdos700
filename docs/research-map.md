@@ -17,8 +17,8 @@ evidence that a route was assigned, not evidence that its target was proved.
 
 | Part | Where we ended | Main progression | Best next action |
 | --- | --- | --- | --- |
-| (i) | Solved: kernel-checked exact finite characterizations of both the maintained and original 1978 targets | residue/carry bridge → boundary antichain → prime-power transfer → digit shadows and bounded obstructions → factor-tableau compiler | independent novelty, priority, and publication review |
-| (ii) | Kernel-checked unconditional infinite family | nearby-prime structural lemma → Maynard candidate → PNT replacement → complete Lean proof | independent mathematical, statement, and novelty review |
+| (i) | Solved: kernel-checked compact structural characterizations of both the maintained and original 1978 targets | residue/carry bridge → boundary antichain → prime-power transfer → synchronized factor tableau → explicit integer/Boolean compiler | independent novelty, priority, and publication review |
+| (ii) | Kernel-checked unconditional infinite family; no novelty claim | nearby-prime structural lemma → Maynard candidate → PNT replacement → complete Lean proof | independent mathematical review and comparison with prior or independent resolutions |
 | (iii) | Open beyond the classical \(A=1\) scale | exact weighted reduction → hard residual packets → many construction, averaging, algebraic, and counterexample routes → quantitative no-retry ledger | prove any unbounded gain over \(D(n)\gg\log n\), prove \(A=2\), or build a genuine counterfamily |
 
 The canonical proof artifacts are in [`proof/`](../proof/). The full frozen
@@ -34,11 +34,23 @@ For every composite \(n>1\), the checked development proves
 Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
 ```
 
-and then proves that `BoundarySafe` is equivalent to an explicit finite
-integer/Boolean system. The right side contains no occurrence of `f`, gcd, or
-a binomial coefficient, but it still encodes a genuine simultaneous
-cross-base digit/carry feasibility problem. It is therefore an exact finite
-characterization, not a short taxonomy of factorization shapes.
+and then proves that failure of `BoundarySafe` is equivalent to satisfiability
+of a compact integer/Boolean system `G(F,P(n))`. The system synchronizes one
+selected divisor and one shared multiplier across explicit base-prime digit
+and borrow rows. It contains no occurrence of `f`, gcd, or a binomial
+coefficient and no coordinate for each possible multiplier. Thus the final
+headline form is
+
+\[
+f(n)=\frac{n}{P(n)}
+\quad\Longleftrightarrow\quad
+\neg G(F,P(n)).
+\]
+
+Its sparse description is polynomial in the binary length of $n$; no
+polynomial-time feasibility claim is made. This is an exact compact structural
+characterization, not merely a bounded scan and not a short taxonomy of
+factorization shapes.
 
 The original 1978 paper uses the greatest exact prime-power component
 
@@ -67,12 +79,12 @@ for every composite `n > 1`. Thus both readings of Part (i) are closed.
 | Simplify the multiplier search | Test `m=1`, squarefree-only, divisor-only, endpoint-excluding, and independent-prime criteria | Refuted by explicit regressions | `n=78`, `136`, and `195` show that endpoint inclusion, nontrivial multipliers, repeated powers, and same-row coupling are load-bearing. |
 | Prime-power threshold | Generalize the exact witness and boundary theorem from the largest prime to every proper prime-power divisor | Proved and formalized | One parameterized theorem supplies the bridge to the original 1978 baseline. |
 | Historical prime-power pass | Define the greatest exact prime-power component, isolate composite prime powers, and specialize the threshold theorem | Proved, audited, and formalized | `n=12` separates the source formulations; both now have exact all-composite iff theorems. |
-| Structural-classification pass | Seek a shorter closed taxonomy eliminating the common multiplier | No universal factorization-family enumeration obtained | This is an optional strengthening, not a missing implication in the finite characterization. |
+| Structural-classification pass | Replace the multiplier scan by synchronized accepting digit words and a compact natural-linear system | Proved and formalized | The shared multiplier survives as one symbolic variable; there is no row or disjunction for each possible value. A factorization-family taxonomy remains optional. |
 | Full digit shadow | Replace carry counts by explicit cross-base prefix comparisons over one common positive residue | Proved and formalized | The criterion is visibly independent of the original minimum while preserving same-row coupling. |
 | Canonical bounded obstruction | Prove every boundary divisor satisfies `d ≤ P(n)^2` and expose a finite rejection rectangle | Proved and formalized | The divisor coordinate admits a sharp polynomial bound without changing the theorem. |
 | Cofactor and divisor-poset forms | Normalize `d*m ≤ n/2` to `m ≤ (n/d)/2`, then range directly over `n.divisors` | Proved and formalized | The final search domains are exact, finite, and nonredundant. |
-| Factor tableau | Encode a boundary divisor by one finite prime-exponent vector and one shared multiplier | Proved and formalized | This is a compact semantic certificate with exact soundness and completeness. |
-| Explicit compiler | Replace the semantic tableau by ordered factorization, one-hot selectors, prefix products, base digits, and borrow rows | Proved and formalized | A modular refinement chain was substantially more tractable than one monolithic projection theorem. |
+| Factor tableau | Encode a boundary divisor by one finite prime-exponent vector and one shared multiplier | Proved and formalized | This is the compact semantic breakthrough: one synchronized object replaces enumeration of legal rows. |
+| Explicit compiler | Replace the semantic tableau by ordered factorization, one-hot selectors, prefix products, base digits, and borrow rows | Proved and formalized | Exact soundness and completeness turn the semantic idea into a sparse checkable integer/Boolean system. |
 | Release gate | Build the root, reject placeholders, print axioms, regression-test composites through 1000, rebuild a bound archive, and run a clean novelty audit | Passed | The host campaign selector failed before Lean, but the direct kernel, release, statement, and regression gates passed; publication remains external. |
 
 ### Evidence and campaign trail
@@ -132,6 +144,8 @@ and proves \(f(pqr)=pq>\sqrt{pqr}\).
 
 ### Evidence and campaign trail
 
+- The standalone reviewer document is the
+  [Part (ii) TeX proof](../writeups/part-ii-infinite-family.tex).
 - Start with [`proof/README.md`](../proof/README.md), then read the
   [complete mathematical proof](../proof/docs/proof.md) and
   [statement audit](../proof/docs/statement-audit.md).
@@ -153,8 +167,8 @@ and proves \(f(pqr)=pq>\sqrt{pqr}\).
 ### Remaining boundary
 
 The repository's internal proof gate is complete. Independent mathematical
-review, novelty review, and disposition by the problem community remain
-external to the Lean theorem.
+review and disposition by the problem community remain external to the Lean
+theorem. No novelty or priority claim is made here.
 
 ## Part (iii): arbitrary logarithmic saving
 

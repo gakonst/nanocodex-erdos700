@@ -25,16 +25,27 @@ theorem Erdos700PNT.erdos_700_ii :
 
 The Erdős Problems site still listed the problem as open when this development
 was completed. This repository presents the proof for independent mathematical
-and formal review; it does not claim that the result has already been
-adjudicated by the problem maintainers.
+and formal review. It makes no novelty or priority claim for Part (ii).
 
-The Part (i) solution gives exact finite iff characterizations and an explicit
-certificate compiler. For every composite `n > 1`,
-`Erdos700PartI.f_eq_div_iff_boundarySafe` characterizes
-`f(n) = n / P(n)`, where `P(n)` is the largest prime factor. The theorem
-`Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that the
+The Part (i) solution culminates in a compact structural compiler. For every
+composite `n > 1`, `Erdos700PartI.f_eq_div_iff_boundarySafe` first reduces
+`f(n) = n / P(n)` to the absence of a divisibility-minimal realized carry
+obstruction. `FactorTableau.lean` represents an obstruction by one selected
+prime-exponent vector and one shared multiplier. Finally,
+`Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that a
 raw Boolean-selector, integer-prefix, digit, and borrow system is equivalent
-to the semantic factor tableau.
+to that semantic tableau in both directions. The system does not enumerate
+the possible multiplier values.
+
+For an ordered exact factorization `F`, the composed result is
+
+```text
+Erdos700.f n = n / Erdos700.P n ↔
+  ¬ Erdos700PartI.ExplicitG.G F (Erdos700.P n)
+```
+
+The system has a sparse description polynomial in the binary length of `n`.
+This is a description-size statement, not a polynomial-time algorithm claim.
 
 For the original definition
 
@@ -51,9 +62,9 @@ Erdos700.f n = n / Erdos700.Q n ↔
 
 The proof root also exposes independent order-duality and finite-extremum
 proofs of the historical theorem, plus full-shadow, bounded-obstruction,
-cofactor-normalized, and divisor-poset equivalents. This is a complete
-solution by finite characterization, though not a short enumeration of
-factorization families. See the
+cofactor-normalized, divisor-poset, factor-tableau, and explicit compiler
+equivalents. This is a complete structural solution, though not a short
+enumeration of factorization families. See the
 [recovered release record](../docs/part-i-release/README.md).
 
 ## Proof idea
@@ -91,6 +102,10 @@ examples. See [the mathematical proof](docs/proof.md) and the
 checks. The [methodology case study](../docs/methodology.md) explains how the
 Nanocodex research harness selected, developed, audited, and formalized the
 result.
+
+For a single self-contained reviewer document containing both the full
+Lucas-theorem structural lemma and the PNT construction, see the
+[Part (ii) TeX proof](../writeups/part-ii-infinite-family.tex).
 
 ## Verification
 

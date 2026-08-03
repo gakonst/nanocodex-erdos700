@@ -4,6 +4,19 @@ Prefer the mathematical paper, exact prompt/transcript, source repository, and
 formal or executable evidence over press coverage. Social posts are useful for
 provenance and timing but are not sufficient proof evidence.
 
+## Erdős Problem 700
+
+- P. Erdős and G. Szekeres, “Some number theoretic problems on binomial
+  coefficients,” *Australian Mathematical Society Gazette* 5 (1978), 97–99:
+  [archival PDF](https://www.renyi.hu/~p_erdos/1978-46.pdf).
+- [Maintained Erdős Problems card](https://www.erdosproblems.com/700) and
+  [discussion thread](https://www.erdosproblems.com/forum/thread/700).
+- [Pinned Formal Conjectures encoding](https://github.com/google-deepmind/formal-conjectures/blob/e751934294a381afd2d5fc1124c5953c8e25f9fa/FormalConjectures/ErdosProblems/700.lean).
+- Repository reviewer packets:
+  [Part (i)](../writeups/part-i-characterization.tex),
+  [Part (ii)](../writeups/part-ii-infinite-family.tex), and
+  [Part (iii)](../writeups/part-iii-frontier.tex).
+
 ## OpenAI and model-produced proofs
 
 - Planar unit distance: [official account](https://openai.com/index/model-disproves-discrete-geometry-conjecture), [proof](https://cdn.openai.com/pdf/74c24085-19b0-4534-9c90-465b8e29ad73/unit-distance-proof.pdf), [trace](https://cdn.openai.com/pdf/1625eff6-5ac1-40d8-b1db-5d5cf925de8b/unit-distance-cot.pdf), [commentary](https://arxiv.org/abs/2605.20695).

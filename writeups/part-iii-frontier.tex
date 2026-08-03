@@ -1,0 +1,213 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{booktabs,tabularx}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{3em}
+
+\newtheorem{proposition}{Proposition}
+\newcommand{\choosef}[2]{\binom{#1}{#2}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{Erd\H{o}s Problem 700(iii):\\
+Research Map and Open Frontier}
+\author{Nanocodex Erd\H{o}s 700 project}
+\date{3 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a status report, not a claimed solution.  It records the exact
+weighted carry reduction for Erd\H{o}s Problem 700(iii), the strongest
+retained partial results, the approaches for which we found rigorous
+counterexamples or quantifier failures, and the remaining same-row
+synchronization problem.  No work in this repository proves the target for
+any fixed exponent $A>1$, gives an unbounded improvement over the classical
+$A=1$ scale for all composite integers, or constructs a counterexample to the
+original statement.
+\end{abstract}
+
+\section{Target and exact reformulation}
+
+For composite $n>1$, define
+\[
+ f(n)=\min_{2\leq k\leq\lfloor n/2\rfloor}
+       \gcd\!\left(n,\choosef nk\right).
+\]
+Part (iii) asks whether, for every real $A>0$, there is a constant $C_A>0$
+such that
+\[
+ f(n)\leq C_A\frac{n}{(\log n)^A}                         \tag{1}
+\]
+for every composite $n$.  Put
+\[
+ D_n(k)=\frac{n}{\gcd(n,\choosef nk)},\qquad
+ D(n)=\max_{2\leq k\leq\lfloor n/2\rfloor}D_n(k).
+\]
+Then (1) is equivalent, after absorbing finitely many small $n$, to
+\[
+ D(n)\geq c_A(\log n)^A                                   \tag{2}
+\]
+for a constant $c_A>0$ depending only on $A$.
+
+Write $n=\prod_{p\mid n}p^{a_p}$ and define the retained depth at a legal row
+by
+\[
+ d_p(k)=\max\!\left\{a_p-v_p\!\left(\choosef nk\right),0\right\}.
+\]
+Primewise valuation gives the exact objective
+\[
+ \boxed{
+ \log D_n(k)=\sum_{p\mid n}d_p(k)\log p.}                  \tag{3}
+\]
+Kummer identifies the binomial valuation with the number of base-$p$ carries.
+Thus the open problem is to find one literal legal row $k$ retaining total
+weighted depth at least
+\[
+ A\log\log n-O_A(1).                                      \tag{4}
+\]
+The words ``one row'' are load-bearing: successes at different primes or
+scales do not combine unless they occur at the same integer $k$.
+
+If $q=p^a\parallel n$ and $q\mid k$, scaling gives
+\[
+ v_p\!\left(\choosef nk\right)
+ =v_p\!\left(\choosef{n/q}{k/q}\right),
+ \qquad
+ d_p(k)=\max\!\left\{a-v_p\!\left(\choosef{n/q}{k/q}\right),0\right\}.
+                                                                    \tag{5}
+\]
+This exact component language underlies all of the retained routes.
+
+\section{What has been proved}
+
+The following are complete partial results, not substitutes for (1).
+
+\begin{enumerate}
+\item \textbf{Classical and easy regimes.}
+The greatest-component witness and the classical least-common-multiple
+estimate recover the $A\leq1$ scale.  Prime powers, boundedly many exact
+prime-power components, a sufficiently large component, and sufficiently
+large high-height mass are also controlled.
+
+\item \textbf{Exact hard-case reduction.}
+Outside those regimes, the obstruction can be reduced to many comparable,
+low-height exact prime-power components.  Ordering and pigeonholing produce a
+homogeneous dyadic packet of growing prime bases.  The component cap,
+high-height cutoff, integral-$A$ endpoint, and legal-row endpoint were checked
+explicitly.
+
+\item \textbf{Deep-prefix escape.}
+For each selected fixed-size subset, explicit Chinese-remainder rows can
+suppress carries through
+$\Omega_A(\log n/\log\log n)$ digit levels.  Therefore a genuine obstruction
+must recur in the deep tail; bounded-prefix counterexamples cannot settle the
+problem.
+
+\item \textbf{Exact effective conductor.}
+For
+\[
+ \mathcal A=\{0\leq z<p^D:z\leq T, v_p\choosef Tz<s\},
+ \qquad \Delta=p^D-T,
+\]
+the least residue conductor retained by the campaign is
+\[
+ E=
+ \begin{cases}
+ 0,&\Delta=1,\\
+ \min\!\left(D,\lceil\log_p\Delta\rceil+s-1\right),&\Delta>1.
+ \end{cases}                                                \tag{6}
+\]
+This replaces an abstract tail period by an exact top-gap statistic.
+
+\item \textbf{Limits on structured blockers.}
+Exact power-word anchors in a short prime packet have pairwise-coprime
+exponents, yielding a sub-packet upper bound on their number.  A separate
+cyclotomic argument excludes one sparse four-digit endpoint architecture for
+fixed $A<2$.  Neither result classifies all hostile digit words.
+
+\item \textbf{Conditional transfer.}
+Any construction of one legal row satisfying (4) proves Part (iii).  The
+often-used upper-half first-layer condition is a stronger sufficient
+condition, not an equivalent reformulation.
+\end{enumerate}
+
+\section{Attempt map and no-retry lessons}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.24\textwidth}Y@{}}
+\toprule
+Route family & Disposition and retained lesson \\
+\midrule
+Fixed multiplier menus and naive witness iteration & Explicit counterexamples show that no fixed finite menu, copied component row, or local bounded-loss peeling rule preserves enough depth uniformly. \\
+Independent carry probabilities and abstract set cover & Marginal success at separate primes does not produce one common row.  Any averaging proof needs arithmetic correlation in the actual signed phases. \\
+Pair and packet alignment & Several universal pair-selection and upper-half full-layer statements are false.  An instance-adaptive multiplier or an inverse theorem for hostile words remains plausible. \\
+Carmichael, lcm, determinant, and resultant bridges & Useful exact identities survive, but a fixed cubic Carmichael bridge is false and bounded-degree algebra loses the growing digit tail. \\
+Digit boxes and affine rigidity & Exact escape bounds and sharp examples were proved.  Total box entropy or active-digit count alone cannot force a positive fraction of useful multipliers. \\
+Large sieve, characters, and moment methods & Taking absolute values destroys the phase needed for simultaneous moving-base control.  Fixed moments stop at the singleton/$A=1$ scale. \\
+Counterexample construction & We found counterexamples to methods, not to Erd\H{o}s 700(iii).  No infinite family with a uniform all-row bound contradicting (2) is known here. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+These routes should not be restarted unchanged.  A new version must state
+the additional arithmetic input that defeats the recorded counterexample or
+repairs the failed quantifier.
+
+\section{The surviving bottleneck}
+
+The most direct target is a weighted-depth preservation theorem: move inside
+an explicit legal progression so as to gain a new prime-power layer while
+losing only a controlled fraction of previously retained weight.  A finite
+iteration would need to reach (4).
+
+For $1<A\leq2$, the residual packet is essentially squarefree, so extra
+prime-power height gives no slack.  The central pair problem is therefore:
+
+\begin{quote}
+Given the actual common cofactor and a sufficiently large packet of primes,
+find distinct $p,q$ and one legal multiplier satisfying both complete
+base-$p$ and base-$q$ Lucas digit inequalities.
+\end{quote}
+
+A plausible route is an inverse theorem: long affine avoidance of a Lucas
+digit down-set forces the upper word into a sparse or near-power class; a
+moving-base separation theorem would then show that only a negligible
+fraction of packet primes can be hostile for the same ambient integer.
+Alternatively, an all-row contradiction could average the exact quantities
+in (3), but it must retain their signed cross-base phase instead of multiplying
+marginal probabilities.
+
+\section{What would count as progress}
+
+The repository's acceptance gate for Part (iii) is intentionally concrete.
+Any one of the following would materially move the frontier:
+\begin{enumerate}
+\item a uniform lower bound $D(n)\geq L(n)\log n$ with $L(n)\to\infty$;
+\item a proof of (2) for $A=2$;
+\item the full theorem for every fixed $A>0$;
+\item an infinite counterfamily negating (2) for one fixed $A>0$;
+\item a carry-preserving composition or moving-base inverse theorem strong
+enough to imply (4).
+\end{enumerate}
+
+\section{Evidence and source trail}
+
+The detailed theorem-by-theorem ledger, including the named no-retry
+constraints and the input required to revive each route, is
+\href{https://github.com/gakonst/nanocodex-erdos700/blob/main/docs/part-iii-exploration-map.md}
+{\texttt{docs/part-iii-exploration-map.md}}.  The compact specialist handoff is
+\href{https://github.com/gakonst/nanocodex-erdos700/blob/main/docs/erdos700-iii-bottleneck-brief.md}
+{\texttt{docs/erdos700-iii-bottleneck-brief.md}}.  Persisted-run and session
+coverage audits are linked from the repository research map.
+
+The primary historical source is P.~Erd\H{o}s and G.~Szekeres,
+``Some number theoretic problems on binomial coefficients,''
+\emph{Australian Mathematical Society Gazette} 5 (1978), 97--99,
+\href{https://www.renyi.hu/~p_erdos/1978-46.pdf}{archival PDF}.
+
+\end{document}
