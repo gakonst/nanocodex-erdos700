@@ -1,5 +1,12 @@
 # Structural upgrade for Erdős 700(i)
 
+> **Superseded status note.** This document records the intermediate state
+> before the full digit-shadow, bounded-obstruction, cofactor-normalized,
+> divisor-poset, historical, and explicit compiler theorems were promoted.
+> Its negative statements about completion are retained as research history,
+> not current status. See the
+> [complete release record](../../docs/part-i-release/README.md).
+
 ## Status
 
 The all-composite `CarrySafe` theorem in `ADVERSARIAL_AUDIT.md` is an exact

@@ -18,15 +18,18 @@ the repository records the external disposition.
 
 ## 2. External review of Part (i)
 
-- review the `BoundarySafe` iff theorem and explicit factor-tableau compiler;
-- decide whether the historical word “characterise” accepts an exact finite
-  carry/factorization predicate or demands a closed factorization taxonomy;
-- if necessary, isolate the smallest remaining structural refinement;
-- publish worked strata and regression examples independently of the general
-  compiler.
+- review both exact targets: the maintained largest-prime theorem and the
+  original greatest-exact-prime-power theorem;
+- independently rebuild the direct, order-duality, and extremal historical
+  proofs and the explicit factor-tableau compiler;
+- assess priority and publication positioning using the completed novelty
+  audits, while treating negative search as evidence rather than proof;
+- submit the complete exact finite characterization; a shorter factorization
+  taxonomy may be published as an optional strengthening.
 
-Gate: the claim boundary is accepted by reviewers or narrowed to one explicit
-remaining classification theorem.
+Gate: reviewers accept or identify a concrete error in the encoded statement,
+proof, historical alignment, or characterization interpretation; record
+publication/community disposition separately from kernel status.
 
 ## 3. Part (iii): cross the first quantitative barrier
 

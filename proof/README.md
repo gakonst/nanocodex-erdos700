@@ -1,9 +1,11 @@
 # Lean developments for Erdős Problem 700
 
-This repository contains a kernel-checked Lean 4 proof of the affirmative
-answer to part (ii) of [Erdős Problem 700](https://www.erdosproblems.com/700).
-See the repository's [canonical status page](../docs/status.md) for the exact
-claim boundaries of all three parts.
+This repository contains kernel-checked Lean 4 solutions of Parts (i) and (ii)
+of [Erdős Problem 700](https://www.erdosproblems.com/700). Part (i) covers both
+the maintained largest-prime statement and the original 1978
+greatest-prime-power statement. See the repository's
+[canonical status page](../docs/status.md) for the exact claim boundaries of
+all three parts.
 
 For
 
@@ -26,15 +28,33 @@ was completed. This repository presents the proof for independent mathematical
 and formal review; it does not claim that the result has already been
 adjudicated by the problem maintainers.
 
-The same project contains an exact Part (i) characterization and its explicit
-finite certificate compiler. For every composite `n > 1`,
+The Part (i) solution gives exact finite iff characterizations and an explicit
+certificate compiler. For every composite `n > 1`,
 `Erdos700PartI.f_eq_div_iff_boundarySafe` characterizes
 `f(n) = n / P(n)`, where `P(n)` is the largest prime factor. The theorem
 `Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that the
 raw Boolean-selector, integer-prefix, digit, and borrow system is equivalent
-to the semantic factor tableau. This is a complete finite characterization,
-but not a closed enumeration of factorization families; see
-`PartIWork/report.md` for the review boundary.
+to the semantic factor tableau.
+
+For the original definition
+
+```text
+Q(n) = max { p^(factorization(n,p)) : p is prime and p divides n },
+```
+
+`Erdos700PartI.erdos_700_i_historical` proves
+
+```lean
+Erdos700.f n = n / Erdos700.Q n ↔
+  ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
+```
+
+The proof root also exposes independent order-duality and finite-extremum
+proofs of the historical theorem, plus full-shadow, bounded-obstruction,
+cofactor-normalized, and divisor-poset equivalents. This is a complete
+solution by finite characterization, though not a short enumeration of
+factorization families. See the
+[recovered release record](../docs/part-i-release/README.md).
 
 ## Proof idea
 
@@ -116,13 +136,15 @@ The Part (i) verifier is:
 ```
 
 It builds `PartIWork`, rejects placeholders, audits every promoted theorem's
-axiom dependencies, and runs the finite characterization audit.
+axiom dependencies, and runs the finite characterization audit. The audited
+surface includes both source formulations and every promoted finite form.
 
 ## Repository map
 
 - `Solution.lean` assembles the exact infinitude theorem.
-- `PartIWork/` contains the Part (i) boundary characterization, factor tableau,
-  and explicit finite-system compiler.
+- `PartIWork/` contains the complete Part (i) solution: parameterized
+  prime-power thresholds, three historical proof architectures, finite
+  obstruction forms, factor tableau, and explicit finite-system compiler.
 - `PartIVerify.lean` is the public Part (i) theorem and axiom-audit surface.
 - `Erdos700PNT.lean` is the root build and dependency-audit module.
 - `PNTWork/` proves the required prime-counting lower bound.
@@ -137,6 +159,10 @@ axiom dependencies, and runs the finite characterization audit.
 - `../docs/research-map.md` records the progression and lessons from all three
   parts; `../docs/part-iii-exploration-map.md` is the detailed open-frontier
   ledger.
+- `../docs/part-i-release/` retains the compact Ubuntu release, referee,
+  reproducibility, regression, and novelty evidence promoted after recovery.
+- `../docs/part-i-run-coverage-audit.md` maps every recovered Part (i) run
+  to its canonical result or superseding proof.
 
 ## License
 

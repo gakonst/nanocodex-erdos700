@@ -40,6 +40,14 @@ promoted_theorems=(
   realized_iff_exists_dvd_residueCarryWeight
   residueCarrySafe_iff_boundarySafe
   f_eq_div_iff_boundarySafe
+  f_eq_div_primePow_iff_boundarySafeAt
+  erdos_700_i_historical
+  erdos_700_i_historical_orderDual
+  erdos_700_i_historical_extremal
+  f_eq_div_iff_fullShadowSafe
+  f_eq_div_iff_boundedObstructionSafe
+  f_eq_div_iff_cofactorObstructionSafe
+  f_eq_div_iff_divisorPosetSafe
   factorTableauFeasible_iff_exists_boundary_realized
   boundarySafeAt_iff_factorTableauSafe
 )

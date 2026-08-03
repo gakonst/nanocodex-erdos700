@@ -7,23 +7,24 @@ what survived, and what each stage taught us. It sits between the short
 The scope is deliberately auditable: this map covers the tracked proof
 developments, every frozen Erdős 700 campaign prompt in
 [`campaigns/problems/`](../campaigns/problems/), the promoted candidate
-artifacts, and the persisted Part (iii) runs and sessions audited through
-28 July 2026, including the late `dev-georgios` reconciliation. It does not
-claim to recover unrecorded thoughts. A prompt is
+artifacts, the complete recovered Part (i) release campaign, and the persisted
+Part (iii) runs and sessions audited through 28 July 2026, including the late
+`dev-georgios` reconciliation. It does not claim to recover unrecorded
+thoughts. A prompt is
 evidence that a route was assigned, not evidence that its target was proved.
 
 ## One-screen overview
 
 | Part | Where we ended | Main progression | Best next action |
 | --- | --- | --- | --- |
-| (i) | Kernel-checked exact equality characterization and explicit finite certificate system | residue/carry bridge → boundary antichain → factor tableau → integer selector/digit/borrow compiler | independent review of whether this is the intended historical notion of “characterize” |
+| (i) | Solved: kernel-checked exact finite characterizations of both the maintained and original 1978 targets | residue/carry bridge → boundary antichain → prime-power transfer → digit shadows and bounded obstructions → factor-tableau compiler | independent novelty, priority, and publication review |
 | (ii) | Kernel-checked unconditional infinite family | nearby-prime structural lemma → Maynard candidate → PNT replacement → complete Lean proof | independent mathematical, statement, and novelty review |
 | (iii) | Open beyond the classical \(A=1\) scale | exact weighted reduction → hard residual packets → many construction, averaging, algebraic, and counterexample routes → quantitative no-retry ledger | prove any unbounded gain over \(D(n)\gg\log n\), prove \(A=2\), or build a genuine counterfamily |
 
 The canonical proof artifacts are in [`proof/`](../proof/). The full frozen
 prompt inventory is in the [campaign index](../campaigns/problems/README.md).
 
-## Part (i): equality with the largest-prime witness
+## Part (i): complete equality-case solution
 
 ### Result
 
@@ -39,27 +40,50 @@ a binomial coefficient, but it still encodes a genuine simultaneous
 cross-base digit/carry feasibility problem. It is therefore an exact finite
 characterization, not a short taxonomy of factorization shapes.
 
+The original 1978 paper uses the greatest exact prime-power component
+
+\[
+Q(n)=\max_{p\mid n}p^{v_p(n)}
+\]
+
+rather than the maintained page's largest prime factor. The formulations are
+not equivalent (`n=12` separates them). The recovered release proves the
+literal historical theorem
+
+```lean
+Erdos700.f n = n / Erdos700.Q n ↔
+  ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
+```
+
+for every composite `n > 1`. Thus both readings of Part (i) are closed.
+
 ### Route map
 
 | Stage | What we tried | Disposition | What we learned / retained |
 | --- | --- | --- | --- |
-| Freeze the target | Separate the largest-prime statement from nearby prime-power-component formulations and forbid a predicate that merely recomputes `f` | Necessary statement control | “Characterization” has a mathematical part and an external interpretation part; they must be reported separately. |
+| Freeze the target | Separate the maintained largest-prime statement from the original greatest-prime-power formulation and forbid a predicate that merely recomputes `f` | Necessary statement control | The source formulations are genuinely different and require separate theorems. |
 | Reuse Part (ii) machinery | Express gcd size through prime-power carry deficits and prove the largest-prime row gives the baseline value | Proved | The equality question is exactly the absence of an admissible row with overweight retained prime-power mass. |
 | Boundary-antichain reduction | Replace all overweight divisors by divisibility-minimal boundary divisors and ask whether one common multiplier realizes all their carry inequalities | Proved and formalized | Minimal divisors are the right finite obstruction set; independent primewise witnesses are not enough. |
 | Simplify the multiplier search | Test `m=1`, squarefree-only, divisor-only, endpoint-excluding, and independent-prime criteria | Refuted by explicit regressions | `n=78`, `136`, and `195` show that endpoint inclusion, nontrivial multipliers, repeated powers, and same-row coupling are load-bearing. |
-| Historical prime-power pass | Audit the Erdős–Szekeres greatest-prime-power formulation separately from the modern largest-prime target | Partial, kept separate | The two baselines are not interchangeable (`n=12` separates relevant formulations); source alignment cannot be repaired by notation. |
-| Structural-classification pass | Seek a shorter closed taxonomy eliminating the common multiplier | No universal shorter taxonomy obtained | The quotient-carry recurrence and several solved strata are useful, but the all-composite cross-base feasibility problem remains irreducible in the current work. |
+| Prime-power threshold | Generalize the exact witness and boundary theorem from the largest prime to every proper prime-power divisor | Proved and formalized | One parameterized theorem supplies the bridge to the original 1978 baseline. |
+| Historical prime-power pass | Define the greatest exact prime-power component, isolate composite prime powers, and specialize the threshold theorem | Proved, audited, and formalized | `n=12` separates the source formulations; both now have exact all-composite iff theorems. |
+| Structural-classification pass | Seek a shorter closed taxonomy eliminating the common multiplier | No universal factorization-family enumeration obtained | This is an optional strengthening, not a missing implication in the finite characterization. |
+| Full digit shadow | Replace carry counts by explicit cross-base prefix comparisons over one common positive residue | Proved and formalized | The criterion is visibly independent of the original minimum while preserving same-row coupling. |
+| Canonical bounded obstruction | Prove every boundary divisor satisfies `d ≤ P(n)^2` and expose a finite rejection rectangle | Proved and formalized | The divisor coordinate admits a sharp polynomial bound without changing the theorem. |
+| Cofactor and divisor-poset forms | Normalize `d*m ≤ n/2` to `m ≤ (n/d)/2`, then range directly over `n.divisors` | Proved and formalized | The final search domains are exact, finite, and nonredundant. |
 | Factor tableau | Encode a boundary divisor by one finite prime-exponent vector and one shared multiplier | Proved and formalized | This is a compact semantic certificate with exact soundness and completeness. |
 | Explicit compiler | Replace the semantic tableau by ordered factorization, one-hot selectors, prefix products, base digits, and borrow rows | Proved and formalized | A modular refinement chain was substantially more tractable than one monolithic projection theorem. |
-| Release gate | Build the root, reject placeholders, print axioms, and regression-test composites through (1000) | Passed internally | Lean establishes the encoded iff and compiler; it does not adjudicate historical taste or novelty. |
+| Release gate | Build the root, reject placeholders, print axioms, regression-test composites through 1000, rebuild a bound archive, and run a clean novelty audit | Passed | The host campaign selector failed before Lean, but the direct kernel, release, statement, and regression gates passed; publication remains external. |
 
 ### Evidence and campaign trail
 
 - The maintained proof narrative is
   [`proof/PartIWork/report.md`](../proof/PartIWork/report.md), with the
-  [boundary-antichain proof](../proof/PartIWork/boundary-antichain.md),
-  [structural analysis](../proof/PartIWork/STRUCTURAL_UPGRADE.md), and
-  [adversarial audit](../proof/PartIWork/ADVERSARIAL_AUDIT.md).
+  [boundary-antichain proof](../proof/PartIWork/boundary-antichain.md).
+- The complete recovered release, including the historical report, prose
+  proof, statement/referee/reproducibility audits, regression certificate,
+  per-formulation adversarial audits, and novelty search, is indexed in the
+  [Part (i) release record](part-i-release/README.md).
 - The public theorem and dependency surface is
   [`proof/PartIVerify.lean`](../proof/PartIVerify.lean); the deterministic gate
   is [`proof/scripts/verify-part-i.sh`](../proof/scripts/verify-part-i.sh).
@@ -67,16 +91,18 @@ characterization, not a short taxonomy of factorization shapes.
   [campaign index](../campaigns/problems/README.md). It records the initial
   target, boundary reduction, historical split, structural attempt, explicit
   borrow compiler, projection repair, refinement reset, and release audit.
-- The persisted-run audit lists the Part (i) campaign and repair runs in its
-  [out-of-scope table](part-iii-run-coverage-audit.md#outside-part-iii-scope).
-  They are “out of scope” only for that Part (iii) audit, not for this map.
+- The [Part (i) persisted-run audit](part-i-run-coverage-audit.md) disposes
+  every discovery, release, compiler, and repair run and identifies the
+  canonical destination of each durable result.
 
 ### Remaining boundary
 
-There is no known formal gap in the encoded largest-prime theorem. The open
-question is external: whether an exact finite carry/factorization system is a
-satisfactory answer to the historical request to characterize all equality
-cases, or whether a shorter factorization-only classification is required.
+There is no known mathematical or formal gap in either Part (i) formulation.
+The repository treats exact finite iff criteria independent of the original
+minimum as a complete solution. A shorter factorization-family enumeration
+would strengthen the result but is not required to discharge the stated
+characterization target. Novelty, priority, publication, and community
+disposition remain external.
 
 ## Part (ii): infinitely many strict examples
 
@@ -189,6 +215,8 @@ extra input needed to revive each route.
   ledgers above.
 - [`experiments/erdos700_extremal.py`](../experiments/erdos700_extremal.py):
   bounded game selection and falsification, never asymptotic evidence.
+- [Recovered Route 3 certificate](../experiments/certificates/route3-verification.json):
+  compact exact finite checks, also diagnostic rather than asymptotic evidence.
 
 ### Exact frontier
 
@@ -235,6 +263,8 @@ Operational lessons about the research harness are kept separately in
 | Artifact | Canonical location | Authority |
 | --- | --- | --- |
 | Promoted Parts (i) and (ii) proofs | [`proof/`](../proof/) | Lean sources, prose proofs, statement audits, deterministic verification |
+| Complete Part (i) release evidence | [`docs/part-i-release/`](part-i-release/README.md) | modern/historical proofs, alternate routes, audits, and regressions |
+| Recovered-host disposition | [`docs/dev-georgios-reconciliation.md`](dev-georgios-reconciliation.md) | promoted versus raw/duplicate/separate-upstream material |
 | Current claim boundaries | [`docs/status.md`](status.md) | repository status vocabulary and publication posture |
 | Cross-problem history | this document | narrative route and lesson map |
 | Exhaustive Part (iii) synthesis | [`docs/part-iii-exploration-map.md`](part-iii-exploration-map.md) | promoted partial results and do-not-retry ledger |

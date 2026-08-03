@@ -17,23 +17,25 @@ f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom nk\right).
 
 The three questions are:
 
-1. characterize the integers for which \(f(n)=n/P(n)\), where \(P(n)\) is the
-   largest prime factor of \(n\);
+1. characterize the integers for which \(f(n)=n/P(n)\). The maintained
+   statement takes \(P(n)\) to be the largest prime factor; the 1978 paper
+   takes it to be the greatest exact prime-power component. These are
+   different targets, and this repository proves both;
 2. determine whether \(f(n)>\sqrt n\) for infinitely many composite \(n\);
 3. determine whether, for every \(A>0\),
    \(f(n)\ll_A n/(\log n)^A\).
 
 ## Status table
 
-| Part  | Internal status             | Exact result                                                                                    | Remaining external question                                                                               |
-| ----- | --------------------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| (i)   | Complete and kernel-checked | `f_eq_div_iff_boundarySafe` plus an equivalent explicit finite factor-tableau constraint system | Whether the historical request for a “characterization” demands a more closed factorization-only taxonomy |
-| (ii)  | Complete and kernel-checked | `Erdos700PNT.erdos_700_ii` proves an infinite set with `f(n)^2 > n`                             | Independent mathematical review, novelty audit, and community adjudication                                |
-| (iii) | Open                        | Classical \(A\le1\) range; several exact partial lemmas and method counterexamples              | Any unconditional improvement beyond \(D(n)\gg\log n\), the full theorem, or a counterexample             |
+| Part  | Internal status | Exact result | Remaining external question |
+| --- | --- | --- | --- |
+| (i) | Solved and kernel-checked | Exact finite iff theorems for both the maintained largest-prime target and the original greatest-prime-power target | Independent novelty, priority, publication, and community adjudication |
+| (ii) | Solved and kernel-checked | `Erdos700PNT.erdos_700_ii` proves an infinite set with `f(n)^2 > n` | Independent mathematical review, novelty audit, and community adjudication |
+| (iii) | Open | Classical \(A\le1\) range; several exact partial lemmas and method counterexamples | Any unconditional improvement beyond \(D(n)\gg\log n\), the full theorem, or a counterexample |
 
 ## Part (i)
 
-### Checked theorem
+### Maintained largest-prime theorem
 
 For every composite \(n>1\),
 
@@ -57,23 +59,61 @@ Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
 turns the semantic factor tableau into a finite integer/Boolean system with
 explicit prime-power, selector, prefix-product, base-digit, and borrow rows.
 
-### What this does and does not establish
+### Original 1978 greatest-prime-power theorem
+
+Define
+
+\[
+Q(n)=\max_{p\mid n}p^{v_p(n)}.
+\]
+
+This differs from the largest prime factor: \(n=12\) separates the two
+formulations. The checked historical theorem is
+
+```lean
+theorem Erdos700PartI.erdos_700_i_historical
+    (n : ℕ) (hn : 1 < n) (hcomp : ¬ n.Prime) :
+    Erdos700.f n = n / Erdos700.Q n ↔
+      ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
+```
+
+The non-prime-power conjunct is necessary because a composite prime power has
+\(Q(n)=n\) while \(f(n)>1=n/Q(n)\).
+
+### Equivalent checked forms
+
+| Form | Final theorem |
+| --- | --- |
+| Proper prime-power baseline | `f_eq_div_primePow_iff_boundarySafeAt` |
+| Full cross-base digit shadow | `f_eq_div_iff_fullShadowSafe` |
+| Boundary range \(P(n)<d\le P(n)^2\) | `f_eq_div_iff_boundedObstructionSafe` |
+| Exact cofactor multiplier range | `f_eq_div_iff_cofactorObstructionSafe` |
+| Exact divisor-poset range | `f_eq_div_iff_divisorPosetSafe` |
+| Semantic factor tableau | `boundarySafeAt_iff_factorTableauSafe` |
+| Explicit integer/Boolean compiler | `explicitG_iff_factorTableauFeasible` |
+
+### Claim boundary
 
 This is an exact, decidable, non-tautological iff characterization. It covers
-all composite integers and has a checked finite encoding. It does not remove
-the common multiplier from the digit/carry realization problem and therefore
-is not a short list of factorization shapes.
+all composite integers, handles both source formulations, and has several
+checked finite encodings. It is a complete solution of the stated
+characterization problem. It is not a short enumeration of factorization
+families; obtaining one would be a stronger optional theorem.
 
-The repository calls the formal development complete. It does not claim that
-external reviewers must accept this as the intended final form of the
-historical word “characterise.”
+The clean-room novelty audit found no prior source stating or immediately
+implying these exact all-composite criteria and classified the work as a new
+application of known Kummer/Lucas methods. That negative search evidence does
+not settle priority or publication.
 
 ### Evidence
 
 - `proof/PartIWork/report.md`
 - `proof/PartIWork/boundary-antichain.md`
-- `proof/PartIWork/STRUCTURAL_UPGRADE.md`
-- `proof/PartIWork/ADVERSARIAL_AUDIT.md`
+- `proof/PartIWork/HistoricalPrimePower.lean`
+- `proof/PartIWork/CofactorObstruction.lean`
+- `docs/part-i-release/README.md`
+- `docs/part-i-release/novelty-audit.md`
+- `docs/part-i-run-coverage-audit.md`
 - `proof/PartIVerify.lean`
 - `proof/scripts/verify-part-i.sh`
 

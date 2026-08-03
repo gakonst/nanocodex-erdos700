@@ -6,17 +6,18 @@ attack on [Erdős Problem 700](https://www.erdosproblems.com/700). It contains:
 [![Lean proof](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml)
 [![Rust harness](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml)
 
-- a kernel-checked characterization for Part (i);
+- a complete kernel-checked solution of Part (i), covering both the maintained
+  largest-prime statement and the original 1978 greatest-prime-power statement;
 - a kernel-checked unconditional proof of Part (ii);
 - the Nanocodex application and methodology used to discover, audit, and
   formalize those results;
 - an explicit account of the unresolved obstruction in Part (iii), including
   the routes we tried and the counterexamples that killed them.
 
-The repository separates internal proof completion from external mathematical
-acceptance. The Lean kernel checks the encoded theorems. It does not decide
-novelty, historical interpretation, or whether the community considers the
-Part (i) characterization sufficiently structural.
+The repository separates proof completion from publication and priority.
+Part (i) is solved here by exact finite iff characterizations; the Lean kernel
+checks the encoded theorems, while independent review still decides novelty,
+priority, exposition, and community acceptance.
 
 ## Read this repository in order
 
@@ -43,19 +44,21 @@ f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom nk\right),
 
 the three subproblems currently stand as follows:
 
-| Part  | Repository result                                                                               | Evidence                                                   | Claim boundary                                                                                               |
-| ----- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| (i)   | \(f(n)=n/P(n)\) iff `BoundarySafe(n)`, with an equivalent explicit finite factor-tableau system | Lean build, axiom audit, finite regression audit           | Complete finite carry/factorization characterization; not a closed enumeration of all factorization families |
-| (ii)  | Infinitely many composite \(n\) satisfy \(f(n)^2>n\)                                            | Complete natural proof, Lean build, axiom audit            | Internally complete; independent novelty and community review remain external                                |
-| (iii) | Open for \(A>1\)                                                                                | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical \(D(n)\gg\log n\) scale                |
+| Part  | Repository result | Evidence | Claim boundary |
+| --- | --- | --- | --- |
+| (i) | Complete exact finite characterizations for the maintained \(n/P(n)\) target and the original 1978 \(n/Q(n)\) target | Lean build, axiom audit, clean release rebuild, finite regression and statement audits | Solved internally; independent novelty, priority, and publication review remain external |
+| (ii) | Infinitely many composite \(n\) satisfy \(f(n)^2>n\) | Complete natural proof, Lean build, axiom audit | Solved internally; independent novelty and community review remain external |
+| (iii) | Open for \(A>1\) | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical \(D(n)\gg\log n\) scale |
 
-Here \(P(n)\) in Part (i) is the largest prime factor of \(n\), as in the
-formal statement. See [the canonical status and claim boundaries](docs/status.md)
-before quoting a result from this repository.
+Here \(P(n)\) is the largest prime factor used by the maintained problem page.
+The 1978 paper instead uses \(Q(n)\), the greatest exact prime-power component
+of \(n\); the repository proves both non-equivalent formulations. See
+[the canonical status and claim boundaries](docs/status.md) before quoting a
+result.
 
 ## The two completed developments
 
-### Part (i): exact equality characterization
+### Part (i): complete solution by exact finite characterization
 
 For every composite \(n>1\), the Lean development proves
 
@@ -68,11 +71,36 @@ prime-power, prefix-product, digit, and borrow constraints. The compiler
 theorem proves that the finite system has neither false positives nor false
 negatives relative to the semantic factor tableau.
 
+For the literal 1978 definition
+
+\[
+Q(n)=\max_{p\mid n}p^{v_p(n)},
+\]
+
+the checked historical theorem is
+
+```lean
+Erdos700.f n = n / Erdos700.Q n ↔
+  ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
+```
+
+The release also proves equivalent full-digit-shadow, bounded-obstruction,
+cofactor-normalized, divisor-poset, factor-tableau, and explicit
+integer/Boolean forms. Thus “characterization” describes the form of the
+solution; it is not a partial-result label.
+
 - [Part (i) overview and scope](proof/PartIWork/report.md)
+- [Recovered complete release record](docs/part-i-release/README.md)
+- [Every recovered Part (i) run and what it contributed](docs/part-i-run-coverage-audit.md)
+- [Original 1978 statement and theorem](docs/part-i-release/historical-characterization-report.md)
+- [Independent novelty audit](docs/part-i-release/novelty-audit.md)
 - [Human-readable boundary-antichain proof](proof/PartIWork/boundary-antichain.md)
-- [Structural upgrade and limitations](proof/PartIWork/STRUCTURAL_UPGRADE.md)
-- [Adversarial audit](proof/PartIWork/ADVERSARIAL_AUDIT.md)
+- [Superseded intermediate structural audit](proof/PartIWork/STRUCTURAL_UPGRADE.md)
 - [Public Lean verification surface](proof/PartIVerify.lean)
+
+The broader [`dev-georgios` reconciliation](docs/dev-georgios-reconciliation.md)
+records what was promoted, what remains raw provenance, and where the separate
+Nanocodex runtime patch was preserved.
 
 ### Part (ii): an unconditional infinite family
 
@@ -196,8 +224,9 @@ organized around Erdős 700 and the evidence produced here.
 - “Method counterexample” refutes an auxiliary strategy, not Erdős 700.
 - “Conditional reduction” is not progress unless its hypotheses are proved
   uniformly and are demonstrably easier than the original target.
-- “Solved” remains subject to independent mathematical, novelty, and community
-  review.
+- “Solved internally” means the repository contains a complete checked proof
+  of the exact statement. Novelty, priority, publication, and community
+  disposition remain separate external judgments.
 
 ## License
 

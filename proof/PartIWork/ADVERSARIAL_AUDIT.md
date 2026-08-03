@@ -1,10 +1,18 @@
 # Adversarial audit of the carry characterization
 
+> **Superseded status note.** This audit predates the prime-power threshold,
+> original 1978 specialization, full-shadow theorem, bounded/cofactor/divisor
+> obstruction forms, and explicit factor-tableau compiler. Its objections
+> drove those upgrades, but its conclusion that Part (i) was not yet solved is
+> no longer current. See the
+> [complete release record](../../docs/part-i-release/README.md) and
+> [`PartIVerify.lean`](../PartIVerify.lean).
+
 Audited artifact:
 `runs/math-1784843263-47597/worker-reports/agent-1-padic-proof-architect.md`
 on the remote campaign host.
 
-## Verdict
+## Verdict at the time of this intermediate audit
 
 The p-adic identities and the stated equivalence with `CarrySafe` are
 mathematically correct. I found no boundary or repeated-prime-power error.

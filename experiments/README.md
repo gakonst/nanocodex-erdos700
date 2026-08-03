@@ -24,3 +24,11 @@ python experiments/erdos700_extremal.py \
 
 The output is diagnostic only. Finite rows cannot prove or disprove the
 asymptotic conjecture.
+
+## Recovered Route 3 certificate
+
+[`certificates/route3-verification.json`](certificates/route3-verification.json)
+is a compact exact diagnostic recovered from `dev-georgios`. It records
+finite block-compression, squarefree first-layer, frontier, partial-layer, and
+balanced-witness checks. A passing certificate validates those computations
+only; it is not an asymptotic Part (iii) result.

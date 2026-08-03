@@ -1,0 +1,100 @@
+{
+  "checks": [
+    {
+      "check": "block_compression",
+      "data": {
+        "n_max": 150,
+        "tuples": 21570
+      },
+      "status": "pass"
+    },
+    {
+      "check": "squarefree_U1_all_indices",
+      "data": {
+        "30": {
+          "Dmax": 5,
+          "first_argmax": 5,
+          "lambda": 4
+        },
+        "858": {
+          "Dmax": 26,
+          "first_argmax": 338,
+          "lambda": 60
+        }
+      },
+      "status": "pass"
+    },
+    {
+      "check": "one_frontier_examples",
+      "data": [
+        {
+          "A": 1,
+          "Dmax": 3,
+          "first_argmax": 3,
+          "frontier": 3,
+          "lambda": 2,
+          "n": 6
+        },
+        {
+          "A": 1,
+          "Dmax": 5,
+          "first_argmax": 5,
+          "frontier": 5,
+          "lambda": 4,
+          "n": 30
+        },
+        {
+          "A": 1,
+          "Dmax": 155,
+          "first_argmax": 155,
+          "frontier": 31,
+          "lambda": 60,
+          "n": 930
+        },
+        {
+          "A": 2,
+          "Dmax": 5,
+          "first_argmax": 5,
+          "frontier": 5,
+          "lambda": 4,
+          "n": 10
+        },
+        {
+          "A": 2,
+          "Dmax": 13,
+          "first_argmax": 13,
+          "frontier": 13,
+          "lambda": 12,
+          "n": 130
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "check": "prime_power_partial_layers",
+      "data": {
+        "indices": {
+          "full": 9,
+          "lower": 75
+        },
+        "n": 171,
+        "q": 9
+      },
+      "status": "pass"
+    },
+    {
+      "check": "balanced_t0_witness",
+      "data": {
+        "420_D_cubed_minus_n": 31079849414237635364425348212060180,
+        "D": 44295075909,
+        "D_exponents": {
+          "3": 17,
+          "7": 3
+        }
+      },
+      "status": "pass"
+    }
+  ],
+  "script_sha256": "6747f8febbcf43364d72eb18355527d3ab6d874670f1bb9c232a512fb3e7fbad",
+  "status": "pass"
+}

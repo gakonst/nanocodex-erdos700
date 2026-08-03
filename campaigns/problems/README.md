@@ -28,7 +28,11 @@ the [canonical status](../../docs/status.md), and the detailed
 | Acceptance | [release gate](erdos-700-i-release-gate.md) | Run statement, kernel, placeholder, regression, reproducibility, and interpretation audits. |
 
 The promoted result is under [`../../proof/PartIWork/`](../../proof/PartIWork/).
-Its exact disposition is in the [Part (i) research map](../../docs/research-map.md#part-i-equality-with-the-largest-prime-witness).
+The complete modern/historical release and alternate proofs are indexed in the
+[Part (i) release record](../../docs/part-i-release/README.md); every persisted
+run is disposed in the [Part (i) run audit](../../docs/part-i-run-coverage-audit.md).
+Its exact claim boundary is in the
+[Part (i) research map](../../docs/research-map.md#part-i-equality-with-the-largest-prime-witness).
 
 ## Part (ii) sequence
 

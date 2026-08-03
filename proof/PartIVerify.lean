@@ -1,12 +1,20 @@
 import PartIWork
 
 /-!
-This is the public verification surface for the Part (i) boundary-antichain
-characterization. It checks the exact theorem and prints the transitive
-dependencies of every load-bearing bridge promoted by the characterization.
+This is the public verification surface for the complete Part (i) solution.
+It checks the maintained largest-prime statement, the original 1978
+greatest-prime-power statement, and every promoted finite characterization.
 -/
 
 #check Erdos700PartI.f_eq_div_iff_boundarySafe
+#check Erdos700PartI.f_eq_div_primePow_iff_boundarySafeAt
+#check Erdos700PartI.erdos_700_i_historical
+#check Erdos700PartI.erdos_700_i_historical_orderDual
+#check Erdos700PartI.erdos_700_i_historical_extremal
+#check Erdos700PartI.f_eq_div_iff_fullShadowSafe
+#check Erdos700PartI.f_eq_div_iff_boundedObstructionSafe
+#check Erdos700PartI.f_eq_div_iff_cofactorObstructionSafe
+#check Erdos700PartI.f_eq_div_iff_divisorPosetSafe
 #check Erdos700PartI.factorTableauFeasible_iff_exists_boundary_realized
 #check Erdos700PartI.boundarySafeAt_iff_factorTableauSafe
 #check Erdos700PartI.ExplicitTableau.borrowRow_iff_outgoing
@@ -24,6 +32,14 @@ dependencies of every load-bearing bridge promoted by the characterization.
 #print axioms Erdos700PartI.realized_iff_exists_dvd_residueCarryWeight
 #print axioms Erdos700PartI.residueCarrySafe_iff_boundarySafe
 #print axioms Erdos700PartI.f_eq_div_iff_boundarySafe
+#print axioms Erdos700PartI.f_eq_div_primePow_iff_boundarySafeAt
+#print axioms Erdos700PartI.erdos_700_i_historical
+#print axioms Erdos700PartI.erdos_700_i_historical_orderDual
+#print axioms Erdos700PartI.erdos_700_i_historical_extremal
+#print axioms Erdos700PartI.f_eq_div_iff_fullShadowSafe
+#print axioms Erdos700PartI.f_eq_div_iff_boundedObstructionSafe
+#print axioms Erdos700PartI.f_eq_div_iff_cofactorObstructionSafe
+#print axioms Erdos700PartI.f_eq_div_iff_divisorPosetSafe
 #print axioms Erdos700PartI.factorTableauFeasible_iff_exists_boundary_realized
 #print axioms Erdos700PartI.boundarySafeAt_iff_factorTableauSafe
 #print axioms Erdos700PartI.ExplicitTableau.borrowRow_iff_outgoing
