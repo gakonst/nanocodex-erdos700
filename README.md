@@ -39,7 +39,7 @@ artifacts, or the broader case catalog.
 For
 
 $$
-f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom{n}{k}\right),
+f(n)=\min_{2\le k\le n/2}\gcd\left(n,\binom{n}{k}\right),
 $$
 
 the three subproblems currently stand as follows:
@@ -88,7 +88,7 @@ $$
 f(n)=\frac{n}{Q(n)}
 \quad\Longleftrightarrow\quad
 \neg\mathrm{IsPrimePow}(n)
-\;\land\;
+\land
 \mathrm{HistoricalBoundarySafe}(n).
 $$
 
@@ -118,11 +118,9 @@ Nanocodex runtime patch was preserved.
 The Lean development proves
 
 $$
-\left\{
-  n\in\mathbb N:
-  n>1,\ n\ \mathrm{composite},\ f(n)^2>n
-\right\}
-\ \mathrm{is\ infinite}.
+\mathrm{Infinitely\ many\ composite}\ n\in\mathbb N
+\ \mathrm{satisfy}\ n>1
+\ \mathrm{and}\ f(n)^2>n.
 $$
 
 The exact Lean declaration is `Erdos700PNT.erdos_700_ii`.
