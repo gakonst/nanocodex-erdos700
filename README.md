@@ -39,7 +39,7 @@ artifacts, or the broader case catalog.
 For
 
 $$
-f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom nk\right),
+f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom{n}{k}\right),
 $$
 
 the three subproblems currently stand as follows:
@@ -62,14 +62,19 @@ result.
 
 For every composite $n>1$, the Lean development proves
 
-```lean
-Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
-```
+$$
+f(n)=\frac{n}{P(n)}
+\quad\Longleftrightarrow\quad
+\operatorname{BoundarySafe}(n).
+$$
 
-and compiles `BoundarySafe` into an explicit finite system of selector,
-prime-power, prefix-product, digit, and borrow constraints. The compiler
-theorem proves that the finite system has neither false positives nor false
-negatives relative to the semantic factor tableau.
+The exact Lean declaration is
+`Erdos700PartI.f_eq_div_iff_boundarySafe`.
+
+The development also compiles `BoundarySafe` into an explicit finite system
+of selector, prime-power, prefix-product, digit, and borrow constraints. The
+compiler theorem proves that the finite system has neither false positives nor
+false negatives relative to the semantic factor tableau.
 
 For the literal 1978 definition
 
@@ -79,10 +84,16 @@ $$
 
 the checked historical theorem is
 
-```lean
-Erdos700.f n = n / Erdos700.Q n ↔
-  ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
-```
+$$
+f(n)=\frac{n}{Q(n)}
+\quad\Longleftrightarrow\quad
+\neg\operatorname{PrimePow}(n)
+\;\land\;
+\operatorname{HistoricalBoundarySafe}(n).
+$$
+
+The exact Lean declaration is
+`Erdos700PartI.erdos_700_i_historical`.
 
 The release also proves equivalent full-digit-shadow, bounded-obstruction,
 cofactor-normalized, divisor-poset, factor-tableau, and explicit
@@ -106,11 +117,16 @@ Nanocodex runtime patch was preserved.
 
 The Lean development proves
 
-```lean
-theorem Erdos700PNT.erdos_700_ii :
-    {n : ℕ | ¬n.Prime ∧ 1 < n ∧
-      (Erdos700.f n) ^ 2 > n}.Infinite
-```
+$$
+\left\{
+  n\in\mathbb N
+  \;\middle|\;
+  n>1,\ n\text{ is composite},\ f(n)^2>n
+\right\}
+\text{ is infinite}.
+$$
+
+The exact Lean declaration is `Erdos700PNT.erdos_700_ii`.
 
 The proof uses the prime number theorem to construct nearby primes
 $p<q<r$ with asymmetric gaps. A Lucas-theorem argument proves that every
@@ -126,11 +142,12 @@ legal row retains at least two primes, so $f(pqr)=pq>\sqrt{pqr}$.
 Put
 
 $$
-D_n(k)=\frac{n}{\gcd(n,\binom nk)},\qquad
+D_n(k)=\frac{n}{\gcd\!\left(n,\binom{n}{k}\right)},\qquad
 D(n)=\max_{2\le k\le n/2}D_n(k).
 $$
 
-Part (iii) is equivalent to proving, for every fixed $A>0$,
+Part (iii) is equivalent to proving that, for every fixed $A>0$, there is a
+constant $c_A>0$ such that
 
 $$
 D(n)\ge c_A(\log n)^A
