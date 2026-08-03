@@ -1,4 +1,4 @@
-name = "erdos700_pnt"
+name = "erdos700_part2"
 defaultTargets = ["Erdos700PNT"]
 
 [[require]]
@@ -28,9 +28,6 @@ name = "FEquality"
 
 [[lean_lib]]
 name = "PackingWork"
-
-[[lean_lib]]
-name = "PartIWork"
 
 [[lean_lib]]
 name = "PNTWork"

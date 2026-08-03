@@ -153,7 +153,7 @@ This theorem is the decisive exact reduction. The subsequent factor-tableau
 and `ExplicitG` theorems go further: they replace value-by-value multiplier
 enumeration by one compact synchronized integer/Boolean system of selectors,
 prefix products, digits, and borrows, with exact soundness and completeness.
-See the [complete prose proof](../../docs/part-i-release/complete-prose-proof.md)
+See the [complete prose proof](../../archive/docs/part-i-release/complete-prose-proof.md)
 for that closure.
 
 The final result still does not provide a closed factorization-only list of

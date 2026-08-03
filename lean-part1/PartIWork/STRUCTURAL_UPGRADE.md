@@ -5,7 +5,7 @@
 > divisor-poset, historical, and explicit compiler theorems were promoted.
 > Its negative statements about completion are retained as research history,
 > not current status. See the
-> [complete release record](../../docs/part-i-release/README.md).
+> [complete release record](../../archive/docs/part-i-release/README.md).
 
 ## Status
 

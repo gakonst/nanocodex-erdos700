@@ -2,11 +2,11 @@
 
 This is the narrative index of what we tried on all three parts of Erdős 700,
 what survived, and what each stage taught us. It sits between the short
-[repository status](status.md) and the much larger retained campaign record.
+[repository status](../archive/docs/status.md) and the much larger retained campaign record.
 
 The scope is deliberately auditable: this map covers the tracked proof
 developments, every frozen Erdős 700 campaign prompt in
-[`campaigns/problems/`](../campaigns/problems/), the promoted candidate
+[`archive/campaigns/problems/`](../archive/campaigns/problems/), the promoted candidate
 artifacts, the complete recovered Part (i) release campaign, and the persisted
 Part (iii) runs and sessions audited through 28 July 2026, including the late
 `dev-georgios` reconciliation. It does not claim to recover unrecorded
@@ -21,8 +21,9 @@ evidence that a route was assigned, not evidence that its target was proved.
 | (ii) | Kernel-checked unconditional infinite family; no novelty claim | nearby-prime structural lemma → Maynard candidate → PNT replacement → complete Lean proof | independent mathematical review and comparison with prior or independent resolutions |
 | (iii) | Open beyond the classical \(A=1\) scale | exact weighted reduction → hard residual packets → many construction, averaging, algebraic, and counterexample routes → quantitative no-retry ledger | prove any unbounded gain over \(D(n)\gg\log n\), prove \(A=2\), or build a genuine counterfamily |
 
-The canonical proof artifacts are in [`proof/`](../proof/). The full frozen
-prompt inventory is in the [campaign index](../campaigns/problems/README.md).
+The canonical proof artifacts are in [`lean-part1/`](../lean-part1/) and
+[`lean-part2/`](../lean-part2/). The full frozen prompt inventory is in the
+[campaign index](../archive/campaigns/problems/README.md).
 
 ## Part (i): complete equality-case solution
 
@@ -90,20 +91,20 @@ for every composite `n > 1`. Thus both readings of Part (i) are closed.
 ### Evidence and campaign trail
 
 - The maintained proof narrative is
-  [`proof/PartIWork/report.md`](../proof/PartIWork/report.md), with the
-  [boundary-antichain proof](../proof/PartIWork/boundary-antichain.md).
+  [`lean-part1/PartIWork/report.md`](../lean-part1/PartIWork/report.md), with the
+  [boundary-antichain proof](../lean-part1/PartIWork/boundary-antichain.md).
 - The complete recovered release, including the historical report, prose
   proof, statement/referee/reproducibility audits, regression certificate,
   per-formulation adversarial audits, and novelty search, is indexed in the
-  [Part (i) release record](part-i-release/README.md).
+  [Part (i) release record](../archive/docs/part-i-release/README.md).
 - The public theorem and dependency surface is
-  [`proof/PartIVerify.lean`](../proof/PartIVerify.lean); the deterministic gate
-  is [`proof/scripts/verify-part-i.sh`](../proof/scripts/verify-part-i.sh).
+  [`lean-part1/PartIVerify.lean`](../lean-part1/PartIVerify.lean); the deterministic gate
+  is [`lean-part1/scripts/verify.sh`](../lean-part1/scripts/verify.sh).
 - The prompt sequence is the Part (i) section of the
-  [campaign index](../campaigns/problems/README.md). It records the initial
+  [campaign index](../archive/campaigns/problems/README.md). It records the initial
   target, boundary reduction, historical split, structural attempt, explicit
   borrow compiler, projection repair, refinement reset, and release audit.
-- The [Part (i) persisted-run audit](part-i-run-coverage-audit.md) disposes
+- The [Part (i) persisted-run audit](../archive/docs/part-i-run-coverage-audit.md) disposes
   every discovery, release, compiler, and repair run and identifies the
   canonical destination of each durable result.
 
@@ -145,24 +146,24 @@ and proves \(f(pqr)=pq>\sqrt{pqr}\).
 ### Evidence and campaign trail
 
 - The standalone reviewer document is the
-  [Part (ii) TeX proof](../writeups/part-ii-infinite-family.tex).
-- Start with [`proof/README.md`](../proof/README.md), then read the
-  [complete mathematical proof](../proof/docs/proof.md) and
-  [statement audit](../proof/docs/statement-audit.md).
-- The exact proof root is [`proof/Erdos700PNT.lean`](../proof/Erdos700PNT.lean)
-  and the verifier is [`proof/scripts/verify.sh`](../proof/scripts/verify.sh).
+  [Part (ii) compiled proof](../part-ii-infinite-family.pdf).
+- Start with [`lean-part2/README.md`](../lean-part2/README.md), then read the
+  [complete mathematical proof](../lean-part2/docs/proof.md) and
+  [statement audit](../lean-part2/docs/statement-audit.md).
+- The exact proof root is [`lean-part2/Erdos700PNT.lean`](../lean-part2/Erdos700PNT.lean)
+  and the verifier is [`lean-part2/scripts/verify.sh`](../lean-part2/scripts/verify.sh).
 - The earlier Maynard candidate, its source mapping, reviewer brief, and
   falsifier are retained under
-  [`campaigns/candidates/erdos-700-maynard/`](../campaigns/candidates/erdos-700-maynard/).
+  [`archive/campaigns/candidates/erdos-700-maynard/`](../archive/campaigns/candidates/erdos-700-maynard/).
   It is research history, not the canonical proof dependency.
 - The intermediate PNT/Lean candidate snapshot under
-  [`campaigns/candidates/erdos-700-pnt-lean/`](../campaigns/candidates/erdos-700-pnt-lean/)
-  is likewise noncanonical; `proof/` contains the promoted development.
+  [`archive/campaigns/candidates/erdos-700-pnt-lean/`](../archive/campaigns/candidates/erdos-700-pnt-lean/)
+  is likewise noncanonical; `lean-part2/` contains the promoted development.
 - The full discovery → structural audit → Maynard audit → Lean integration →
   PNT route → release sequence is linked in the Part (ii) section of the
-  [campaign index](../campaigns/problems/README.md).
+  [campaign index](../archive/campaigns/problems/README.md).
 - The human/AI division of labor and the formalization pivot are documented in
-  the [methodology case study](methodology.md).
+  the [methodology case study](../archive/docs/methodology.md).
 
 ### Remaining boundary
 
@@ -208,28 +209,28 @@ one literal legal index (k).
 | Quantitative reset | The high-height branch gives genuine restricted \(A=2\)-scale results | No unconditional unbounded factor beyond \(D(n)\gg\log n\) in the residual branch. |
 
 This table is intentionally a summary. The [Part (iii) exploration
-map](part-iii-exploration-map.md) is the canonical theorem-by-theorem ledger
+map](part-3.md) is the canonical theorem-by-theorem ledger
 and currently records 69 named no-retry constraints with the
 extra input needed to revive each route.
 
 ### Coverage and evidence
 
-- [Technical bottleneck brief](erdos700-iii-bottleneck-brief.md): the shortest
+- [Technical bottleneck brief](part-3-bottleneck.md): the shortest
   specialist handoff.
-- [Exploration map](part-iii-exploration-map.md): top-down tree, proved partial
+- [Exploration map](part-3.md): top-down tree, proved partial
   results, route outcomes, finite and infinite method counterexamples,
   quarantined claims, and exact surviving targets.
-- [Persisted-run coverage audit](part-iii-run-coverage-audit.md): chronological
+- [Persisted-run coverage audit](../archive/docs/part-iii-run-coverage-audit.md): chronological
   run matrix and disposition labels.
-- [Session coverage audit](part-iii-session-coverage-audit.md): local Codex
+- [Session coverage audit](../archive/docs/part-iii-session-coverage-audit.md): local Codex
   forks and identified browser sessions, including terminal non-solution
   verdicts.
-- [Campaign index](../campaigns/problems/README.md): every frozen Part (iii)
+- [Campaign index](../archive/campaigns/problems/README.md): every frozen Part (iii)
   prompt, grouped by representation. These prompts do not override the result
   ledgers above.
-- [`experiments/erdos700_extremal.py`](../experiments/erdos700_extremal.py):
+- [`archive/experiments/erdos700_extremal.py`](../archive/experiments/erdos700_extremal.py):
   bounded game selection and falsification, never asymptotic evidence.
-- [Recovered Route 3 certificate](../experiments/certificates/route3-verification.json):
+- [Recovered Route 3 certificate](../archive/experiments/certificates/route3-verification.json):
   compact exact finite checks, also diagnostic rather than asymptotic evidence.
 
 ### Exact frontier
@@ -269,20 +270,20 @@ proved or is demonstrably easier than the existing same-row bottleneck.
    barrier or changes the counterexample frontier.
 
 Operational lessons about the research harness are kept separately in
-[`harness/live-campaign-lessons.md`](../harness/live-campaign-lessons.md) and
-[`harness/rlm-orchestration-lessons.md`](../harness/rlm-orchestration-lessons.md).
+[`archive/harness/live-campaign-lessons.md`](../archive/harness/live-campaign-lessons.md) and
+[`archive/harness/rlm-orchestration-lessons.md`](../archive/harness/rlm-orchestration-lessons.md).
 
 ## Where each kind of artifact lives
 
 | Artifact | Canonical location | Authority |
 | --- | --- | --- |
-| Promoted Parts (i) and (ii) proofs | [`proof/`](../proof/) | Lean sources, prose proofs, statement audits, deterministic verification |
-| Complete Part (i) release evidence | [`docs/part-i-release/`](part-i-release/README.md) | modern/historical proofs, alternate routes, audits, and regressions |
-| Recovered-host disposition | [`docs/dev-georgios-reconciliation.md`](dev-georgios-reconciliation.md) | promoted versus raw/duplicate/separate-upstream material |
-| Current claim boundaries | [`docs/status.md`](status.md) | repository status vocabulary and publication posture |
+| Promoted Parts (i) and (ii) proofs | [`lean-part1/`](../lean-part1/) and [`lean-part2/`](../lean-part2/) | Lean sources, prose proofs, statement audits, deterministic verification |
+| Complete Part (i) release evidence | [`archive/docs/part-i-release/`](../archive/docs/part-i-release/README.md) | modern/historical proofs, alternate routes, audits, and regressions |
+| Recovered-host disposition | [`archive/docs/dev-georgios-reconciliation.md`](../archive/docs/dev-georgios-reconciliation.md) | promoted versus raw/duplicate/separate-upstream material |
+| Current claim boundaries | [`archive/docs/status.md`](../archive/docs/status.md) | repository status vocabulary and publication posture |
 | Cross-problem history | this document | narrative route and lesson map |
-| Exhaustive Part (iii) synthesis | [`docs/part-iii-exploration-map.md`](part-iii-exploration-map.md) | promoted partial results and do-not-retry ledger |
-| Frozen research assignments | [`campaigns/problems/`](../campaigns/problems/) | inputs and completion gates, not outcomes |
-| Candidate snapshots | [`campaigns/candidates/`](../campaigns/candidates/) | historical intermediate evidence, noncanonical after promotion |
-| Generated runs | `runs/` | ignored raw runtime evidence; durable conclusions must be promoted into docs |
-| Research application | [`src/`](../src/) and [`harness/`](../harness/) | orchestration and verifier policy, not mathematical evidence by itself |
+| Exhaustive Part (iii) synthesis | [`map/part-3.md`](part-3.md) | promoted partial results and do-not-retry ledger |
+| Frozen research assignments | [`archive/campaigns/problems/`](../archive/campaigns/problems/) | inputs and completion gates, not outcomes |
+| Candidate snapshots | [`archive/campaigns/candidates/`](../archive/campaigns/candidates/) | historical intermediate evidence, noncanonical after promotion |
+| Generated runs | `archive/runs/` | ignored raw runtime evidence; durable conclusions must be promoted into the map or archive docs |
+| Research application | [`archive/src/`](../archive/src/) and [`archive/harness/`](../archive/harness/) | orchestration and verifier policy, not mathematical evidence by itself |

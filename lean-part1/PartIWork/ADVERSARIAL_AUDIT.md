@@ -5,7 +5,7 @@
 > obstruction forms, and explicit factor-tableau compiler. Its objections
 > drove those upgrades, but its conclusion that Part (i) was not yet solved is
 > no longer current. See the
-> [complete release record](../../docs/part-i-release/README.md) and
+> [complete release record](../../archive/docs/part-i-release/README.md) and
 > [`PartIVerify.lean`](../PartIVerify.lean).
 
 Audited artifact:

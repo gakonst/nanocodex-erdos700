@@ -1,4 +1,4 @@
-name: Lean proof
+name: Lean proofs
 
 on:
   push:
@@ -9,19 +9,32 @@ permissions:
   contents: read
 
 jobs:
-  verify:
+  part-1:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Lean and build
+      - name: Set up Lean and build Part (i)
         uses: leanprover/lean-action@v1
         with:
-          lake-package-directory: proof
+          lake-package-directory: lean-part1
+          build: true
+          test: false
+          lint: false
+      - name: Verify Part (i) theorem dependencies and regressions
+        run: ERDOS700_PART_I_SKIP_BUILD=1 ./lean-part1/scripts/verify.sh
+
+  part-2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Lean and build Part (ii)
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: lean-part2
           build: true
           test: false
           lint: false
       - name: Verify Part (ii) theorem dependencies
-        run: ERDOS700_SKIP_BUILD=1 ./proof/scripts/verify.sh
-      - name: Build and verify Part (i) characterization
-        run: ./proof/scripts/verify-part-i.sh
+        run: ERDOS700_SKIP_BUILD=1 ./lean-part2/scripts/verify.sh

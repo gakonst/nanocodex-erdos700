@@ -1,7 +1,9 @@
-/target
+**/target/
 /.env
 /runs/*
 !/runs/.gitkeep
+/archive/runs/*
+!/archive/runs/.gitkeep
 /loops/
 /campaign-logs/
 /.nanocodex/

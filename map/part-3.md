@@ -6,7 +6,7 @@ counterfamily.**
 This document is the durable synthesis of the Part (iii) campaign. It records
 the exact target, the strongest proved reductions, the routes explored, the
 failure certificates, and the current frontier. Runtime transcripts remain
-under ignored `runs/` directories; this map retains only claims that survived
+under ignored `archive/runs/` directories; this map retains only claims that survived
 the campaign's internal audits.
 
 This is also the canonical **do-not-retry ledger**. A route marked *killed*
@@ -539,7 +539,7 @@ endpoint-only even though all \(21\) pairs have an interior common row. Thus:
   fixed graph threshold.
 
 The exact checks are `verify_k4.py` and `search_cap3.cpp` in
-`runs/erdos700-iii-packet-capacity-20260727/`.
+`archive/runs/erdos700-iii-packet-capacity-20260727/`.
 
 ### Lock, smoothness, and rigidity routes
 
@@ -1759,7 +1759,7 @@ a K33 regression rather than evidence for a family.
 The R=2 dichotomy remains open. Its exact surviving arithmetic is the signed
 aggregate of the simultaneous full-tail counts in `(R2-PC)`; phase-free
 packing and literal divisor-row failure counts have now been eliminated.
-Artifacts are under `runs/erdos700-iii-r2-gateway-20260728/`.
+Artifacts are under `archive/runs/erdos700-iii-r2-gateway-20260728/`.
 
 ## R=2 representation-theorem reset: 2026-07-28
 
@@ -1868,7 +1868,7 @@ common Erdős row. It is a scalable carry obstruction but not a prime
 counterfamily: simultaneous primality of those five prescribed linear forms
 is unproved, and one structured subset has zero density in the Maynard
 intersection problem. Checked artifacts are under
-`runs/erdos700-iii-r2-representation-20260728/`.
+`archive/runs/erdos700-iii-r2-representation-20260728/`.
 
 If the carry-density statement is proved, Maynard supplies a prime subset
 beyond its stability threshold. Odd-pair endpoint-only behavior gives
@@ -1930,9 +1930,9 @@ canonical `R_*=2` packets.
 
 No late run produced an unconditional Part (iii) improvement or a genuine
 target counterfamily. The terminal reports are retained on `dev-georgios`
-under `runs/erdos700-iii-audited-max-20260727/`,
-`runs/erdos700-iii-tm-proof-20260728/`, and
-`runs/erdos700-iii-tm-adversary-20260728/`.
+under `archive/runs/erdos700-iii-audited-max-20260727/`,
+`archive/runs/erdos700-iii-tm-proof-20260728/`, and
+`archive/runs/erdos700-iii-tm-adversary-20260728/`.
 
 ## Route constraints
 
@@ -2116,46 +2116,46 @@ precise theorem rather than another equivalent bridge.
 
 ## Artifact and prompt index
 
-- `docs/part-iii-exploration-map.md`: this canonical attempt and
+- `map/part-3.md`: this canonical attempt and
   do-not-retry ledger.
-- `docs/part-iii-run-coverage-audit.md`: exact 105-directory coverage matrix,
+- `archive/docs/part-iii-run-coverage-audit.md`: exact 105-directory coverage matrix,
   including prompt-only, worker-only, controller, quarantined, and
   out-of-scope dispositions.
 - `docs/erdos700-iii-bottleneck-brief.md`: compact technical starting point.
-- `campaigns/problems/erdos-700-iii.md`: immutable target.
-- `campaigns/problems/README.md`: grouped campaign prompt index.
-- `campaigns/problems/erdos-700-iii-beyond-a1-reset.md`: current quantitative
+- `archive/campaigns/problems/erdos-700-iii.md`: immutable target.
+- `archive/campaigns/problems/README.md`: grouped campaign prompt index.
+- `archive/campaigns/problems/erdos-700-iii-beyond-a1-reset.md`: current quantitative
   acceptance gate.
-- `runs/erdos700-iii-packet-capacity-20260727/report.md`: exact derivations for
+- `archive/runs/erdos700-iii-packet-capacity-20260727/report.md`: exact derivations for
   the packet-capacity fork.
-- `runs/erdos700-iii-packet-capacity-20260727/verify_k4.py`,
+- `archive/runs/erdos700-iii-packet-capacity-20260727/verify_k4.py`,
   `verify_new_lemmas.py`, and `search_cap3.cpp`: deterministic regressions for
   the retained finite falsifiers and exact identities.
-- `runs/erdos700-iii-r2-gateway-20260728/` and
-  `runs/erdos700-iii-r2-representation-20260728/` on `dev-georgios`: exact
+- `archive/runs/erdos700-iii-r2-gateway-20260728/` and
+  `archive/runs/erdos700-iii-r2-representation-20260728/` on `dev-georgios`: exact
   `R=2` gateway and representation-reset reports.
-- `runs/erdos700-iii-audited-max-20260727/`,
-  `runs/erdos700-iii-tm-proof-20260728/`, and
-  `runs/erdos700-iii-tm-adversary-20260728/` on `dev-georgios`: terminal
+- `archive/runs/erdos700-iii-audited-max-20260727/`,
+  `archive/runs/erdos700-iii-tm-proof-20260728/`, and
+  `archive/runs/erdos700-iii-tm-adversary-20260728/` on `dev-georgios`: terminal
   top-component-mass reports and deterministic checks.
 - Root Codex history audited:
   `~/.codex/sessions/2026/07/22/rollout-2026-07-22T15-07-34-019f8bde-ae0f-77f0-a4e4-4d3e84f5381c.jsonl`,
   the 34 MB continuation
   `~/.codex/sessions/2026/07/26/rollout-2026-07-26T10-49-48-019f9f8c-215d-7ff0-a390-f79351c726d0.jsonl`,
   and the relevant 23 and 27 July specialist rollouts. The per-fork matrix is
-  `docs/part-iii-session-coverage-audit.md`.
+  `archive/docs/part-iii-session-coverage-audit.md`.
 - Remote dev-box root audited:
-  `ubuntu@dev-georgios:/home/ubuntu/campaigns/erdos700-research/nanocodex-erdos700`.
+  `ubuntu@dev-georgios:/home/ubuntu/archive/campaigns/erdos700-research/nanocodex-erdos700`.
   The reconciled corpus contains 105 top-level run directories: 16
   Part-(i)/(ii), 3 Part-(iii) prompts with no returned work, 84 directories
   containing Part-(iii) material, and 2 operational-only artifacts. Recorder
   `events.jsonl`, build trees, raw snapshots, and telemetry were excluded.
 - High-value dev-box sources recovered in the final diff include
-  `runs/math-1784949501-3806031/turn2-exact-incidence.md` (full-depth
+  `archive/runs/math-1784949501-3806031/turn2-exact-incidence.md` (full-depth
   singleton classification),
-  `runs/math-1784987750-4084057/exact-statements-and-proofs.md` (owner bound
+  `archive/runs/math-1784987750-4084057/exact-statements-and-proofs.md` (owner bound
   and its dense falsifier), and
-  `runs/math-1784913529-3482687/bg-robust-theorem.md` (robust BG
+  `archive/runs/math-1784913529-3482687/bg-robust-theorem.md` (robust BG
   impossibility).
 - Accessible Brave/ChatGPT Pro threads audited:
   `6a67e243-31fc-8329-a50d-03c04504e99e` (broad sparse-shadow proof
@@ -2166,10 +2166,10 @@ precise theorem rather than another equivalent bridge.
   `6a666ed5-1aec-8327-ac10-041ff0c7fb6b` (fibre/common-prefix route), and
   `6a67e26a-ae70-8325-a446-e5db722aeba2` (character route).
 - Exact source-coverage matrices:
-  `docs/part-iii-run-coverage-audit.md` (all 97 dev-box run directories) and
-  `docs/part-iii-session-coverage-audit.md` (root sessions, all 28
+  `archive/docs/part-iii-run-coverage-audit.md` (all 97 dev-box run directories) and
+  `archive/docs/part-iii-session-coverage-audit.md` (root sessions, all 28
   continuation descendants, and six identified Brave threads).
-- Ignored `runs/`: raw campaign reports, exact jobs, and telemetry.
+- Ignored `archive/runs/`: raw campaign reports, exact jobs, and telemetry.
 
 The ignored run artifacts remain necessary for forensic review, but the claims
 above—not terminal scrollback—are the repository's maintained research state.

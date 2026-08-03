@@ -207,7 +207,7 @@ We would value one of:
 
 ## Evidence map
 
-- Immutable target: `campaigns/problems/erdos-700-iii.md`
+- Immutable target: `archive/campaigns/problems/erdos-700-iii.md`
 - General conditional transfer: retained remote campaign
   `math-1785005284-4146904`
 - Exact conductor theorem: retained remote campaign
@@ -216,4 +216,4 @@ We would value one of:
   `math-1785010372-4161735` and `math-1785012022-4186126`
 - Smooth-cofactor and global-lock audits: retained remote campaigns
   `math-1785012022-4186125` and `math-1785012022-4186127`
-- Formalized Parts (i) and (ii): `proof/`
+- Formalized Parts (i) and (ii): `lean-part1/` and `lean-part2/`

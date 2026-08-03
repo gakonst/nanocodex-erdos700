@@ -1,7 +1,7 @@
 # Mathematical write-ups
 
-This directory is the shortest reviewer path through the mathematics in this
-repository. Each file is standalone LaTeX and states its own claim boundary.
+These are the standalone LaTeX sources for the three compiled PDFs at the
+repository root. Each file states its own claim boundary.
 
 | Part | Document | Status | What it contains |
 | --- | --- | --- | --- |
@@ -10,11 +10,12 @@ repository. Each file is standalone LaTeX and states its own claim boundary.
 | (iii) | [`part-iii-frontier.tex`](part-iii-frontier.tex) | Open | The exact reduction, strongest retained partial results, routes ruled out, and the current same-row synchronization bottleneck |
 
 The corresponding Lean entry points are
-[`proof/PartIVerify.lean`](../proof/PartIVerify.lean) for Part (i) and
-[`proof/Erdos700PNT.lean`](../proof/Erdos700PNT.lean) for Part (ii). Part
+[`../../lean-part1/PartIVerify.lean`](../../lean-part1/PartIVerify.lean) for
+Part (i) and
+[`../../lean-part2/Erdos700PNT.lean`](../../lean-part2/Erdos700PNT.lean) for Part (ii). Part
 (iii) has no claimed proof or Lean candidate.
 
 For the route-by-route research history, including superseded attempts and
 counterexamples to methods, continue to
-[`docs/research-map.md`](../docs/research-map.md). For exact evidence labels
-and publication boundaries, see [`docs/status.md`](../docs/status.md).
+[`../../MAP.md`](../../MAP.md). For exact historical evidence labels and
+publication boundaries, see [`../docs/status.md`](../docs/status.md).
