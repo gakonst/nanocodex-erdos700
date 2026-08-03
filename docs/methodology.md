@@ -241,14 +241,31 @@ programmable Nanocodex harness to discover and refine a route, changed
 strategy when the formal trust boundary demanded it, and produced a
 reproducible kernel-checked proof package.
 
-## Follow-on work
+## Follow-on work and what happened next
 
-The structural machinery may already support a useful contribution toward
-Erdős 700(i): for the constructed prime triples, the argument is designed to
-show \(f(pqr)=pq=n/P(n)\). Packaging the strongest exact corollary and
-determining how much it narrows the requested characterization is the natural
-next campaign.
+The Part (ii) structural machinery did lead to the Part (i) development. The
+repository now proves, for every composite \(n>1\), an exact
+boundary-antichain characterization of
 
-Part (iii) is less directly connected. The constructed family is compatible
-with its proposed upper bounds; proving part (iii) requires a global argument
-for every composite \(n\), not merely an infinite structured family.
+\[
+f(n)=n/P(n),
+\]
+
+where \(P(n)\) is the largest prime factor. It also compiles the semantic
+factor tableau into an explicit finite integer/Boolean digit-and-borrow system.
+That result is kernel-checked. Its remaining review question is interpretive:
+whether the historical request for a characterization demands a shorter
+closed factorization taxonomy.
+
+Part (iii) required a much broader campaign and remains open. The exact
+weighted objective, hard residual decomposition, and many local identities are
+now understood, but no argument has improved the classical uniform
+\(D(n)\gg\log n\) bound. Several attractive mechanisms—fixed multiplier
+menus, naive witness iteration, independent carry probabilities, abstract
+set cover, and a fixed cubic Carmichael bridge—were rigorously refuted.
+
+The durable synthesis is in
+[`part-iii-exploration-map.md`](part-iii-exploration-map.md). The methodological
+lesson is important: retaining counterexamples and imposing a quantitative
+progress gate prevents a large multi-agent campaign from confusing a renamed
+open condition with movement on the theorem.

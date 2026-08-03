@@ -2,6 +2,8 @@
 
 This repository contains a kernel-checked Lean 4 proof of the affirmative
 answer to part (ii) of [Erdős Problem 700](https://www.erdosproblems.com/700).
+See the repository's [canonical status page](../docs/status.md) for the exact
+claim boundaries of all three parts.
 
 For
 
@@ -27,10 +29,12 @@ adjudicated by the problem maintainers.
 The same project contains an exact Part (i) characterization and its explicit
 finite certificate compiler. For every composite `n > 1`,
 `Erdos700PartI.f_eq_div_iff_boundarySafe` characterizes
-`f(n) = n / P(n)`. The theorem
+`f(n) = n / P(n)`, where `P(n)` is the largest prime factor. The theorem
 `Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible` proves that the
 raw Boolean-selector, integer-prefix, digit, and borrow system is equivalent
-to the semantic factor tableau.
+to the semantic factor tableau. This is a complete finite characterization,
+but not a closed enumeration of factorization families; see
+`PartIWork/report.md` for the review boundary.
 
 ## Proof idea
 
@@ -130,6 +134,9 @@ axiom dependencies, and runs the finite characterization audit.
 - `docs/` contains the human-readable proof and statement audit.
 - `../docs/methodology.md` records the Nanocodex-assisted research process and
   attribution boundary.
+- `../docs/research-map.md` records the progression and lessons from all three
+  parts; `../docs/part-iii-exploration-map.md` is the detailed open-frontier
+  ledger.
 
 ## License
 

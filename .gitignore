@@ -2,6 +2,12 @@
 /.env
 /runs/*
 !/runs/.gitkeep
+/loops/
+/campaign-logs/
+/.nanocodex/
+/.sync-staging/
+__pycache__/
+*.py[cod]
 /.direnv
 /result
 /result-*

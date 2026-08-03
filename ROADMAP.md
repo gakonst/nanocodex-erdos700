@@ -1,89 +1,88 @@
 # Roadmap
 
-Build vertical evidence-producing slices rather than a generic agent platform.
+The repository has two completed formal developments and one open research
+frontier. Work should strengthen those evidence packages rather than expand
+the repository into a generic agent platform.
 
-## 0. Research knowledge base — complete
+## 1. External review of Part (ii)
 
-- evidence-tiered case catalog;
-- prompt and methodology field guide;
-- execution-environment metadata including web/search and specialized tools;
-- proof-assisted-solving design;
-- machine-readable schema and source index;
-- compiling Nanocodex research-manager scaffold.
+- obtain independent review of the natural-language proof;
+- obtain an independent Lean build and statement-alignment check;
+- complete the novelty and citation-neighborhood audit;
+- submit the result to the Erdős Problems maintainers or an appropriate
+  mathematical venue;
+- record external feedback separately from kernel status.
 
-## 1. Reproducible campaign record — operational vertical slice
+Gate: reviewers agree that the exact strict infinitude statement is proved and
+the repository records the external disposition.
 
-- host-created manifest and immutable target;
-- ordered JSONL campaign log (`record_evidence` implemented);
-- explicit disabled/novelty-only/full-research web phases;
-- structured child-agent results;
-- separate call, retained-session, and active-concurrency budgets;
-- host-owned batch fan-out, per-child deadlines, and cancellation;
-- content-addressed candidate freeze (implemented);
-- complete attributed Nanocodex event JSONL;
-- derived Markdown report.
+## 2. External review of Part (i)
 
-Gate: a run can be replayed and its complete evidence package inspected without
-reading terminal scrollback.
+- review the `BoundarySafe` iff theorem and explicit factor-tableau compiler;
+- decide whether the historical word “characterise” accepts an exact finite
+  carry/factorization predicate or demands a closed factorization taxonomy;
+- if necessary, isolate the smallest remaining structural refinement;
+- publish worked strata and regression examples independently of the general
+  compiler.
 
-## 2. Exact computational counterexample loop
+Gate: the claim boundary is accepted by reviewers or narrowed to one explicit
+remaining classification theorem.
 
-Choose one problem family expressible as LP/MILP or finite search.
+## 3. Part (iii): cross the first quantitative barrier
 
-- typed solver tool;
-- numerical-to-rational transition;
-- independent exact checker;
-- clean discovery workers and blind auditor;
-- verified finite-counterexample acceptance predicate.
+The current measurable target is not another equivalent bridge. It is one of:
 
-Gate: rediscover the pairwise-correlation-gap style workflow on held-out known
-problems without false verification.
+1. prove
+   \[
+   D(n)\ge c\log n\,L(\log n)
+   \]
+   uniformly for an explicit \(L(x)\to\infty\);
+2. prove the uniform fixed \(A=2\) case;
+3. construct an infinite counterfamily to one of those statements.
 
-## 3. Lean compiler loop
+Priority global representations:
 
-- immutable target fingerprint;
-- narrow Lean check/goal/declaration/axiom tools;
-- isolated lemma ownership;
-- integration agent;
-- test-lemma and statement-alignment audit;
-- sandboxed generated code.
+- the sublevel extremal function \(H(x)\);
+- an all-divisor product/max identity for literal rows;
+- weighted partial-layer selection with an instance-adaptive multiplier.
 
-Gate: complete held-out proof holes while never accepting a changed target,
-unfinished proof, or prohibited axiom.
+Every new route must name the failure certificates in
+`docs/part-iii-exploration-map.md` that it escapes.
 
-## 4. Literature and novelty layer
+Gate: an unconditional theorem improves the \(A=1\) bound, or a rigorous
+counterfamily changes the mathematical frontier.
 
-- primary-source search connector;
-- query and source ledger;
-- exact-statement and implication comparison;
-- discovery-blind versus novelty-only policies;
-- rediscovery classification.
+## 4. Proof-package maintenance
 
-Gate: recover known hidden solutions and correctly label them without inflating
-the new-discovery count.
+- keep the Lean and Rust CI green against pinned dependencies;
+- retain explicit axiom, placeholder, and statement audits;
+- keep runtime artifacts ignored and promote only audited conclusions;
+- maintain a compact canonical status page;
+- preserve source and model/tool provenance for every public claim.
 
-## 5. Adaptive research portfolio
+Gate: a fresh checkout can reproduce both completed proof developments and
+understand the Part (iii) frontier without reading terminal transcripts.
 
-- route objects and kill conditions;
-- clean/forked worker policies;
-- retained follow-up workers;
-- host budget allocator;
-- failure-memory retrieval;
-- adversarial audit quorum backed by exact gates, not votes.
+## 5. Harness development
 
-Gate: improve verified yield over a one-agent baseline on a pre-registered
-corpus while publishing all attempts and costs.
+Only implement harness changes required by a concrete campaign:
 
-## 6. Domain campaign
+- migrate the application from the pre-`0.3.0` Nanocodex tool/event/builder
+  API and restore `cargo test --all-targets` against `../nanocodex-latest`;
+- typed route state and explicit progress gates;
+- compact evidence retrieval rather than transcript replay;
+- reliable continuation of long Pro/Max reasoning;
+- host-owned scheduling, cancellation, and artifact limits;
+- verifier-first candidate promotion.
 
-Select one narrow research domain with:
+Do not add a generic scheduler or provider abstraction to Nanocodex core from
+this repository.
 
-- a credible source of open problems;
-- machine-checkable or expert-reviewable outputs;
-- mature computational/formal libraries;
-- collaborators able to assess significance.
+Gate: the harness makes false progress harder to report and useful partial
+results easier to retain.
 
-Candidate starting domains: finite combinatorics, inequalities with interval
-certificates, extremal constructions, or Lean-formalized elementary number
-theory. Avoid starting with famous conjectures whose only feedback is human
-plausibility.
+## 6. Broader AI-for-science corpus
+
+The case catalog, prompt patterns, and method taxonomy remain useful secondary
+assets. Update them when new source-backed cases materially change the
+methodology. Keep the repository front door focused on Erdős 700.

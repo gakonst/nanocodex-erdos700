@@ -1,110 +1,158 @@
-# Nanocodex Erdős
+# Nanocodex Erdős 700
 
-A source-backed knowledge base and executable research-manager scaffold for
-AI-assisted mathematics. It collects public cases from 22 April through
-22 July 2026, reconstructs the prompts and harnesses that produced them, and
-turns those lessons into a concrete Nanocodex application design.
-
-The name is broader than Erdős problems. The corpus includes conjecture proofs
-and counterexamples, formal theorem proving, exact computational certificates,
-optimization records, statistics, quantum optimization, and cases where an AI
-system rediscovered a result hidden in the literature.
-
-## Featured result: Erdős 700(ii)
+This repository is the proof package and research record for an AI-assisted
+attack on [Erdős Problem 700](https://www.erdosproblems.com/700). It contains:
 
 [![Lean proof](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/lean.yml)
 [![Rust harness](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml/badge.svg)](https://github.com/gakonst/nanocodex-erdos700/actions/workflows/rust.yml)
 
-This repository now includes the complete kernel-checked Lean proof that there
-are infinitely many composite \(n\) with
+- a kernel-checked characterization for Part (i);
+- a kernel-checked unconditional proof of Part (ii);
+- the Nanocodex application and methodology used to discover, audit, and
+  formalize those results;
+- an explicit account of the unresolved obstruction in Part (iii), including
+  the routes we tried and the counterexamples that killed them.
+
+The repository separates internal proof completion from external mathematical
+acceptance. The Lean kernel checks the encoded theorems. It does not decide
+novelty, historical interpretation, or whether the community considers the
+Part (i) characterization sufficiently structural.
+
+## Read this repository in order
+
+1. This page gives the problem, the two completed developments, and the open
+   frontier.
+2. [`proof/README.md`](proof/README.md) explains the promoted Lean package and
+   how to verify it.
+3. [`docs/research-map.md`](docs/research-map.md) maps every major route tried
+   on Parts (i), (ii), and (iii), with outcomes and lessons.
+4. [`docs/erdos700-iii-bottleneck-brief.md`](docs/erdos700-iii-bottleneck-brief.md)
+   is the short technical handoff for new work on the open part.
+
+The forensic run and session audits are linked from the research map. Readers
+interested only in the mathematics do not need the Rust harness, raw runtime
+artifacts, or the broader case catalog.
+
+## Current status
+
+For
 
 \[
-\left(\min_{1<k\le n/2}\gcd\left(n,\binom nk\right)\right)^2>n.
+f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom nk\right),
 \]
 
-- [Lean project, proof overview, and verification](proof/README.md)
-- [Human-readable mathematical proof](proof/docs/proof.md)
-- [Exact historical/formal statement audit](proof/docs/statement-audit.md)
-- [Nanocodex research methodology and attribution](docs/methodology.md)
+the three subproblems currently stand as follows:
 
-The proof is presented for independent mathematical and formal review. The
-canonical problem page still listed part (ii) as open when the development was
-completed; kernel verification is not a substitute for external novelty and
-community review.
+| Part  | Repository result                                                                               | Evidence                                                   | Claim boundary                                                                                               |
+| ----- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| (i)   | \(f(n)=n/P(n)\) iff `BoundarySafe(n)`, with an equivalent explicit finite factor-tableau system | Lean build, axiom audit, finite regression audit           | Complete finite carry/factorization characterization; not a closed enumeration of all factorization families |
+| (ii)  | Infinitely many composite \(n\) satisfy \(f(n)^2>n\)                                            | Complete natural proof, Lean build, axiom audit            | Internally complete; independent novelty and community review remain external                                |
+| (iii) | Open for \(A>1\)                                                                                | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical \(D(n)\gg\log n\) scale                |
 
-## Part (i): explicit checked characterization
+Here \(P(n)\) in Part (i) is the largest prime factor of \(n\), as in the
+formal statement. See [the canonical status and claim boundaries](docs/status.md)
+before quoting a result from this repository.
 
-The repository also proves the exact boundary-antichain characterization
+## The two completed developments
 
-```text
-f(n) = n / P(n) ↔ BoundarySafe(n)
-```
+### Part (i): exact equality characterization
 
-for every composite `n > 1`, then refines the semantic obstruction into the
-finite integer/Boolean system `ExplicitG.G`. The checked compiler theorem
+For every composite \(n>1\), the Lean development proves
 
 ```lean
-Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
+Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
 ```
 
-proves that the raw selector, prefix-product, digit, and borrow constraints
-have neither false positives nor false negatives relative to the semantic
-factor tableau. `./proof/scripts/verify-part-i.sh` builds the complete chain,
-rejects proof placeholders, audits dependencies, and runs finite regression
-tests through `n = 1000`.
+and compiles `BoundarySafe` into an explicit finite system of selector,
+prime-power, prefix-product, digit, and borrow constraints. The compiler
+theorem proves that the finite system has neither false positives nor false
+negatives relative to the semantic factor tableau.
 
-## Start here
+- [Part (i) overview and scope](proof/PartIWork/report.md)
+- [Human-readable boundary-antichain proof](proof/PartIWork/boundary-antichain.md)
+- [Structural upgrade and limitations](proof/PartIWork/STRUCTURAL_UPGRADE.md)
+- [Adversarial audit](proof/PartIWork/ADVERSARIAL_AUDIT.md)
+- [Public Lean verification surface](proof/PartIVerify.lean)
 
-- [Erdős 700(ii) proof](proof/README.md): pinned Lean project and CI verifier.
-- [Methodology case study](docs/methodology.md): how the harness selected,
-  concentrated on, audited, and formalized this result.
-- [Case catalog](cases/README.md): evidence-tiered index of discoveries and claims.
-- [Erdős census](cases/erdos-census.md): accepted, partial, and provisional results.
-- [Prompt field guide](prompts/README.md): reusable patterns extracted from public prompts.
-- [Methods taxonomy](methods/README.md): how the successful systems actually searched.
-- [Web and specialized tools](methods/web-search-and-specialized-tools.md): execution-policy and provenance matrix.
-- [Verification ladder](methods/verification.md): what different evidence does and does not establish.
-- [Nanocodex architecture](architecture/nanocodex-math-agent.md): proposed system built from current library APIs.
-- [Tool-native orchestration](harness/tool-native-orchestration.md): typed feedback loops beyond subagents.
-- [RLM orchestration lessons](harness/rlm-orchestration-lessons.md): trace-driven scheduling and context-offloading rules.
-- [Breakthrough campaign runbook](harness/breakthrough-runbook.md): target selection, verifier-first execution, closure steering, and promotion gates.
-- [Live runtime validation](harness/live-runtime-validation.md): retained evidence
-  for long silent Pro calls, transport-only retries, and Bash/Code Mode use.
-- [Exact-verdict campaign shortlist](campaigns/gym-shortlist.md): five screened targets and hard no-go gates.
-- [Experiment protocol](harness/experiment-protocol.md): how to run research without fooling ourselves.
-- [Machine-readable catalog](data/cases.jsonl) and [schema](data/case.schema.json).
-- [Primary source index](sources/README.md).
-- [Roadmap](ROADMAP.md).
+### Part (ii): an unconditional infinite family
 
-## Executable scaffold
+The Lean development proves
 
-The Rust binary is a verifier-first research manager, not a claim that
-autonomous mathematics has been solved. It runs GPT-5.6 Pro through Nanocodex,
-gives the lead agent Code Mode and standard workspace tools, and exposes
-application-owned tools for clean-room workers, contextual forks, retained
-follow-ups, immutable candidate freezing, and pre-approved verification.
+```lean
+theorem Erdos700PNT.erdos_700_ii :
+    {n : ℕ | ¬n.Prime ∧ 1 < n ∧
+      (Erdos700.f n) ^ 2 > n}.Infinite
+```
 
-### Persistent Code Mode research loop
+The proof uses the prime number theorem to construct nearby primes
+\(p<q<r\) with asymmetric gaps. A Lucas-theorem argument proves that every
+legal row retains at least two primes, so \(f(pqr)=pq>\sqrt{pqr}\).
 
-`research-loop` adds an outer portfolio controller around those campaigns. It
-keeps one Pro/Max Nanocodex manager session alive across rounds, gives that
-manager normal Code Mode workspace tools, and exposes a host-owned
-`run_campaign_batch` tool. Every campaign request must name its mathematical
-representation, falsifiable hypothesis, dead end escaped, and
-outcome-dependent decision rule.
+- [Lean project and verification](proof/README.md)
+- [Complete mathematical proof](proof/docs/proof.md)
+- [Statement alignment audit](proof/docs/statement-audit.md)
+- [Research and formalization methodology](docs/methodology.md)
 
-The host rejects exact duplicate route fingerprints and owns campaign
-concurrency, total campaign count, wall time, prompt freezing, compact result
-collection, and success detection. A model message cannot stop the loop:
-completion requires either a verifier-accepted frozen candidate or an explicit
-success command.
+## Part (iii): where the proof stops
 
-Child outcomes are journaled as soon as they finish. A verified or
-`strong-candidate` report returns control to the manager immediately while
-other detached campaigns continue under the shared concurrency bound. The
-manager can therefore inspect, promote, and run the host gate without waiting
-for the slowest member of a batch. Prose `candidate.json` answers never count
-as success without the host gate.
+Put
+
+\[
+D_n(k)=\frac{n}{\gcd(n,\binom nk)},\qquad
+D(n)=\max_{2\le k\le n/2}D_n(k).
+\]
+
+Part (iii) is equivalent to proving, for every fixed \(A>0\),
+
+\[
+D(n)\ge c_A(\log n)^A
+\]
+
+for every composite \(n\), after absorbing finitely many small cases. The
+classical largest-component argument gives only \(D(n)\gg\log n\).
+
+Our work has reduced and mapped the missing same-row synchronization problem,
+but has not crossed that \(A=1\) barrier. Fixed multiplier menus, naive
+iteration, independent carry probabilities, abstract set cover, and several
+pairwise Lucas and Carmichael reductions all have rigorous failure
+certificates.
+
+- [Technical Part (iii) bottleneck](docs/erdos700-iii-bottleneck-brief.md)
+- [All-parts attempt and lesson map](docs/research-map.md)
+- [Detailed exploration tree and result ledger](docs/part-iii-exploration-map.md)
+- [Canonical status and evidence labels](docs/status.md)
+- [Part (iii) campaign prompt index](campaigns/problems/README.md)
+
+The current acceptance gate is deliberately strict: a new campaign counts as
+progress only if it beats \(D(n)\gg\log n\) by an explicit unbounded factor,
+proves the \(A=2\) case, or constructs an infinite counterfamily to such a
+uniform statement.
+
+## Reproducing the proofs
+
+The pinned Lean project lives under `proof/`.
+
+```sh
+cd proof
+./scripts/verify.sh
+./scripts/verify-part-i.sh
+```
+
+The scripts build the relevant roots, reject `sorry` and `admit`, inspect
+axiom dependencies, and run the Part (i) finite regression audit. CI runs the
+same proof gates.
+
+## Nanocodex research harness
+
+This is also a normal Rust crate using Nanocodex as a library. The application
+owns the research policy: problem freezing, route portfolios, retained worker
+reports, exact jobs, candidate freezing, verification, and failure-aware
+continuation.
+
+The retained harness currently needs a Nanocodex `0.3.0` API migration before
+these entry points build against a fresh `../nanocodex-latest`; see the
+[harness compatibility status](harness/README.md#compatibility-status). This
+does not affect the independent Lean proof package.
 
 ```sh
 cargo build --release --bin nanocodex-erdos --bin research-loop
@@ -112,230 +160,45 @@ cargo build --release --bin nanocodex-erdos --bin research-loop
 ./harness/run-erdos700-loop.sh iii
 ```
 
-Loop state is retained beneath `loops/loop-*/`; child research remains beneath
-`runs/math-*/`. Manager telemetry and session snapshots are operator-only and
-are explicitly excluded from model research input.
-
-```sh
-cp .env.example .env
-# Keep the complete LR closure alive for every multi-hour child process.
-nix build .#lr --out-link .nix-math-env
-nix develop .#lr --command cargo run --release -- \
-  --env-file ../nanocodex/.env \
-  --workspace . \
-  --web-policy novelty-only \
-  --max-worker-calls 64 \
-  --max-retained-workers 16 \
-  --max-concurrent-workers 8 \
-  --max-exact-jobs 64 \
-  --max-concurrent-exact-jobs 4 \
-  --max-exact-artifact-bytes 4294967296 \
-  --max-exact-jobs-per-worker 8 \
-  --worker-timeout-seconds 0 \
-  --worker-closure-after-seconds 720 \
-  --verifier /absolute/path/to/preapproved-checker \
-  --closure-after-seconds 14400 \
-  --max-lead-turns 4 \
-  --campaign-timeout-seconds 21600 \
-  "Prove or disprove the supplied conjecture. Produce an auditable evidence package."
-```
-
-The important model configuration is:
-
-```rust
-Nanocodex::builder(api_key)
-    .reasoning_mode(ReasoningMode::Pro)
-    .thinking(Thinking::Max)
-```
-
-GPT-5.6 Pro is a reasoning mode, not a separate model slug. Nanocodex's Code
-Mode lets the lead write adaptive orchestration programs with loops and
-conditionals. The host-owned `spawn_math_batch` handles mechanical fan-out,
-concurrency, deadlines, cancellation, and result ordering. Independent workers
-are fresh capability-minimal Nanocodex sessions; contextual branches use
-`AgentHandle::fork` only when inherited state is intentional. The
-`record_evidence` tool writes typed JSONL records and `freeze_candidate` creates
-content-addressed audit boundaries. Successful worker reports are retained by
-the host under `worker-reports/` and returned with `report_path`, so a malformed
-model-side batch loop cannot discard them. `--web-policy` supports `disabled`,
-`novelty-only`, and `full-research`.
-
-Every completed lead or worker boundary also writes its complete
-`TurnResult::snapshot()` beneath the ignored `session-snapshots/` directory in
-that run. These files make completed typed history resumable after a process
-handoff and contain the full unredacted conversation, reasoning payloads, and
-tool data; protect them like the API trace. An unfinished response is not
-committed or presented as recoverable.
-
-Long computation uses `run_exact_job`, a typed application-owned tool rather
-than an opaque subagent or raw shell session. It invokes `/bin/bash -c` in the
-campaign directory, removes the API credential, enforces both a total deadline
-and a no-progress watchdog, kills the complete process group on failure, and
-retains hashed stdout, stderr, script, and result records. It also enforces a
-campaign-wide exact-artifact growth budget (4 GiB by default); crossing it
-kills the process group with explicit `artifact-limit` status before a
-productive but unbounded materialization fills the filesystem. A search must emit
-periodic log checkpoints or update a declared heartbeat file; `no-progress` is
-reported as an explicit bounded unknown that the next lead turn must diagnose.
-The host detaches accepted exact jobs from the invoking model cell, so a yielded
-cell, compaction, or caller cancellation cannot erase the terminal job record;
-the owned job still completes or is killed by its declared policy and retains
-its result.
-The lead and clean workers read prior retained evidence through the bounded, read-only
-`inspect_research_artifacts` tool. Those reads do not spend exact-job budget.
-The tool hides and rejects every live `events.jsonl`: recorder output is an
-operator-only observability stream and must never feed itself through a model
-tool result.
-Each worker receives a local `--max-exact-jobs-per-worker` quota layered over
-the campaign-wide pool, preventing the first concurrency wave from starving
-later mathematical routes.
-Large finite searches should stream deduplicated summaries, top-K candidates,
-and resumable shard checkpoints. Do not persist every raw candidate when the
-domain can reach millions of rows merely because SQLite makes that convenient.
-For a job to count as resumable, its script must both write and read a
-versioned cursor or completed-shard manifest, validate the input hash, and skip
-completed work after restart. A timestamp-only heartbeat does not satisfy this
-contract.
-This watchdog applies to deterministic child processes, where the job controls
-its heartbeat. It is deliberately distinct from the disabled Pro transport
-idle watchdog: provider-side reasoning silence is not observable progress and
-must not trigger a restart.
-
-Build `.#lr` to the persistent `.nix-math-env` output link, then enter
-`nix develop .#lr` once around the harness, as in the command above. The output
-link is a Nix GC root: it keeps Sage and the complete transitive math closure
-alive even if garbage collection runs during a multi-hour campaign. Every Bash
-and exact-job process inherits those Sage, Lean, and solver paths. Do not invoke
-nested `nix develop` from a live campaign directory: this knowledge base is
-currently a path flake, so Nix may snapshot the growing `runs/` tree on every
-nested invocation.
-
-Pro requests may legitimately remain silent for more than five minutes while
-the provider is reasoning. The adjacent Nanocodex transport therefore disables
-the per-event idle watchdog in `ReasoningMode::Pro`; Standard mode retains its
-300-second watchdog. The harness's whole-worker deadline also defaults to
-disabled (`--worker-timeout-seconds 0`); whole-turn and campaign limits remain
-independent operator controls. Set a positive value only when the campaign
-deliberately needs a hard worker boundary. Retrying merely because a Pro
-response is silent discards uncommitted reasoning and restarts paid model work.
-
-`--worker-closure-after-seconds` is not an idle timeout. It sends one explicit
-steer so a productive worker can stop opening searches and return its exact
-partial report. With a nonzero whole-worker timeout it must precede that hard
-deadline; with `--worker-timeout-seconds 0` it may be used as a synthesis nudge
-without later cancellation. The request is never restarted merely for silence.
-
-An optional pre-approved verifier receives frozen-candidate manifests and is
-hashed into the campaign provenance. Optional timed closure steering turns the
-public “enough partial results” prompt into an evidence-qualified phase change:
-finish an unconditional object and pass the gate, or return honestly blocked.
-
-A lead turn that ends without verifier acceptance no longer ends the process.
-The host retains the same lead session, injects verifier feedback and remaining
-budgets, requires a failure postmortem and a materially different route, and
-continues up to `--max-lead-turns` or `--campaign-timeout-seconds`. This is one
-campaign and one provenance record, not selective retrying. `campaign-final.json`
-records the host stop reason and is authoritative over optimistic model prose.
-
-The Cargo dependency points at the dedicated adjacent `../nanocodex-latest`
-worktree. It tracks the current upstream master checkpoint plus the audited Pro
-transport patch, and build-time fingerprints bind every campaign manifest to
-the exact Nanocodex source used.
-
-### Reproducible mathematics environment
-
-The pinned Nix flake supplies the Rust/Nanocodex build chain plus the practical
-proof and computation stack:
-
-```sh
-nix build .#lr --out-link .nix-math-env
-nix develop .#lr
-math-env-report > tool-versions.json
-cargo run --bin math-environment-check
-cargo test exact_job_can_invoke_the_lr_toolchain -- --ignored
-cargo test --all-targets
-```
-
-The default shell includes Lean 4 and Lake, Z3, cvc5, HiGHS, GLPK, CBC,
-MiniZinc, CaDiCaL, Kissat, FLINT, GAP, PARI/GP, Singular, Maxima, Graphviz,
-Gnuplot, and a scientific Python/Jupyter environment. Two larger variants are
-available:
-
-```sh
-nix develop .#formal  # adds Coq/Rocq, Isabelle, Vampire, E, Yices, Boolector
-nix develop .#lr      # SageMath, Normaliz, LattE, exact solvers (+ polymake on Linux)
-nix develop .#full    # formal shell plus SageMath
-```
-
-The pinned Python environment also exposes `import lrcalc` directly.  Use that
-binding for high-throughput LR support and stretch screens; reserve Sage for
-independent interpolation/polyhedral checks and the final verifier.  This
-avoids realizing or launching a complete Sage process for every small exact
-coefficient call.
-
-For installation outside a development shell, use `nix profile install .`,
-`.#formal`, or `.#full`. Before a long ephemeral-shell campaign, create a local
-GC root with `nix build .#lr --out-link .nix-math-env`; remove that link only
-after no retained process needs the closure. The flake never reads or supplies
-`OPENAI_API_KEY`. Each campaign should retain `math-env-report` output alongside
-its verifier artifacts; the flake lock pins package builds, while the report
-records the actual executables selected on that machine.
-
-`math-environment-check` is an end-to-end local smoke of the lead path: an
-embedded Code Mode JavaScript cell calls Nanocodex `exec_command` with Bash,
-resolves the installed proof/solver CLIs, invokes Lean and Z3, and imports the
-Python mathematics stack. It requires no API key or model call. Clean-room
-workers deliberately use `Tools::without_defaults()`: they have no raw shell,
-but can read retained run evidence through `inspect_research_artifacts` and
-invoke the same binaries through the capability-scoped `run_exact_job` broker,
-which strips the API key, pins the working directory, supervises the process
-group, and retains logs.
-
-Example model-generated orchestration:
-
-```js
-const scouts = await tools.spawn_math_batch({
-  tasks: ["counterexample", "extremal", "probabilistic", "computational"].map(role => ({
-    role,
-    task: `Attack the problem independently by the ${role} route. Return checkable lemmas.`
-  }))
-});
-
-for (const item of scouts.items) {
-  if (item.status === "completed") {
-    text(item.result.report);
-  }
-}
-
-// Synthesize a complete artifact, freeze it, and then give only the immutable
-// claim and manifest to fresh adversarial auditors.
-text(JSON.stringify({succeeded: scouts.succeeded, failed: scouts.failed}));
-```
+Generated campaigns live under ignored `runs/` directories. They are evidence,
+not the public API of the repository. Start with the
+[harness guide](harness/README.md) for architecture, environment, and
+operational details.
 
 ## Repository map
 
 ```text
-cases/          result cards and the Erdős census
-prompts/        prompt patterns, exact public artifacts, and templates
-methods/        search strategies, verification, and failure analysis
-harness/        experimental protocol and tool contracts
-architecture/   Nanocodex application design and state model
-data/           normalized JSONL catalog and JSON Schema
-sources/        primary-source and audit index
-templates/      new-case and run-report templates
-src/            compiling Nanocodex research-manager scaffold
+proof/          Lean proofs and their mathematical/statement audits
+docs/           status, all-parts research map, methodology, and Part (iii) ledger
+campaigns/      frozen problem packages and research prompts
+harness/        application runbooks, runtime lessons, and tool contracts
+src/            Rust Nanocodex research application
+experiments/    bounded falsification and game-selection instruments
+cases/          broader AI-for-science case catalog
+methods/        reusable research and verification methods
+prompts/        reusable prompt patterns
+architecture/   application and state-management design
+data/           normalized case catalog and schema
+sources/        primary-source index
 runs/           ignored runtime workspaces
-proof/          pinned Lean proof of Erdős 700(ii)
-docs/           result methodology and attribution
 ```
 
-## Scope and epistemic policy
+The broader AI-for-science knowledge base remains available in `cases/`,
+`methods/`, `prompts/`, and `sources/`, but the repository front door is now
+organized around Erdős 700 and the evidence produced here.
 
-“Solved” is reserved for results with meaningful external acceptance. The
-catalog records separate fields for mathematical status, AI role, novelty,
-formalization, executable certificates, human review, and public prompt
-availability. Benchmark solutions and formalizations of known results are
-tracked as capabilities, not counted as new discoveries.
+## Epistemic policy
 
-This is a best-effort public-source census. Private runs, deleted posts, and
-unindexed discussions can make absolute completeness impossible.
+- “Kernel-checked” means Lean accepted the encoded proposition with the
+  reported dependency set.
+- “Proved partial” means a complete mathematical lemma was obtained, but not
+  the original target.
+- “Method counterexample” refutes an auxiliary strategy, not Erdős 700.
+- “Conditional reduction” is not progress unless its hypotheses are proved
+  uniformly and are demonstrably easier than the original target.
+- “Solved” remains subject to independent mathematical, novelty, and community
+  review.
+
+## License
+
+MIT or Apache-2.0.
