@@ -38,21 +38,21 @@ artifacts, or the broader case catalog.
 
 For
 
-\[
+$$
 f(n)=\min_{1<k\le n/2}\gcd\left(n,\binom nk\right),
-\]
+$$
 
 the three subproblems currently stand as follows:
 
 | Part  | Repository result | Evidence | Claim boundary |
 | --- | --- | --- | --- |
-| (i) | Complete exact finite characterizations for the maintained \(n/P(n)\) target and the original 1978 \(n/Q(n)\) target | Lean build, axiom audit, clean release rebuild, finite regression and statement audits | Solved internally; independent novelty, priority, and publication review remain external |
-| (ii) | Infinitely many composite \(n\) satisfy \(f(n)^2>n\) | Complete natural proof, Lean build, axiom audit | Solved internally; independent novelty and community review remain external |
-| (iii) | Open for \(A>1\) | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical \(D(n)\gg\log n\) scale |
+| (i) | Complete exact finite characterizations for the maintained $n/P(n)$ target and the original 1978 $n/Q(n)$ target | Lean build, axiom audit, clean release rebuild, finite regression and statement audits | Solved internally; independent novelty, priority, and publication review remain external |
+| (ii) | Infinitely many composite $n$ satisfy $f(n)^2>n$ | Complete natural proof, Lean build, axiom audit | Solved internally; independent novelty and community review remain external |
+| (iii) | Open for $A>1$ | Exact reductions, partial theorems, method counterexamples | No proof, disproof, or unconditional improvement beyond the classical $D(n)\gg\log n$ scale |
 
-Here \(P(n)\) is the largest prime factor used by the maintained problem page.
-The 1978 paper instead uses \(Q(n)\), the greatest exact prime-power component
-of \(n\); the repository proves both non-equivalent formulations. See
+Here $P(n)$ is the largest prime factor used by the maintained problem page.
+The 1978 paper instead uses $Q(n)$, the greatest exact prime-power component
+of $n$; the repository proves both non-equivalent formulations. See
 [the canonical status and claim boundaries](docs/status.md) before quoting a
 result.
 
@@ -60,7 +60,7 @@ result.
 
 ### Part (i): complete solution by exact finite characterization
 
-For every composite \(n>1\), the Lean development proves
+For every composite $n>1$, the Lean development proves
 
 ```lean
 Erdos700.f n = n / Erdos700.P n ↔ BoundarySafe n
@@ -73,9 +73,9 @@ negatives relative to the semantic factor tableau.
 
 For the literal 1978 definition
 
-\[
+$$
 Q(n)=\max_{p\mid n}p^{v_p(n)},
-\]
+$$
 
 the checked historical theorem is
 
@@ -113,8 +113,8 @@ theorem Erdos700PNT.erdos_700_ii :
 ```
 
 The proof uses the prime number theorem to construct nearby primes
-\(p<q<r\) with asymmetric gaps. A Lucas-theorem argument proves that every
-legal row retains at least two primes, so \(f(pqr)=pq>\sqrt{pqr}\).
+$p<q<r$ with asymmetric gaps. A Lucas-theorem argument proves that every
+legal row retains at least two primes, so $f(pqr)=pq>\sqrt{pqr}$.
 
 - [Lean project and verification](proof/README.md)
 - [Complete mathematical proof](proof/docs/proof.md)
@@ -125,22 +125,22 @@ legal row retains at least two primes, so \(f(pqr)=pq>\sqrt{pqr}\).
 
 Put
 
-\[
+$$
 D_n(k)=\frac{n}{\gcd(n,\binom nk)},\qquad
 D(n)=\max_{2\le k\le n/2}D_n(k).
-\]
+$$
 
-Part (iii) is equivalent to proving, for every fixed \(A>0\),
+Part (iii) is equivalent to proving, for every fixed $A>0$,
 
-\[
+$$
 D(n)\ge c_A(\log n)^A
-\]
+$$
 
-for every composite \(n\), after absorbing finitely many small cases. The
-classical largest-component argument gives only \(D(n)\gg\log n\).
+for every composite $n$, after absorbing finitely many small cases. The
+classical largest-component argument gives only $D(n)\gg\log n$.
 
 Our work has reduced and mapped the missing same-row synchronization problem,
-but has not crossed that \(A=1\) barrier. Fixed multiplier menus, naive
+but has not crossed that $A=1$ barrier. Fixed multiplier menus, naive
 iteration, independent carry probabilities, abstract set cover, and several
 pairwise Lucas and Carmichael reductions all have rigorous failure
 certificates.
@@ -152,8 +152,8 @@ certificates.
 - [Part (iii) campaign prompt index](campaigns/problems/README.md)
 
 The current acceptance gate is deliberately strict: a new campaign counts as
-progress only if it beats \(D(n)\gg\log n\) by an explicit unbounded factor,
-proves the \(A=2\) case, or constructs an infinite counterfamily to such a
+progress only if it beats $D(n)\gg\log n$ by an explicit unbounded factor,
+proves the $A=2$ case, or constructs an infinite counterfamily to such a
 uniform statement.
 
 ## Reproducing the proofs
