@@ -44,7 +44,7 @@ not an unproved part of the stated theorem.
 
 ## Reading order
 
-1. [`../../writeups/part-i-characterization.tex`](../../writeups/part-i-characterization.tex)
+1. [`../../writeups/part-i-complete-solution.tex`](../../writeups/part-i-complete-solution.tex)
    is the standalone reviewer-ready TeX proof of the parameterized theorem,
    compact compiler, and both source formulations.
 2. [`complete-prose-proof.md`](complete-prose-proof.md) gives the complete

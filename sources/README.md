@@ -13,7 +13,7 @@ provenance and timing but are not sufficient proof evidence.
   [discussion thread](https://www.erdosproblems.com/forum/thread/700).
 - [Pinned Formal Conjectures encoding](https://github.com/google-deepmind/formal-conjectures/blob/e751934294a381afd2d5fc1124c5953c8e25f9fa/FormalConjectures/ErdosProblems/700.lean).
 - Repository reviewer packets:
-  [Part (i)](../writeups/part-i-characterization.tex),
+  [Part (i)](../writeups/part-i-complete-solution.tex),
   [Part (ii)](../writeups/part-ii-infinite-family.tex), and
   [Part (iii)](../writeups/part-iii-frontier.tex).
 

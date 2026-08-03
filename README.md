@@ -67,7 +67,7 @@ result.
 
 The shortest mathematical path is one standalone TeX source per part:
 
-- [Part (i): complete structural characterization proof](writeups/part-i-characterization.tex)
+- [Part (i): complete solution](writeups/part-i-complete-solution.tex)
 - [Part (ii): complete unconditional infinite-family proof](writeups/part-ii-infinite-family.tex)
 - [Part (iii): partial-results map and open frontier](writeups/part-iii-frontier.tex)
 
@@ -147,7 +147,7 @@ integer/Boolean forms. Thus “characterization” describes the form of the
 solution; it is neither a partial-result label nor merely the original finite
 minimum rewritten.
 
-- [Standalone Part (i) mathematical write-up](writeups/part-i-characterization.tex)
+- [Standalone Part (i) complete solution](writeups/part-i-complete-solution.tex)
 - [Part (i) overview and scope](proof/PartIWork/report.md)
 - [Recovered complete release record](docs/part-i-release/README.md)
 - [Every recovered Part (i) run and what it contributed](docs/part-i-run-coverage-audit.md)

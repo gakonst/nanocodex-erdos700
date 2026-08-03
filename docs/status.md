@@ -121,7 +121,7 @@ not settle priority or publication.
 
 ### Evidence
 
-- `writeups/part-i-characterization.tex`
+- `writeups/part-i-complete-solution.tex`
 - `proof/PartIWork/report.md`
 - `proof/PartIWork/boundary-antichain.md`
 - `proof/PartIWork/HistoricalPrimePower.lean`
