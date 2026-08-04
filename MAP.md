@@ -5,7 +5,7 @@ For the complete route-by-route ledger, use
 [`map/all-attempts.md`](map/all-attempts.md). For the exhaustive Part (iii)
 tree, use [`map/part-3.md`](map/part-3.md).
 
-## Part (i): complete
+## Part (i): exact finite criterion; direct classification open
 
 ```text
 Kummer carry counts
@@ -13,13 +13,17 @@ Kummer carry counts
   → divisibility-minimal boundary obstructions
   → one synchronized factor tableau
   → explicit selector / prefix / digit / borrow system G(F,B)
-  → complete modern and literal-1978 iff theorems
+  → exact modern and literal-1978 iff theorems
+  → shared-multiplier elimination still missing
 ```
 
-The decisive breakthrough was not merely naming `BoundarySafe`. It was
-replacing enumeration of possible rows by one compact symbolic system with a
-shared multiplier, followed by checked soundness and completeness in both
-directions. See [`map/part-1.md`](map/part-1.md).
+The Lean development replaces enumeration of possible rows by one compact
+symbolic system with a shared multiplier and proves soundness and completeness
+in both directions. That closes exact finite feasibility, but not the stricter
+request for a direct factor-readable classification: feasibility of the shared
+multiplier remains. The focused follow-up reduces that gap to a short-CRT
+digit-cylinder elimination problem and records counterexamples to the obvious
+shortcuts. See [`map/part-1.md`](map/part-1.md).
 
 ## Part (ii): complete here, without a priority claim
 

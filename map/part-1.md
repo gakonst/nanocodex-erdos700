@@ -1,12 +1,17 @@
-# Part (i): complete-solution route
+# Part (i): exact proof route and open direct-classification gap
 
 ## Endpoint
 
-Part (i) is complete for both source formulations. The reader-facing proof is
+Part (i) has kernel-checked exact feasibility theorems for both source
+formulations. The reader-facing proof is
 [`../part-i-complete-solution.pdf`](../part-i-complete-solution.pdf), and the
 independent formal project is [`../lean-part1/`](../lean-part1/README.md).
+These results decide equality through an explicit finite system; they do not
+yet give a reviewer-grade direct classification readable from the ordered
+prime-power factors without solving that system.  The latter remains open at
+the short-CRT elimination obligation stated below.
 
-## Winning chain
+## Exact feasibility chain
 
 1. Kummer converts $p$-adic valuations of binomial coefficients into base-$p$
    carry counts.
@@ -28,8 +33,9 @@ independent formal project is [`../lean-part1/`](../lean-part1/README.md).
 - Direct row enumeration exposed examples but did not characterize equality.
 - Independent per-prime witnesses failed because all carry constraints must
   hold at the same row.
-- BoundarySafe was an exact proof bridge, but the later synchronized compiler
-  supplied the full structural breakthrough.
+- BoundarySafe was an exact proof bridge, and the later synchronized compiler
+  supplied a kernel-checked exact feasibility encoding.  Neither eliminates
+  the shared multiplier to give the stricter direct classification.
 - Full-shadow, bounded-obstruction, cofactor, and divisor-poset forms remain
   useful equivalent views, not separate gaps.
 
@@ -47,3 +53,24 @@ independent formal project is [`../lean-part1/`](../lean-part1/README.md).
 - [Human proof bridge](../lean-part1/PartIWork/boundary-antichain.md)
 - [Complete release record](../archive/docs/part-i-release/README.md)
 - [Every recovered Part (i) run](../archive/docs/part-i-run-coverage-audit.md)
+
+## Recovered zero-sum route and stricter classification gap
+
+The August 3 shared-session result has now been normalized and independently
+checked.  It gives a correct token-refinement/quotient-spectrum reformulation,
+closed classifications for the families $4q,6q,8q,9q$, and an infinite-prime
+theorem for every fixed cofactor.  The general spectrum intersection still
+quantifies over the same shared multiplier as `Realized`, so it does not by
+itself answer the stricter request for a direct all-factorization taxonomy.
+The focused follow-up isolated the remaining task as a factor-coupled
+short-CRT digit-cylinder elimination theorem and retained counterexamples to
+independent-prime, greedy, pairwise/Helly, and divisor-descent shortcuts.  It
+did not close that theorem.  Concretely, the missing result is an explicit
+well-founded evaluator, using only the ordered factorization and its digits
+and performing no search over multipliers, CRT tuples, automaton states, or
+solver assignments, proved equal to the least accepted CRT representative.
+
+See the
+[zero-sum classification audit](../archive/docs/part-i-direct-classification/research-report.md)
+and its
+[reproducible checker](../archive/docs/part-i-direct-classification/experiments/verify_shared_claims.py).

@@ -1,0 +1,16 @@
+Command:
+python3 archive/docs/part-i-direct-classification/experiments/verify_shared_claims.py --all-n-limit 5000 --prime-limit 100000
+
+Output:
+all_n_limit=5000
+modern_composites_checked=4330
+historical_non_prime_powers_checked=4288
+prime_limit=100000
+4q_primes_checked=9590
+6q_primes_checked=9589
+8q_primes_checked=9588
+9q_primes_checked=9588
+cofactor_carry_identity_cases_checked=152994
+predecessor_identity_cases_checked=36975
+focused_regressions_checked=12
+shortcut_counterexamples_checked=12

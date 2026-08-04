@@ -22,7 +22,7 @@
 \newcommand{\GSys}{\mathcal G}
 
 \title{Erd\H{o}s Problem 700(i):\\
-Complete Solution via a Synchronized Carry Compiler}
+An Exact Finite Feasibility Criterion via a Synchronized Carry Compiler}
 \author{Nanocodex Erd\H{o}s 700 project}
 \date{3 August 2026}
 
@@ -35,19 +35,21 @@ For
  f(n)=\min_{2\leq k\leq \lfloor n/2\rfloor}
        \gcd\!\left(n,\choosef nk\right),
 \]
-we completely solve Part~(i) by giving an exact structural characterization
-of the equality $f(n)=n/q$
+we give an exact finite feasibility criterion for the equality $f(n)=n/q$
 for every proper prime-power component $q$ of $n$.  The initial reduction
 identifies divisibility-minimal carry obstructions.  The main structural step
 then compiles simultaneous realization in all relevant prime bases into one
 compact finite integer/Boolean system of selectors, prefix products, digits,
-and borrows.  The system has no variable or disjunction for each possible
-row or multiplier.  Taking $q$ to be the largest prime divisor gives the
+and borrows.  The system has no separate variable or disjunction for each
+possible row, but it retains one symbolic shared multiplier and asks whether
+the resulting system is feasible.  Taking $q$ to be the largest prime divisor gives the
 maintained formulation of Erd\H{o}s Problem 700(i).  Taking $q$ to be the
 greatest exact prime-power component gives the literal formulation in the
 1978 Erd\H{o}s--Szekeres paper, with the necessary prime-power exception.
 The reductions and both directions of the compiler are checked in Lean;
-novelty and priority remain matters for independent review.
+they prove the encoded iff criteria.  They do not yet provide the stricter
+direct classification readable from the factorization without solving a
+bespoke feasibility problem.
 \end{abstract}
 
 \section{Definitions and statement}
@@ -204,9 +206,10 @@ Equations (11) and (13) prove Theorem~\ref{thm:threshold}.
 
 \section{The compact synchronized compiler}
 
-The preceding theorem is already an exact characterization, but its semantic
-definition quantifies over a shared multiplier.  We now describe the stronger
-form that removes any need to list those multipliers in the statement.
+The preceding theorem is already an exact iff criterion, but its semantic
+definition quantifies over a shared multiplier.  We now describe a compact
+form that removes any need to list those multipliers in the statement while
+retaining one symbolic shared multiplier.
 
 Fix an ordered exact prime factorization
 \[
@@ -296,9 +299,10 @@ linear in
 Since $r$, $\sum_i a_i$, and every $h_i$ are bounded by the binary length of
 $n$, there are $O((\log n)^2)$ indexed coordinates.  The fixed coefficients
 have $O(\log n)$ bits, giving an $O((\log n)^3)$ direct sparse description.
-This is a compact symbolic characterization, not a claim that the resulting
-feasibility problem is decidable in polynomial time and not a claim that the
-equality cases admit a short list of factorization families.
+This is a compact symbolic feasibility criterion, not a claim that the
+resulting feasibility problem is decidable in polynomial time.  In particular,
+it does not eliminate the shared multiplier and is not a direct taxonomy of
+the equality cases from their prime factorizations.
 
 \section{The two formulations of Part (i)}
 
@@ -356,6 +360,21 @@ for $k=2,3,4,5,6$ are $6,4,3,12,12$, so $f(12)=3$.  Here
 $P(12)=3$ and $Q(12)=4$: the historical equality $f(12)=12/Q(12)$ holds,
 whereas the maintained equality $f(12)=12/P(12)$ does not.
 \end{remark}
+
+\section{Classification boundary}
+
+The displayed equivalences are exact, finite, and kernel-checked.  They prove
+that the original equality question is equivalent to infeasibility of the
+explicit synchronized system.  A stricter reading of ``characterize'',
+however, asks for conditions read directly from the ordered exact factors
+without solving this custom feasibility problem.  The compiler does not meet
+that stronger bar: its one shared multiplier must still satisfy coupled digit
+and borrow conditions in every active prime base.  A later audit reduces the
+remaining task to elimination of a short-interval CRT digit-cylinder
+intersection and records counterexamples to independent-prime, greedy,
+pairwise, and divisor-descent shortcuts.  No exhaustive non-search branch
+theorem is currently proved.  Thus this document establishes the exact finite
+criterion, not closure of that stricter direct-classification problem.
 
 
 \section{Formal verification and source trail}

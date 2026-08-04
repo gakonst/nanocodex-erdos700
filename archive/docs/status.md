@@ -20,7 +20,8 @@ The three questions are:
 1. characterize the integers for which \(f(n)=n/P(n)\). The maintained
    statement takes \(P(n)\) to be the largest prime factor; the 1978 paper
    takes it to be the greatest exact prime-power component. These are
-   different targets, and this repository proves both;
+   different targets. This repository proves exact finite iff criteria for
+   both, but not yet a direct factor-readable taxonomy;
 2. determine whether \(f(n)>\sqrt n\) for infinitely many composite \(n\);
 3. determine whether, for every \(A>0\),
    \(f(n)\ll_A n/(\log n)^A\).
@@ -29,7 +30,7 @@ The three questions are:
 
 | Part  | Internal status | Exact result | Remaining external question |
 | --- | --- | --- | --- |
-| (i) | Solved and kernel-checked | Compact synchronized integer/Boolean characterizations for both the maintained largest-prime target and the original greatest-prime-power target | Independent novelty, priority, publication, and community adjudication |
+| (i) | Exact finite feasibility is kernel-checked; direct classification open | Compact synchronized integer/Boolean iff criteria for both the maintained largest-prime target and the original greatest-prime-power target | Eliminate the shared multiplier without replacing it by another bespoke search problem |
 | (ii) | Solved and kernel-checked | `Erdos700PNT.erdos_700_ii` proves an infinite set with `f(n)^2 > n` | Independent mathematical review and comparison with prior or independent resolutions; no novelty claim |
 | (iii) | Open | Classical \(A\le1\) range; several exact partial lemmas and method counterexamples | Any unconditional improvement beyond \(D(n)\gg\log n\), the full theorem, or a counterexample |
 
@@ -50,7 +51,7 @@ divisibility-minimal divisor strictly above the largest prime factor can be
 realized by one legal row with the required simultaneous carry inequalities.
 It contains neither `f`, a gcd, nor a binomial coefficient.
 
-The main structural closure is the compiler theorem
+The main compact-feasibility theorem is the compiler theorem
 
 ```lean
 Erdos700PartI.ExplicitG.explicitG_iff_factorTableauFeasible
@@ -67,10 +68,11 @@ f(n)=\frac{n}{P(n)}
 \]
 
 The same row variable and multiplier are shared across every active prime.
-There is no variable, row, or disjunction for every possible multiplier. The
-indexed fields are polynomial in the binary length of `n`; the direct sparse
-description is $O((\log n)^3)$ bits. This is a representation-size statement,
-not a polynomial-time algorithm claim.
+There is no separate variable, row, or disjunction for every possible
+multiplier. The indexed fields are polynomial in the binary length of `n`;
+the sparse description is $O((\log n)^3)$ bits. This is a
+representation-size statement, not a polynomial-time algorithm claim and not
+an elimination of shared-multiplier feasibility.
 
 ### Original 1978 greatest-prime-power theorem
 
@@ -107,12 +109,17 @@ The non-prime-power conjunct is necessary because a composite prime power has
 
 ### Claim boundary
 
-This is an exact, decidable, non-tautological structural characterization. It
+This is an exact, decidable, non-tautological finite feasibility criterion. It
 covers all composite integers, handles both source formulations, and
 culminates in a compact symbolic system rather than an enumeration of the
-original rows. It is a complete solution of the stated characterization
-problem. It is not a short enumeration of factorization families; obtaining
-one would be a stronger optional theorem.
+original rows. It does not meet the stricter direct-classification bar because
+the system retains a shared multiplier constrained across all active prime
+bases. The remaining task is to replace that feasibility question by an
+explicit exhaustive factor/digit evaluator with no multiplier, CRT-tuple,
+automaton-state, or solver search. The
+[focused direct-classification audit](part-i-direct-classification/research-report.md)
+states that obligation precisely and records counterexamples to failed
+shortcuts.
 
 The clean-room novelty audit found no prior source stating or immediately
 implying these exact all-composite criteria and classified the work as a new
@@ -132,6 +139,7 @@ not settle priority or publication.
 - `docs/part-i-release/README.md`
 - `docs/part-i-release/novelty-audit.md`
 - `docs/part-i-run-coverage-audit.md`
+- `docs/part-i-direct-classification/research-report.md`
 - `proof/PartIVerify.lean`
 - `proof/scripts/verify-part-i.sh`
 

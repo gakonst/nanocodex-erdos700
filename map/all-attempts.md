@@ -17,7 +17,7 @@ evidence that a route was assigned, not evidence that its target was proved.
 
 | Part | Where we ended | Main progression | Best next action |
 | --- | --- | --- | --- |
-| (i) | Solved: kernel-checked compact structural characterizations of both the maintained and original 1978 targets | residue/carry bridge → boundary antichain → prime-power transfer → synchronized factor tableau → explicit integer/Boolean compiler | independent novelty, priority, and publication review |
+| (i) | Exact finite feasibility is kernel-checked for both targets; direct factor-readable classification remains open | residue/carry bridge → boundary antichain → prime-power transfer → synchronized factor tableau → explicit compiler → unresolved short-CRT elimination | eliminate the shared multiplier without a renamed search problem |
 | (ii) | Kernel-checked unconditional infinite family; no novelty claim | nearby-prime structural lemma → Maynard candidate → PNT replacement → complete Lean proof | independent mathematical review and comparison with prior or independent resolutions |
 | (iii) | Open beyond the classical \(A=1\) scale | exact weighted reduction → hard residual packets → many construction, averaging, algebraic, and counterexample routes → quantitative no-retry ledger | prove any unbounded gain over \(D(n)\gg\log n\), prove \(A=2\), or build a genuine counterfamily |
 
@@ -25,7 +25,7 @@ The canonical proof artifacts are in [`lean-part1/`](../lean-part1/) and
 [`lean-part2/`](../lean-part2/). The full frozen prompt inventory is in the
 [campaign index](../archive/campaigns/problems/README.md).
 
-## Part (i): complete equality-case solution
+## Part (i): exact equality criterion and direct-classification gap
 
 ### Result
 
@@ -50,8 +50,9 @@ f(n)=\frac{n}{P(n)}
 
 Its sparse description is polynomial in the binary length of $n$; no
 polynomial-time feasibility claim is made. This is an exact compact structural
-characterization, not merely a bounded scan and not a short taxonomy of
-factorization shapes.
+feasibility criterion, not merely a bounded scan. It is not yet the stricter
+direct classification requested by reviewers, because the shared multiplier
+survives as a symbolic feasibility variable.
 
 The original 1978 paper uses the greatest exact prime-power component
 
@@ -68,7 +69,9 @@ Erdos700.f n = n / Erdos700.Q n ↔
   ¬ IsPrimePow n ∧ Erdos700.HistoricalBoundarySafe n
 ```
 
-for every composite `n > 1`. Thus both readings of Part (i) are closed.
+for every composite `n > 1`. Thus both readings have exact checked iff
+criteria; neither has yet had the shared-multiplier feasibility step eliminated
+into a direct all-factorization taxonomy.
 
 ### Route map
 
@@ -80,7 +83,7 @@ for every composite `n > 1`. Thus both readings of Part (i) are closed.
 | Simplify the multiplier search | Test `m=1`, squarefree-only, divisor-only, endpoint-excluding, and independent-prime criteria | Refuted by explicit regressions | `n=78`, `136`, and `195` show that endpoint inclusion, nontrivial multipliers, repeated powers, and same-row coupling are load-bearing. |
 | Prime-power threshold | Generalize the exact witness and boundary theorem from the largest prime to every proper prime-power divisor | Proved and formalized | One parameterized theorem supplies the bridge to the original 1978 baseline. |
 | Historical prime-power pass | Define the greatest exact prime-power component, isolate composite prime powers, and specialize the threshold theorem | Proved, audited, and formalized | `n=12` separates the source formulations; both now have exact all-composite iff theorems. |
-| Structural-classification pass | Replace the multiplier scan by synchronized accepting digit words and a compact natural-linear system | Proved and formalized | The shared multiplier survives as one symbolic variable; there is no row or disjunction for each possible value. A factorization-family taxonomy remains optional. |
+| Structural-feasibility pass | Replace the multiplier scan by synchronized accepting digit words and a compact natural-linear system | Proved and formalized | The shared multiplier survives as one symbolic variable; there is no row or disjunction for each possible value, but reviewer-grade direct classification remains open. |
 | Full digit shadow | Replace carry counts by explicit cross-base prefix comparisons over one common positive residue | Proved and formalized | The criterion is visibly independent of the original minimum while preserving same-row coupling. |
 | Canonical bounded obstruction | Prove every boundary divisor satisfies `d ≤ P(n)^2` and expose a finite rejection rectangle | Proved and formalized | The divisor coordinate admits a sharp polynomial bound without changing the theorem. |
 | Cofactor and divisor-poset forms | Normalize `d*m ≤ n/2` to `m ≤ (n/d)/2`, then range directly over `n.divisors` | Proved and formalized | The final search domains are exact, finite, and nonredundant. |
@@ -110,12 +113,16 @@ for every composite `n > 1`. Thus both readings of Part (i) are closed.
 
 ### Remaining boundary
 
-There is no known mathematical or formal gap in either Part (i) formulation.
-The repository treats exact finite iff criteria independent of the original
-minimum as a complete solution. A shorter factorization-family enumeration
-would strengthen the result but is not required to discharge the stated
-characterization target. Novelty, priority, publication, and community
-disposition remain external.
+There is no known gap in the exact finite iff theorems encoded in Lean. There
+is, however, a mathematical presentation gap relative to the requested direct
+classification: the factor tableau and explicit compiler still decide whether
+one shared multiplier satisfies coupled prime-base digit conditions. The
+[focused audit](../archive/docs/part-i-direct-classification/research-report.md)
+reduces this to an exact short-CRT digit-cylinder elimination obligation and
+records why independent-prime, greedy, pairwise/Helly, divisor-descent, and
+fixed-initial-menu shortcuts fail. Until an explicit non-search evaluator and
+proof are supplied, the stricter Part (i) target remains open. Novelty,
+priority, publication, and community disposition remain external.
 
 ## Part (ii): infinitely many strict examples
 
